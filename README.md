@@ -23,6 +23,13 @@ Our project enables users to log plant growth, manage garden maintenance tasks, 
 This project follows standard ER modeling practices and will be normalized up to **BCNF**. 
 
 ## Task Distribution
+### SQL Script
+- Each person work on 5 SQL schemas and their respective script
+
+### Frontend
+- 
+
+
 
 
 ## Project Timeline
