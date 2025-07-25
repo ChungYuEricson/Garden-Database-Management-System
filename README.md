@@ -46,13 +46,13 @@ This project follows standard ER modeling practices and will be normalized up to
 ## Tasks
 **Frontend**
 - **Will we do a static or dynamic page?**
-- Creating Tables
-- Modifying Tables
-- Delete all tables
-- Textboxes or dropdowns for modifying plant names, soil, fertilizer, attributes, etc.
-- Filter/sorting options (i.e., filter by plant type or family)
-- Feedback messages (i.e., table created successfully, error messages, etc.)
-- Views/Pages
+- Creating Tables (Justin)
+- Modifying Tables (Justin)
+- Delete all tables (Ericson)
+- Textboxes or dropdowns for modifying plant names, soil, fertilizer, attributes, etc. (Jacky)
+- Filter/sorting options (i.e., filter by plant type or family) (Justin)
+- Feedback messages (i.e., table created successfully, error messages, etc.) (Ericson)
+- Views/Pages (All)
     - Signup/login
     - User profile UI
     - New landplot
@@ -62,21 +62,21 @@ This project follows standard ER modeling practices and will be normalized up to
     - Would gardenders have a different view than owners?
 
 **Backend**
-- POST /create-table
-- POST /insert-data
-- PUT /edit-table
-- DELETE /delete-all
-- POST /create-user
-- GET /users
-- GET /plants
-- GET /tasks
-- PUT /edit-plant
-- POST /assign-task
-- Error handling features
-- Save/load
+- POST /create-table (Justin)
+- POST /insert-data  (Justin)
+- PUT /edit-table    (Justin)
+- DELETE /delete-all (Ericson)
+- POST /create-user  (Jacky)
+- GET /users         (Jacky)
+- GET /plants        (Ericson)
+- GET /tasks         (Jacky)
+- PUT /edit-plant    (Ericson)
+- POST /assign-task  (Jacky)
+- Error handling features (Ericson) 
+- Save/load?
 
 **Misc**
-- Connecting Database/front-end and back-end
+- Connecting Database/front-end and back-end (Jacky)
 
 ----------------------
 
