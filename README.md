@@ -36,8 +36,45 @@ This project follows standard ER modeling practices and will be normalized up to
 7) Aug 08-09: Presentation Practice Over Zoom
 8) Aug 10: Deadline Milestone 5
 
+## Tasks
+**Frontend**
+- **Will we do a static or dynamic page?**
+- Creating Tables
+- Modifying Tables
+- Delete all tables
+- Textboxes or dropdowns for modifying plant names, soil, fertilizer, attributes, etc.
+- Filter/sorting options (i.e., filter by plant type or family)
+- Feedback messages (i.e., table created successfully, error messages, etc.)
+- Views/Pages
+    - Signup/login
+    - User profile UI
+    - New landplot
+    - Notifications for tasks/scheduling?
+    - Landing page
+    - Views for plants, tasks, users, etc.
+    - Would gardenders have a different view than owners?
+
+**Backend**
+- POST /create-table
+- POST /insert-data
+- PUT /edit-table
+- DELETE /delete-all
+- POST /create-user
+- GET /users
+- GET /plants
+- GET /tasks
+- PUT /edit-plant
+- POST /assign-task
+- Error handling features
+- Save/load
+
+**Misc**
+- Connecting Database/front-end and back-end
+
 ----------------------
 
 #### Personal Github Disclaimer
 Some github commits may be done using personal accounts for ease of use. The information for these accounts are listed below:
 1. Justin Galimpin: justingalimpin@gmail.com
+2. Jacky Wang:
+jacky05wang@gmail.com
