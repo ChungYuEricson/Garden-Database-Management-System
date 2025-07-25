@@ -22,12 +22,7 @@ Our project enables users to log plant growth, manage garden maintenance tasks, 
 
 This project follows standard ER modeling practices and will be normalized up to **BCNF**. 
 
-## Task Distribution
-### SQL Script
-- Each person work on 5 SQL schemas and their respective script
 
-### Frontend
-- 
 
 
 
@@ -38,10 +33,10 @@ This project follows standard ER modeling practices and will be normalized up to
 2) July 25-27: SQL script
 3) July 28-29: DataBase Generation
 4) July 30- Aug 07: Frontend and hooking up backend to frontend
-5) Aug 08: Deadline Milestone 4
-6) Aug 08: Presentation Preparation: Sciprt & Presentation Material
-7) Aug 08-09: Presentation Practice Over Zoom
-8) Aug 10: Deadline Milestone 5
+5) Aug 06: Deadline Milestone 4
+6) Aug 06: Presentation Preparation: Sciprt & Presentation Material
+7) Aug 06-07: Presentation Practice Over Zoom
+8) Aug 08: Deadline Milestone 5
 
 ## Tasks
 **Frontend**
