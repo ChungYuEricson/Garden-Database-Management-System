@@ -85,3 +85,4 @@ Some github commits may be done using personal accounts for ease of use. The inf
 1. Justin Galimpin: justingalimpin@gmail.com
 2. Jacky Wang:
 jacky05wang@gmail.com
+3. Ericson Ho: cy.ericson@gmail.com
