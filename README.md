@@ -22,6 +22,19 @@ Our project enables users to log plant growth, manage garden maintenance tasks, 
 
 This project follows standard ER modeling practices and will be normalized up to **BCNF**. 
 
+## Task Distribution
+
+
+## Project Timeline
+
+1) July 25: Milestone 3 Check-in
+2) 
+
+Aug 08: Deadline Milestone 4
+Aug 08: Presentation Preparation: Sciprt & Presentation Material
+Aug 08-09: Presentation Practice Over Zoom
+Aug 10: Deadline Milestone 5
+
 ----------------------
 
 #### Personal Github Disclaimer
