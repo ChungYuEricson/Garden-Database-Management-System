@@ -28,12 +28,13 @@ This project follows standard ER modeling practices and will be normalized up to
 ## Project Timeline
 
 1) July 25: Milestone 3 Check-in
-2) 
-
-Aug 08: Deadline Milestone 4
-Aug 08: Presentation Preparation: Sciprt & Presentation Material
-Aug 08-09: Presentation Practice Over Zoom
-Aug 10: Deadline Milestone 5
+2) July 25-27: SQL script
+3) July 28-29: DataBase Generation
+4) July 30- Aug 07: Frontend and hooking up backend to frontend
+5) Aug 08: Deadline Milestone 4
+6) Aug 08: Presentation Preparation: Sciprt & Presentation Material
+7) Aug 08-09: Presentation Practice Over Zoom
+8) Aug 10: Deadline Milestone 5
 
 ----------------------
 
