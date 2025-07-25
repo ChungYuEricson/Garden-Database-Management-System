@@ -21,3 +21,9 @@ Our project enables users to log plant growth, manage garden maintenance tasks, 
 ## ER Diagram & Schema
 
 This project follows standard ER modeling practices and will be normalized up to **BCNF**. 
+
+----------------------
+
+#### Personal Github Disclaimer
+Some github commits may be done using personal accounts for ease of use. The information for these accounts are listed below:
+1. Justin Galimpin: justingalimpin@gmail.com
