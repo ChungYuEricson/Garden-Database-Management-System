@@ -1,5 +1,5 @@
 # CPSC 304 Project: Garden Database Management System
-testing 
+testing 2
 ## Overview
 
 This project is a relational database system designed to support garden and plant management for individual and community gardeners. 
