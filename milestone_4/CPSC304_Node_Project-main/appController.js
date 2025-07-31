@@ -15,8 +15,13 @@ router.get('/check-db-connection', async (req, res) => {
     }
 });
 
-router.get('/demotable', async (req, res) => {
-    const tableContent = await appService.fetchDemotableFromDb();
+// router.get('/demotable', async (req, res) => {
+//     const tableContent = await appService.fetchDemotableFromDb();
+//     res.json({data: tableContent});
+// });
+
+router.get('/appusers', async (req, res) => {
+    const tableContent = await appService.fetchAppUsersFromDb();
     res.json({data: tableContent});
 });
 

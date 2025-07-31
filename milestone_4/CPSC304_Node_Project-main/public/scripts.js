@@ -37,11 +37,36 @@ async function checkDbConnection() {
 }
 
 // Fetches data from the demotable and displays it.
+// async function fetchAndDisplayUsers() {
+//     const tableElement = document.getElementById('demotable');
+//     const tableBody = tableElement.querySelector('tbody');
+
+//     const response = await fetch('/demotable', {
+//         method: 'GET'
+//     });
+
+//     const responseData = await response.json();
+//     const demotableContent = responseData.data;
+
+//     // Always clear old, already fetched data before new fetching process.
+//     if (tableBody) {
+//         tableBody.innerHTML = '';
+//     }
+
+//     demotableContent.forEach(user => {
+//         const row = tableBody.insertRow();
+//         user.forEach((field, index) => {
+//             const cell = row.insertCell(index);
+//             cell.textContent = field;
+//         });
+//     });
+// }
+
 async function fetchAndDisplayUsers() {
-    const tableElement = document.getElementById('demotable');
+    const tableElement = document.getElementById('appUser');
     const tableBody = tableElement.querySelector('tbody');
 
-    const response = await fetch('/demotable', {
+    const response = await fetch('/appusers', {
         method: 'GET'
     });
 
