@@ -57,16 +57,16 @@ This project follows standard ER modeling practices and will be normalized up to
     - Would gardenders have a different view than owners?
 
 **Backend**
-- POST /create-table (Justin)
-- POST /insert-data  (Justin)
-- PUT /edit-table    (Justin)
-- DELETE /delete-all (Ericson)
-- POST /create-user  (Jacky)
-- GET /users         (Jacky)
-- GET /plants        (Ericson)
-- GET /tasks         (Jacky)
-- PUT /edit-plant    (Ericson)
-- POST /assign-task  (Jacky)
+- POST /create-table (Justin)  
+- POST /insert-data  (Justin)  
+- PUT /edit-table    (Justin)  
+- DELETE /delete-all (Ericson) 
+- POST /create-user  (Jacky)   **Potentially Done?**
+- GET /users         (Jacky)   **Potentially Done? Would this be Show Users?** 
+- GET /plants        (Ericson) 
+- GET /tasks         (Jacky)   
+- PUT /edit-plant    (Ericson) 
+- POST /assign-task  (Jacky)   
 - Error handling features (Ericson) 
 - Save/load?
 
