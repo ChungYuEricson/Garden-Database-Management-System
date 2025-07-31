@@ -13,6 +13,7 @@
  */
 
 
+
 // This function checks the database connection and updates its status on the frontend.
 async function checkDbConnection() {
     const statusElem = document.getElementById('dbStatus');
@@ -202,6 +203,34 @@ async function insertDemotable(event) {
     }
 }
 
+async function insertTasks(event) {
+    event.preventDefault();
+
+    const taskID = document.getElementById('insertTaskId').value;
+    const frequency = document.getElementById('insertFrequency').value;
+
+    const response = await fetch('/insert-task', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            taskID: taskID,
+            frequency: frequency
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('insertResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "Data inserted successfully!";
+        fetchTableData();
+    } else {
+        messageElement.textContent = "Error inserting data!";
+    }
+}
+
 async function populateAppUsers() {
     const response = await fetch("/populate-appusers", {
         method: 'POST'
@@ -315,6 +344,7 @@ window.onload = function() {
     document.getElementById("countAppUsers").addEventListener("click", countAppUsers);
     document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
     document.getElementById("populateTasks").addEventListener("click", populateTasks);
+    document.getElementById("insertTask").addEventListener("submit", insertTasks);
 };
 
 // General function to refresh the displayed table data. 

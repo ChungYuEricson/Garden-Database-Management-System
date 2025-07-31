@@ -65,11 +65,6 @@
         </tbody>
     </table>
 
-    <h2>Populate Tasks</h2>
-    <button id="populateTasks"> Populate </button> <br>
-    <div id="populateResultMsg"></div>
-
-
     <br><hr><br> <!-- ========================================================================= -->
 
     <h2>Reset User Table</h2>
@@ -80,6 +75,10 @@
 
     <h2>Populate Users</h2>
     <button id="populateAppUsers"> Populate </button> <br>
+    <div id="populateResultMsg"></div>
+
+    <h2>Populate Tasks</h2>
+    <button id="populateTasks"> Populate </button> <br>
     <div id="populateResultMsg"></div>
 
 
@@ -101,6 +100,15 @@
         Last Name: <input type="text" id="insertLastName" placeholder="Enter Last Name" maxlength="20"> <br><br>
 
         <button type="submit"> Insert </button> <br>
+    </form>
+    <div id="insertResultMsg"></div>
+
+    <h2> Insert New Task </h2>
+    <form id="insertTask">
+        TaskID: <input type="number" id="insertTaskId" placeholder="Enter ID" required> <br><br>
+        Frequency: <input type="text" id="insertFrequency" placeholder="Enter Frequency" maxlength="20"> <br><br>
+
+        <button type="submit"> Insert Task</button> <br>
     </form>
     <div id="insertResultMsg"></div>
 

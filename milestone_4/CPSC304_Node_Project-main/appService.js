@@ -244,6 +244,20 @@ async function insertAppUser(userID, firstName, lastName) {
     });
 }
 
+async function insertTask(taskID, frequency) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `INSERT INTO Tasks (taskID, frequency) VALUES (:taskID, :frequency)`,
+            [taskID, frequency],
+            { autoCommit: true }
+        );
+
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return false;
+    });
+}
+
 async function updateNameDemotable(oldName, newName) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
@@ -290,5 +304,6 @@ module.exports = {
     insertAppUser,
     populateAppUsers,
     fetchTasksFromDb,
-    populateTasks
+    populateTasks,
+    insertTask
 };
