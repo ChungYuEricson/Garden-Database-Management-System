@@ -76,18 +76,27 @@ async function testOracleConnection() {
     });
 }
 
-async function fetchDemotableFromDb() {
+// async function fetchDemotableFromDb() {
+//     return await withOracleDB(async (connection) => {
+//         const result = await connection.execute('SELECT * FROM DEMOTABLE');
+//         return result.rows;
+//     }).catch(() => {
+//         return [];
+//     });
+// }
+
+async function fetchAppUsersFromDb() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM DEMOTABLE');
+        const result = await connection.execute('SELECT * FROM AppUser');
         return result.rows;
     }).catch(() => {
         return [];
     });
 }
 
-async function fetchAppUsersFromDb() {
+async function fetchTasksFromDb() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM AppUser');
+        const result = await connection.execute('SELECT * FROM Tasks');
         return result.rows;
     }).catch(() => {
         return [];
@@ -174,6 +183,37 @@ async function populateAppUsers() {
     });
 }
 
+async function populateTasks() {
+    const tasks = [
+        [101, 'Daily'],
+        [102, 'Weekly'],
+        [103, 'Biweekly'],
+        [104, 'Monthly'],
+        [105, 'Annually'],
+    ];
+
+    return await withOracleDB(async (connection) => {
+        for (const [taskID, frequency] of tasks) {
+            try {
+                await connection.execute(
+                    `INSERT INTO Tasks (taskID, frequency) VALUES (:taskID, :frequency)`,
+                    [taskID, frequency],
+                    { autoCommit: true }
+                );
+            } catch (err) { // for when there is an existing Task
+                if (err.errorNum === 1) {
+                    continue;
+                } else {
+                    console.error(err);
+                    throw err;
+                }
+            }
+        }
+        return true;
+    }).catch(() => {
+        return false;
+    });
+}
 
 
 // async function insertDemotable(id, name) {
@@ -238,15 +278,17 @@ async function countAppUsers() {
 
 
 module.exports = {
-    testOracleConnection,
     // fetchDemotableFromDb,
     //initiateDemotable,
-    initiateAppUsers, 
     //insertDemotable, 
-    updateNameDemotable, 
     // countDemotable,
+    testOracleConnection,
+    initiateAppUsers, 
+    updateNameDemotable, 
     countAppUsers,
     fetchAppUsersFromDb,
     insertAppUser,
-    populateAppUsers
+    populateAppUsers,
+    fetchTasksFromDb,
+    populateTasks
 };

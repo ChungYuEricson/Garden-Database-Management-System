@@ -87,6 +87,31 @@ async function fetchAndDisplayUsers() {
     });
 }
 
+async function fetchAndDisplayTasks() {
+    const tableElement = document.getElementById('tasksTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/tasks', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+    const taskData = responseData.data;
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    taskData.forEach(task => {
+        const row = tableBody.insertRow();
+        task.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+}
+
 // This function resets or initializes the demotable.
 // async function resetDemotable() {
 //     const response = await fetch("/initiate-demotable", {
@@ -193,6 +218,22 @@ async function populateAppUsers() {
     }
 }
 
+async function populateTasks() {
+    const response = await fetch("/populate-tasks", {
+        method: 'POST'
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('populateResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "Tasks table populated successfully!";
+        fetchTableData();
+    } else {
+        messageElement.textContent = "Error populating table.";
+    }
+}
+
 
 // Updates names in the demotable.
 async function updateNameDemotable(event) {
@@ -264,6 +305,7 @@ async function countAppUsers() {
 window.onload = function() {
     checkDbConnection();
     fetchTableData();
+    fetchAndDisplayTasks();
     // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("resetAppUsers").addEventListener("click", resetAppUsers);
     // document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
@@ -272,6 +314,7 @@ window.onload = function() {
     // document.getElementById("countDemotable").addEventListener("click", countDemotable);
     document.getElementById("countAppUsers").addEventListener("click", countAppUsers);
     document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
+    document.getElementById("populateTasks").addEventListener("click", populateTasks);
 };
 
 // General function to refresh the displayed table data. 

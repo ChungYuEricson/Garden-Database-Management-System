@@ -25,6 +25,11 @@ router.get('/appusers', async (req, res) => {
     res.json({data: tableContent});
 });
 
+router.get('/tasks', async (req, res) => {
+    const tableContent = await appService.fetchTasksFromDb();
+    res.json({data: tableContent});
+});
+
 // router.post("/initiate-demotable", async (req, res) => {
 //     const initiateResult = await appService.initiateDemotable();
 //     if (initiateResult) {
@@ -45,6 +50,15 @@ router.post("/initiate-appusers", async (req, res) => {
 
 router.post("/populate-appusers", async (req, res) => {
     const populateResult = await appService.populateAppUsers();
+    if (populateResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.post("/populate-tasks", async (req, res) => {
+    const populateResult = await appService.populateTasks();
     if (populateResult) {
         res.json({ success: true });
     } else {
