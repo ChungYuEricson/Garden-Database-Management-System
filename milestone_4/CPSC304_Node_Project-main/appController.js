@@ -64,8 +64,23 @@ router.post("/update-name-demotable", async (req, res) => {
     }
 });
 
-router.get('/count-demotable', async (req, res) => {
-    const tableCount = await appService.countDemotable();
+// router.get('/count-demotable', async (req, res) => {
+//     const tableCount = await appService.countDemotable();
+//     if (tableCount >= 0) {
+//         res.json({ 
+//             success: true,  
+//             count: tableCount
+//         });
+//     } else {
+//         res.status(500).json({ 
+//             success: false, 
+//             count: tableCount
+//         });
+//     }
+// });
+
+router.get('/count-appusers', async (req, res) => {
+    const tableCount = await appService.countAppUsers();
     if (tableCount >= 0) {
         res.json({ 
             success: true,  

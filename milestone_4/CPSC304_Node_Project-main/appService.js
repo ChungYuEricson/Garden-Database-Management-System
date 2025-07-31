@@ -156,14 +156,24 @@ async function updateNameDemotable(oldName, newName) {
     });
 }
 
-async function countDemotable() {
+// async function countDemotable() {
+//     return await withOracleDB(async (connection) => {
+//         const result = await connection.execute('SELECT Count(*) FROM DEMOTABLE');
+//         return result.rows[0][0];
+//     }).catch(() => {
+//         return -1;
+//     });
+// }
+
+async function countAppUsers() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT Count(*) FROM DEMOTABLE');
+        const result = await connection.execute('SELECT Count(*) FROM AppUser');
         return result.rows[0][0];
     }).catch(() => {
         return -1;
     });
 }
+
 
 module.exports = {
     testOracleConnection,
@@ -171,7 +181,8 @@ module.exports = {
     initiateDemotable, 
     //insertDemotable, 
     updateNameDemotable, 
-    countDemotable,
+    // countDemotable,
+    countAppUsers,
     fetchAppUsersFromDb,
     insertAppUser
 };

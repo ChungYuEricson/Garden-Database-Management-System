@@ -193,8 +193,24 @@ async function updateNameDemotable(event) {
 
 // Counts rows in the demotable.
 // Modify the function accordingly if using different aggregate functions or procedures.
-async function countDemotable() {
-    const response = await fetch("/count-demotable", {
+// async function countDemotable() {
+//     const response = await fetch("/count-demotable", {
+//         method: 'GET'
+//     });
+
+//     const responseData = await response.json();
+//     const messageElement = document.getElementById('countResultMsg');
+
+//     if (responseData.success) {
+//         const tupleCount = responseData.count;
+//         messageElement.textContent = `The number of tuples in demotable: ${tupleCount}`;
+//     } else {
+//         alert("Error in count demotable!");
+//     }
+// }
+
+async function countAppUsers() {
+    const response = await fetch("/count-appusers", {
         method: 'GET'
     });
 
@@ -203,9 +219,9 @@ async function countDemotable() {
 
     if (responseData.success) {
         const tupleCount = responseData.count;
-        messageElement.textContent = `The number of tuples in demotable: ${tupleCount}`;
+        messageElement.textContent = `The number of users: ${tupleCount}`;
     } else {
-        alert("Error in count demotable!");
+        alert("Error in count users!");
     }
 }
 
@@ -220,7 +236,8 @@ window.onload = function() {
     // document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     document.getElementById("insertAppUser").addEventListener("submit", insertDemotable);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
-    document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    // document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    document.getElementById("countAppUsers").addEventListener("click", countAppUsers);
 };
 
 // General function to refresh the displayed table data. 
