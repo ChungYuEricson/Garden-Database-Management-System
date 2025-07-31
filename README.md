@@ -67,7 +67,7 @@ This project follows standard ER modeling practices and will be normalized up to
 - GET /tasks         (Jacky)   
     - Populating task table   **[DONE]**
     - Reset task table        **[In Progress]**
-    - Insert into task table  **[In Progress]**
+    - Insert into task table  **[DONE]**
 - PUT /edit-plant    (Ericson) 
 - POST /assign-task  (Jacky)
     - Associate task table with users **[In Progress]**
