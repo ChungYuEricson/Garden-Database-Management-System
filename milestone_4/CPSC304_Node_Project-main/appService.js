@@ -114,11 +114,25 @@ async function initiateDemotable() {
     });
 }
 
-async function insertDemotable(id, name) {
+// async function insertDemotable(id, name) {
+//     return await withOracleDB(async (connection) => {
+//         const result = await connection.execute(
+//             `INSERT INTO DEMOTABLE (id, name) VALUES (:id, :name)`,
+//             [id, name],
+//             { autoCommit: true }
+//         );
+
+//         return result.rowsAffected && result.rowsAffected > 0;
+//     }).catch(() => {
+//         return false;
+//     });
+// }
+
+async function insertAppUser(userID, firstName, lastName) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `INSERT INTO DEMOTABLE (id, name) VALUES (:id, :name)`,
-            [id, name],
+            `INSERT INTO AppUser (userID, firstName, lastName) VALUES (:userID, :firstName, :lastName)`,
+            [userID, firstName, lastName],
             { autoCommit: true }
         );
 
@@ -155,8 +169,9 @@ module.exports = {
     testOracleConnection,
     // fetchDemotableFromDb,
     initiateDemotable, 
-    insertDemotable, 
+    //insertDemotable, 
     updateNameDemotable, 
     countDemotable,
-    fetchAppUsersFromDb
+    fetchAppUsersFromDb,
+    insertAppUser
 };

@@ -34,9 +34,19 @@ router.post("/initiate-demotable", async (req, res) => {
     }
 });
 
-router.post("/insert-demotable", async (req, res) => {
-    const { id, name } = req.body;
-    const insertResult = await appService.insertDemotable(id, name);
+// router.post("/insert-demotable", async (req, res) => {
+//     const { id, name } = req.body;
+//     const insertResult = await appService.insertDemotable(id, name);
+//     if (insertResult) {
+//         res.json({ success: true });
+//     } else {
+//         res.status(500).json({ success: false });
+//     }
+// });
+
+router.post("/insert-appuser", async (req, res) => {
+    const { userID, firstName, lastName } = req.body;
+    const insertResult = await appService.insertAppUser(userID, firstName, lastName);
     if (insertResult) {
         res.json({ success: true });
     } else {

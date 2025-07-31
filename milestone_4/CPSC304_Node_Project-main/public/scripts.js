@@ -104,20 +104,50 @@ async function resetDemotable() {
 }
 
 // Inserts new records into the demotable.
+// async function insertDemotable(event) {
+//     event.preventDefault();
+
+//     const idValue = document.getElementById('insertId').value;
+//     const nameValue = document.getElementById('insertName').value;
+
+//     const response = await fetch('/insert-demotable', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             id: idValue,
+//             name: nameValue
+//         })
+//     });
+
+//     const responseData = await response.json();
+//     const messageElement = document.getElementById('insertResultMsg');
+
+//     if (responseData.success) {
+//         messageElement.textContent = "Data inserted successfully!";
+//         fetchTableData();
+//     } else {
+//         messageElement.textContent = "Error inserting data!";
+//     }
+// }
+
 async function insertDemotable(event) {
     event.preventDefault();
 
-    const idValue = document.getElementById('insertId').value;
-    const nameValue = document.getElementById('insertName').value;
+    const userID = document.getElementById('insertId').value;
+    const firstName = document.getElementById('insertFirstName').value;
+    const lastName = document.getElementById('insertLastName').value;
 
-    const response = await fetch('/insert-demotable', {
+    const response = await fetch('/insert-appuser', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id: idValue,
-            name: nameValue
+            userID: userID,
+            firstName: firstName,
+            lastName: lastName
         })
     });
 
@@ -187,7 +217,8 @@ window.onload = function() {
     checkDbConnection();
     fetchTableData();
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
-    document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
+    // document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
+    document.getElementById("insertAppUser").addEventListener("submit", insertDemotable);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countDemotable").addEventListener("click", countDemotable);
 };
