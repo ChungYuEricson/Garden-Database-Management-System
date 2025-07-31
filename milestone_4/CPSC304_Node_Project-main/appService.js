@@ -145,6 +145,27 @@ async function initiateAppUsers() {
     });
 }
 
+async function initiateTasks() {
+    return await withOracleDB(async (connection) => {
+        try {
+            await connection.execute(`DROP TABLE Tasks CASCADE CONSTRAINTS PURGE`); // need to purge existing table for reset to occur
+        } catch(err) {
+            console.log('Table might not exist, proceeding to create...');
+        }
+
+        const result = await connection.execute(`
+            CREATE TABLE Tasks (
+                taskID INTEGER,
+                frequency VARCHAR(20),
+                PRIMARY KEY (taskID)
+            )
+        `);
+        return true;
+    }).catch(() => {
+        return false;
+    });
+}
+
 
 async function populateAppUsers() {
     const users = [
@@ -305,5 +326,6 @@ module.exports = {
     populateAppUsers,
     fetchTasksFromDb,
     populateTasks,
-    insertTask
+    insertTask,
+    initiateTasks
 };

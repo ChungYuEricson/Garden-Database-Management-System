@@ -144,6 +144,21 @@ async function resetAppUsers() {
     }
 }
 
+async function resetTasks() {
+    const response = await fetch("/initiate-tasks", {
+        method: 'POST'
+    });
+    const responseData = await response.json();
+
+    if (responseData.success) {
+        const messageElement = document.getElementById('resetResultMsg');
+        messageElement.textContent = "tasks initiated successfully!";
+        fetchAndDisplayTasks();
+    } else {
+        alert("Error initiating table!");
+    }
+}
+
 // Inserts new records into the demotable.
 // async function insertDemotable(event) {
 //     event.preventDefault();
@@ -345,6 +360,7 @@ window.onload = function() {
     document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
     document.getElementById("populateTasks").addEventListener("click", populateTasks);
     document.getElementById("insertTask").addEventListener("submit", insertTasks);
+    document.getElementById("resetTasks").addEventListener("click", resetTasks);
 };
 
 // General function to refresh the displayed table data. 

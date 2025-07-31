@@ -48,6 +48,15 @@ router.post("/initiate-appusers", async (req, res) => {
     }
 });
 
+router.post("/initiate-tasks", async (req, res) => {
+    const initiateResult = await appService.initiateTasks();
+    if (initiateResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
 router.post("/populate-appusers", async (req, res) => {
     const populateResult = await appService.populateAppUsers();
     if (populateResult) {
