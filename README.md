@@ -65,8 +65,12 @@ This project follows standard ER modeling practices and will be normalized up to
 - GET /users         (Jacky)   **Potentially Done? Would this be Show Users?** 
 - GET /plants        (Ericson) 
 - GET /tasks         (Jacky)   
+    - Populating task table   **[DONE]**
+    - Reset task table        **[In Progress]**
+    - Insert into task table  **[In Progress]**
 - PUT /edit-plant    (Ericson) 
-- POST /assign-task  (Jacky)   
+- POST /assign-task  (Jacky)
+    - Associate task table with users **[In Progress]**
 - Error handling features (Ericson) 
 - Save/load?
 
