@@ -1,3 +1,24 @@
+DROP TABLE AppUser CASCADE CONSTRAINT;
+DROP TABLE Owner CASCADE CONSTRAINT;
+DROP TABLE Gardener CASCADE CONSTRAINT;
+drop table Tasks CASCADE CONSTRAINT;
+drop table User_HAS_Task CASCADE CONSTRAINT;
+drop table Landplot CASCADE CONSTRAINT;
+drop table Garden_WORKS_Landplot;
+drop table Owner_OWNS_Landplot;
+drop table Fertilizer CASCADE CONSTRAINT;
+drop table Soil CASCADE CONSTRAINT;
+drop table gardenSetting CASCADE CONSTRAINT;
+drop table GardenType CASCADE CONSTRAINT;
+drop table GardenLog CASCADE CONSTRAINT;
+drop table seedType CASCADE CONSTRAINT;
+drop table PlantFamily CASCADE CONSTRAINT;
+drop table PlantInfo CASCADE CONSTRAINT;
+drop table Plant CASCADE CONSTRAINT;
+drop table Landplot_HAS_GardenType CASCADE CONSTRAINT;
+drop table PlantLog CASCADE CONSTRAINT;
+drop table GardenLog_HAS_Plant CASCADE CONSTRAINT;
+
 CREATE TABLE AppUser (
 	userID INTEGER,
 	firstName VARCHAR(20),
@@ -7,9 +28,9 @@ CREATE TABLE AppUser (
 
 CREATE TABLE Owner (
 	userID INTEGER,
-	gardensOwned INTEGER NOT NULL DEFAULT 1,
+	gardensOwned INTEGER DEFAULT 1 NOT NULL,
 	PRIMARY KEY (userID),
-	FOREIGN KEY (userID) REFERENCES AppUser(userID) 
+	FOREIGN KEY (userID) REFERENCES AppUser(userID)
         ON DELETE CASCADE
 );
 
@@ -34,7 +55,7 @@ CREATE TABLE User_HAS_Task (
 	taskID INTEGER,
 	PRIMARY KEY (userID, taskID),
 	FOREIGN KEY (userID) REFERENCES AppUser(userID)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
 	FOREIGN KEY (taskID) REFERENCES Tasks(taskID)
 );
 
@@ -254,13 +275,13 @@ INSERT INTO SeedType (seedType, harvestable) VALUES ('Seed', 1);
 INSERT INTO SeedType (seedType, harvestable) VALUES ('Bulb', 0);
 INSERT INTO SeedType (seedType, harvestable) VALUES ('Tuber', 1);
 INSERT INTO SeedType (seedType, harvestable) VALUES ('Rhizome', 0);
-INSERT INTO SeedType (seedType, harvestable) VALUES ('Seed', 1);
+INSERT INTO SeedType (seedType, harvestable) VALUES ('Root', 1);
 
 INSERT INTO PlantFamily (familyID, seedType, floralStructure) VALUES (601, 'Seed', 'Simple');
 INSERT INTO PlantFamily (familyID, seedType, floralStructure) VALUES (602, 'Bulb', 'Simple');
 INSERT INTO PlantFamily (familyID, seedType, floralStructure) VALUES (603, 'Tuber', 'Simple');
 INSERT INTO PlantFamily (familyID, seedType, floralStructure) VALUES (604, 'Rhizome', 'Simple');
-INSERT INTO PlantFamily (familyID, seedType, floralStructure) VALUES (605, 'Seed', 'Complex');
+INSERT INTO PlantFamily (familyID, seedType, floralStructure) VALUES (605, 'Root', 'Complex');
 
 INSERT INTO PlantInfo (species, familyID, prefEnvironment) VALUES ('Rose', 601, 'Mild');
 INSERT INTO PlantInfo (species, familyID, prefEnvironment) VALUES ('Tulip', 602, 'Cool');
