@@ -225,7 +225,7 @@ async function insertTasks(event) {
 
     if (responseData.success) {
         messageElement.textContent = "Data inserted successfully!";
-        fetchTableData();
+        fetchAndDisplayTasks();
     } else {
         messageElement.textContent = "Error inserting data!";
     }
