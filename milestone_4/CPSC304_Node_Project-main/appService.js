@@ -137,6 +137,45 @@ async function initiateAppUsers() {
 }
 
 
+async function populateAppUsers() {
+    const users = [
+        [1, 'Ericson', 'Ho'],
+        [2, 'Justin', 'Galimpin'],
+        [3, 'Jacky', 'Wang'],
+        [4, 'John', 'Doe'],
+        [5, 'Michael', 'Jordan'],
+        [6, 'Bob', 'Smith'],
+        [7, 'Lebron', 'James'],
+        [8, 'Kevin', 'Levin'],
+        [9, 'Tom', 'Cruise'],
+        [10, 'Jackie', 'Chan']
+    ];
+    
+    return await withOracleDB(async (connection) => {
+        for (const [userID, firstName, lastName] of users) {
+            try {
+                await connection.execute(
+                    `INSERT INTO AppUser (userID, firstName, lastName) VALUES (:userID, :firstName, :lastName)`,
+                    [userID, firstName, lastName],
+                    { autoCommit: true }
+                );
+            } catch (err) { // for when there is an existing userID
+                if (err.errorNum === 1) {
+                    continue;
+                } else {
+                    console.error(err);
+                    throw err;
+                }
+            }
+        }
+        return true;
+    }).catch(() => {
+        return false;
+    });
+}
+
+
+
 // async function insertDemotable(id, name) {
 //     return await withOracleDB(async (connection) => {
 //         const result = await connection.execute(
@@ -208,5 +247,6 @@ module.exports = {
     // countDemotable,
     countAppUsers,
     fetchAppUsersFromDb,
-    insertAppUser
+    insertAppUser,
+    populateAppUsers
 };

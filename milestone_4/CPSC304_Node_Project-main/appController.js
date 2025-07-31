@@ -43,6 +43,16 @@ router.post("/initiate-appusers", async (req, res) => {
     }
 });
 
+router.post("/populate-appusers", async (req, res) => {
+    const populateResult = await appService.populateAppUsers();
+    if (populateResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+
 // router.post("/insert-demotable", async (req, res) => {
 //     const { id, name } = req.body;
 //     const insertResult = await appService.insertDemotable(id, name);

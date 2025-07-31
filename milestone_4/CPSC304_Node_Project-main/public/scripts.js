@@ -177,6 +177,23 @@ async function insertDemotable(event) {
     }
 }
 
+async function populateAppUsers() {
+    const response = await fetch("/populate-appusers", {
+        method: 'POST'
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('populateResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "AppUser table populated successfully!";
+        fetchTableData();
+    } else {
+        messageElement.textContent = "Error populating table.";
+    }
+}
+
+
 // Updates names in the demotable.
 async function updateNameDemotable(event) {
     event.preventDefault();
@@ -254,6 +271,7 @@ window.onload = function() {
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     // document.getElementById("countDemotable").addEventListener("click", countDemotable);
     document.getElementById("countAppUsers").addEventListener("click", countAppUsers);
+    document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
 };
 
 // General function to refresh the displayed table data. 
