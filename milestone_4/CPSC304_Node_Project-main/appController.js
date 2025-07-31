@@ -25,8 +25,17 @@ router.get('/appusers', async (req, res) => {
     res.json({data: tableContent});
 });
 
-router.post("/initiate-demotable", async (req, res) => {
-    const initiateResult = await appService.initiateDemotable();
+// router.post("/initiate-demotable", async (req, res) => {
+//     const initiateResult = await appService.initiateDemotable();
+//     if (initiateResult) {
+//         res.json({ success: true });
+//     } else {
+//         res.status(500).json({ success: false });
+//     }
+// });
+
+router.post("/initiate-appusers", async (req, res) => {
+    const initiateResult = await appService.initiateAppUsers();
     if (initiateResult) {
         res.json({ success: true });
     } else {

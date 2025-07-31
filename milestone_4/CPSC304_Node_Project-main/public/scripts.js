@@ -88,15 +88,30 @@ async function fetchAndDisplayUsers() {
 }
 
 // This function resets or initializes the demotable.
-async function resetDemotable() {
-    const response = await fetch("/initiate-demotable", {
+// async function resetDemotable() {
+//     const response = await fetch("/initiate-demotable", {
+//         method: 'POST'
+//     });
+//     const responseData = await response.json();
+
+//     if (responseData.success) {
+//         const messageElement = document.getElementById('resetResultMsg');
+//         messageElement.textContent = "demotable initiated successfully!";
+//         fetchTableData();
+//     } else {
+//         alert("Error initiating table!");
+//     }
+// }
+
+async function resetAppUsers() {
+    const response = await fetch("/initiate-appusers", {
         method: 'POST'
     });
     const responseData = await response.json();
 
     if (responseData.success) {
         const messageElement = document.getElementById('resetResultMsg');
-        messageElement.textContent = "demotable initiated successfully!";
+        messageElement.textContent = "appusers initiated successfully!";
         fetchTableData();
     } else {
         alert("Error initiating table!");
@@ -232,7 +247,8 @@ async function countAppUsers() {
 window.onload = function() {
     checkDbConnection();
     fetchTableData();
-    document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
+    // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
+    document.getElementById("resetAppUsers").addEventListener("click", resetAppUsers);
     // document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     document.getElementById("insertAppUser").addEventListener("submit", insertDemotable);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);

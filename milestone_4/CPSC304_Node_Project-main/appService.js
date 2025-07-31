@@ -94,18 +94,40 @@ async function fetchAppUsersFromDb() {
     });
 }
 
-async function initiateDemotable() {
+// async function initiateDemotable() {
+//     return await withOracleDB(async (connection) => {
+//         try {
+//             await connection.execute(`DROP TABLE DEMOTABLE`);
+//         } catch(err) {
+//             console.log('Table might not exist, proceeding to create...');
+//         }
+
+//         const result = await connection.execute(`
+//             CREATE TABLE DEMOTABLE (
+//                 id NUMBER PRIMARY KEY,
+//                 name VARCHAR2(20)
+//             )
+//         `);
+//         return true;
+//     }).catch(() => {
+//         return false;
+//     });
+// }
+
+async function initiateAppUsers() {
     return await withOracleDB(async (connection) => {
         try {
-            await connection.execute(`DROP TABLE DEMOTABLE`);
+            await connection.execute(`DROP TABLE AppUser CASCADE CONSTRAINTS PURGE`); // need to purge existing table for reset to occur
         } catch(err) {
             console.log('Table might not exist, proceeding to create...');
         }
 
         const result = await connection.execute(`
-            CREATE TABLE DEMOTABLE (
-                id NUMBER PRIMARY KEY,
-                name VARCHAR2(20)
+            CREATE TABLE AppUser (
+                userID INTEGER,
+	            firstName VARCHAR(20),
+	            lastName VARCHAR(20),
+	            PRIMARY KEY (userID)
             )
         `);
         return true;
@@ -113,6 +135,7 @@ async function initiateDemotable() {
         return false;
     });
 }
+
 
 // async function insertDemotable(id, name) {
 //     return await withOracleDB(async (connection) => {
@@ -178,7 +201,8 @@ async function countAppUsers() {
 module.exports = {
     testOracleConnection,
     // fetchDemotableFromDb,
-    initiateDemotable, 
+    //initiateDemotable,
+    initiateAppUsers, 
     //insertDemotable, 
     updateNameDemotable, 
     // countDemotable,
