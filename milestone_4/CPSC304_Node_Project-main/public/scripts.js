@@ -142,6 +142,8 @@ async function fetchUserTasks() {
             cell1.textContent = task.taskID;
             const cell2 = row.insertCell();
             cell2.textContent = task.frequency;
+            const cell3 = row.insertCell();
+            cell3.textContent = task.details;
         });
     } else if (responseData.success) {
         resultmsg.textContent = 'This user has no tasks assigned.'; // if len(tasks) = 0
@@ -260,6 +262,7 @@ async function insertTasks(event) {
 
     const taskID = document.getElementById('insertTaskId').value;
     const frequency = document.getElementById('insertFrequency').value;
+    const details = document.getElementById('insertDetails').value;
 
     const response = await fetch('/insert-task', {
         method: 'POST',
@@ -268,7 +271,8 @@ async function insertTasks(event) {
         },
         body: JSON.stringify({
             taskID: taskID,
-            frequency: frequency
+            frequency: frequency,
+            details: details
         })
     });
 
@@ -289,6 +293,7 @@ async function insertUserTask(event) { // for viewing user's tasks
     const userID = document.getElementById("insertUserId").value;
     const taskID = document.getElementById("insertTaskId").value;
     const frequency = document.getElementById("insertFrequency").value;
+    const details = document.getElementById("insertDetails").value;
 
     const response = await fetch("/insert-user-task", {
         method: "POST",
@@ -298,7 +303,8 @@ async function insertUserTask(event) { // for viewing user's tasks
         body: JSON.stringify({ 
             userID: userID, 
             taskID: taskID, 
-            frequency: frequency})
+            frequency: frequency,
+            details: details})
     });
 
     const data = await response.json();
@@ -459,7 +465,7 @@ window.onload = function() {
     document.getElementById("resetTasks").addEventListener("click", resetTasks);
     document.getElementById("insertUserTask").addEventListener("submit", insertUserTask);
     document.getElementById("showUserTasksForm").addEventListener("submit", function(event) {
-        event.preventDefault();
+        event.preventDefault(); // to prevent reloading page upon submitting 
         fetchUserTasks();
     });
 };

@@ -157,6 +157,7 @@ async function initiateTasks() {
             CREATE TABLE Tasks (
                 taskID INTEGER,
                 frequency VARCHAR(20),
+                details VARCHAR(20),
                 PRIMARY KEY (taskID)
             )
         `);
@@ -169,7 +170,7 @@ async function initiateTasks() {
 async function getUserTasks(userID) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `SELECT t.taskID, t.frequency
+            `SELECT t.taskID, t.frequency, t.details
              FROM Tasks t
              JOIN User_HAS_Task uht ON t.taskID = uht.taskID
              WHERE uht.userID = :userID`,
@@ -178,7 +179,8 @@ async function getUserTasks(userID) {
 
         const tasks = result.rows.map(row => ({
             taskID: row[0],
-            frequency: row[1]
+            frequency: row[1],
+            details:   row[2]
         }));
 
         return { success: true, tasks };
@@ -236,11 +238,11 @@ async function populateTasks() {
     ];
 
     return await withOracleDB(async (connection) => {
-        for (const [taskID, frequency] of tasks) {
+        for (const [taskID, frequency, details] of tasks) {
             try {
                 await connection.execute(
-                    `INSERT INTO Tasks (taskID, frequency) VALUES (:taskID, :frequency)`,
-                    [taskID, frequency],
+                    `INSERT INTO Tasks (taskID, frequency, details) VALUES (:taskID, :frequency, :details)`,
+                    {taskID, frequency, details}, //named object again
                     { autoCommit: true }
                 );
             } catch (err) { // for when there is an existing Task
@@ -287,11 +289,11 @@ async function insertAppUser(userID, firstName, lastName) {
     });
 }
 
-async function insertTask(taskID, frequency) {
+async function insertTask(taskID, frequency, details) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `INSERT INTO Tasks (taskID, frequency) VALUES (:taskID, :frequency)`,
-            [taskID, frequency],
+            `INSERT INTO Tasks (taskID, frequency, details) VALUES (:taskID, :frequency, :details)`,
+            {taskID, frequency, details},
             { autoCommit: true }
         );
 
@@ -301,7 +303,7 @@ async function insertTask(taskID, frequency) {
     });
 }
 
-async function insertUserTask(userID, taskID, frequency) {
+async function insertUserTask(userID, taskID, frequency, details) {
     return await withOracleDB(async (connection) => {
         const existing = await connection.execute(
             `SELECT * FROM User_HAS_Task WHERE userID = :userID AND taskID = :taskID`,
@@ -319,8 +321,8 @@ async function insertUserTask(userID, taskID, frequency) {
 
         if (taskExists.rows.length === 0) {
             await connection.execute(
-                `INSERT INTO Tasks (taskID, frequency) VALUES (:taskID, :frequency)`,
-                [taskID, frequency],
+                `INSERT INTO Tasks (taskID, frequency, details) VALUES (:taskID, :frequency, :details)`,
+                {taskID, frequency, details}, // named object; these objects have values
                 { autoCommit: false }
             );
         }

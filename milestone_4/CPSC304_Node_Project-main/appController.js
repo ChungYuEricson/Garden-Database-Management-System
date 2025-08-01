@@ -103,8 +103,8 @@ router.post("/insert-appuser", async (req, res) => {
 });
 
 router.post("/insert-task", async (req, res) => {
-    const { taskID, frequency } = req.body;
-    const insertResult = await appService.insertTask(taskID, frequency);
+    const { taskID, frequency, details } = req.body;
+    const insertResult = await appService.insertTask(taskID, frequency, details);
     if (insertResult) {
         res.json({ success: true });
     } else {
@@ -113,8 +113,8 @@ router.post("/insert-task", async (req, res) => {
 });
 
 router.post("/insert-user-task", async (req, res) => {
-    const { userID, taskID, frequency } = req.body;
-    const insertResult = await appService.insertUserTask(userID, taskID, frequency);
+    const { userID, taskID, frequency, details } = req.body;
+    const insertResult = await appService.insertUserTask(userID, taskID, frequency, details);
     if (insertResult) {
         res.json({ success: true });
     } else {

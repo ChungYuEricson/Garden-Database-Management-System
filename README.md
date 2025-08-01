@@ -80,6 +80,9 @@ This project follows standard ER modeling practices and will be normalized up to
 **Misc**
 - Connecting Database/front-end and back-end (Jacky)
 
+**Notes**
+- Added details to tasks
+
 ----------------------
 
 #### Personal Github Disclaimer

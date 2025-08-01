@@ -47,6 +47,7 @@ CREATE TABLE Gardener (
 CREATE TABLE Tasks (
 	taskID INTEGER,
 	frequency VARCHAR(20),
+	details VARCHAR(20),
 	PRIMARY KEY (taskID)
 );
 
@@ -207,11 +208,11 @@ INSERT INTO Gardener (userID, experience, gardensWorked, availability) VALUES (8
 INSERT INTO Gardener (userID, experience, gardensWorked, availability) VALUES (9, 'Expert', 4, 'Weekdays');
 INSERT INTO Gardener (userID, experience, gardensWorked, availability) VALUES (10, 'Intermediate', 3, 'Mornings');
 
-INSERT INTO Tasks (taskID, frequency) VALUES (101, 'Daily');
-INSERT INTO Tasks (taskID, frequency) VALUES (102, 'Weekly');
-INSERT INTO Tasks (taskID, frequency) VALUES (103, 'Biweekly');
-INSERT INTO Tasks (taskID, frequency) VALUES (104, 'Monthly');
-INSERT INTO Tasks (taskID, frequency) VALUES (105, 'Annually');
+INSERT INTO Tasks (taskID, frequency, details) VALUES (101, 'Daily', 'water');
+INSERT INTO Tasks (taskID, frequency, details) VALUES (102, 'Weekly', 'new soil');
+INSERT INTO Tasks (taskID, frequency, details) VALUES (103, 'Biweekly', 'water');
+INSERT INTO Tasks (taskID, frequency, details) VALUES (104, 'Monthly', 'water');
+INSERT INTO Tasks (taskID, frequency, details) VALUES (105, 'Annually', 'harvest');
 
 INSERT INTO User_HAS_Task (userID, taskID) VALUES (1, 101);
 INSERT INTO User_HAS_Task (userID, taskID) VALUES (2, 102);
