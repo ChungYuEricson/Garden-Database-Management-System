@@ -119,11 +119,6 @@ async function fetchUserTasks() {
     const resultmsg = document.getElementById('userTasksResultMsg')
     const tableBody = table.querySelector('tbody');
 
-    // const response = await fetch('/tasks', {
-    //     method: 'GET'
-    // });
-
-    // Always clear old, already fetched data before new fetching process.
     if (tableBody) {
         tableBody.innerHTML = '';
     }
