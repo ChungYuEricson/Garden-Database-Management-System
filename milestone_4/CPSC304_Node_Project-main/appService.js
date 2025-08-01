@@ -192,19 +192,6 @@ async function getUserTasks(userID) {
 
 
 async function populateAppUsers() {
-    const users = [
-        [1, 'Ericson', 'Ho'],
-        [2, 'Justin', 'Galimpin'],
-        [3, 'Jacky', 'Wang'],
-        [4, 'John', 'Doe'],
-        [5, 'Michael', 'Jordan'],
-        [6, 'Bob', 'Smith'],
-        [7, 'Lebron', 'James'],
-        [8, 'Kevin', 'Levin'],
-        [9, 'Tom', 'Cruise'],
-        [10, 'Jackie', 'Chan']
-    ];
-    
     return await withOracleDB(async (connection) => {
         for (const [userID, firstName, lastName] of users) {
             try {
