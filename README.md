@@ -70,7 +70,8 @@ This project follows standard ER modeling practices and will be normalized up to
     - Insert into task table  **[DONE]**
 - PUT /edit-plant    (Ericson) 
 - POST /assign-task  (Jacky)
-    - Associate task table with users **[In Progress]**
+    - Associate task table with users **[DONE via Search User's Tasks?]**
+    - Delete task upon completing **[In progress]**
 - Error handling features (Ericson) 
 - Save/load?
 

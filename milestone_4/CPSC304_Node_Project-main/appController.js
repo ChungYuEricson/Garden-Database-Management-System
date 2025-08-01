@@ -30,6 +30,12 @@ router.get('/tasks', async (req, res) => {
     res.json({data: tableContent});
 });
 
+router.get('/api/user-tasks/:userID', async (req, res) => {
+    const userID = parseInt(req.params.userID);
+    const result = await appService.getUserTasks(userID);
+    res.json(result);
+});
+
 // router.post("/initiate-demotable", async (req, res) => {
 //     const initiateResult = await appService.initiateDemotable();
 //     if (initiateResult) {
@@ -106,6 +112,16 @@ router.post("/insert-task", async (req, res) => {
     }
 });
 
+router.post("/insert-user-task", async (req, res) => {
+    const { userID, taskID, frequency } = req.body;
+    const insertResult = await appService.insertUserTask(userID, taskID, frequency);
+    if (insertResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
 router.post("/update-name-demotable", async (req, res) => {
     const { oldName, newName } = req.body;
     const updateResult = await appService.updateNameDemotable(oldName, newName);
@@ -115,6 +131,7 @@ router.post("/update-name-demotable", async (req, res) => {
         res.status(500).json({ success: false });
     }
 });
+
 
 // router.get('/count-demotable', async (req, res) => {
 //     const tableCount = await appService.countDemotable();

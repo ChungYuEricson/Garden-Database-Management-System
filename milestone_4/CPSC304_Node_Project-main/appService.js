@@ -166,6 +166,28 @@ async function initiateTasks() {
     });
 }
 
+async function getUserTasks(userID) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT t.taskID, t.frequency
+             FROM Tasks t
+             JOIN User_HAS_Task uht ON t.taskID = uht.taskID
+             WHERE uht.userID = :userID`,
+            [userID] // binds :userID ; ORA-1008
+        );
+
+        const tasks = result.rows.map(row => ({
+            taskID: row[0],
+            frequency: row[1]
+        }));
+
+        return { success: true, tasks };
+    }).catch((err) => {
+        console.error("getUserTasks error:", err);
+        return { success: false };
+    });
+}
+
 
 async function populateAppUsers() {
     const users = [
@@ -279,6 +301,44 @@ async function insertTask(taskID, frequency) {
     });
 }
 
+async function insertUserTask(userID, taskID, frequency) {
+    return await withOracleDB(async (connection) => {
+        const existing = await connection.execute(
+            `SELECT * FROM User_HAS_Task WHERE userID = :userID AND taskID = :taskID`,
+            [userID, taskID]
+        );
+
+        if (existing.rows.length > 0) {
+            throw new Error("User already assigned to this task.");
+        }
+
+        const taskExists = await connection.execute( // you dont want to insert an existing task or else error will happen
+            `SELECT * FROM Tasks WHERE taskID = :taskID`,
+            [taskID]
+        );
+
+        if (taskExists.rows.length === 0) {
+            await connection.execute(
+                `INSERT INTO Tasks (taskID, frequency) VALUES (:taskID, :frequency)`,
+                [taskID, frequency],
+                { autoCommit: false }
+            );
+        }
+
+        await connection.execute(
+            `INSERT INTO User_HAS_Task (userID, taskID) VALUES (:userID, :taskID)`,
+            [userID, taskID],
+            { autoCommit: false }
+        );
+
+        await connection.commit();
+
+        return true;
+    }).catch(() => {
+        return false;
+    });
+}
+
 async function updateNameDemotable(oldName, newName) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
@@ -327,5 +387,7 @@ module.exports = {
     fetchTasksFromDb,
     populateTasks,
     insertTask,
-    initiateTasks
+    initiateTasks,
+    getUserTasks,
+    insertUserTask
 };

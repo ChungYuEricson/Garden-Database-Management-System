@@ -113,6 +113,43 @@ async function fetchAndDisplayTasks() {
     });
 }
 
+async function fetchUserTasks() {
+    const userID = document.getElementById('userIDInput').value;
+    const table = document.getElementById('tasksTable');
+    const resultmsg = document.getElementById('userTasksResultMsg')
+    const tableBody = table.querySelector('tbody');
+
+    // const response = await fetch('/tasks', {
+    //     method: 'GET'
+    // });
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    const response = await fetch(`/api/user-tasks/${userID}`, { // we want the userID to be the endpoint to retrieve info
+        method: 'GET'
+    });
+    const responseData = await response.json();
+    const taskData = responseData.tasks;
+    if (responseData.success && Array.isArray(taskData) && taskData.length > 0) { // if there is a user and there is task data
+        table.style.display = 'table';
+
+        taskData.forEach(task => {
+            const row = tableBody.insertRow();
+            const cell1 = row.insertCell();
+            cell1.textContent = task.taskID;
+            const cell2 = row.insertCell();
+            cell2.textContent = task.frequency;
+        });
+    } else if (responseData.success) {
+        resultmsg.textContent = 'This user has no tasks assigned.'; // if len(tasks) = 0
+    } else {
+        resultmsg.textContent = 'User not found.';                  // if the userID is null
+    }
+}
+
 // This function resets or initializes the demotable.
 // async function resetDemotable() {
 //     const response = await fetch("/initiate-demotable", {
@@ -246,6 +283,36 @@ async function insertTasks(event) {
     }
 }
 
+async function insertUserTask(event) { // for viewing user's tasks
+    event.preventDefault();
+
+    const userID = document.getElementById("insertUserId").value;
+    const taskID = document.getElementById("insertTaskId").value;
+    const frequency = document.getElementById("insertFrequency").value;
+
+    const response = await fetch("/insert-user-task", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ 
+            userID: userID, 
+            taskID: taskID, 
+            frequency: frequency})
+    });
+
+    const data = await response.json();
+    const msg = document.getElementById("insertResultMsg");
+
+    if (data.success) {
+        msg.textContent = "Task inserted and assigned successfully!";
+        fetchAndDisplayTasks();
+    } else {
+        msg.textContent = "Error inserting task.";
+    }
+}
+
+
 async function populateAppUsers() {
     const response = await fetch("/populate-appusers", {
         method: 'POST'
@@ -359,8 +426,13 @@ window.onload = function() {
     document.getElementById("countAppUsers").addEventListener("click", countAppUsers);
     document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
     document.getElementById("populateTasks").addEventListener("click", populateTasks);
-    document.getElementById("insertTask").addEventListener("submit", insertTasks);
+    // document.getElementById("insertTask").addEventListener("submit", insertTasks);
     document.getElementById("resetTasks").addEventListener("click", resetTasks);
+    document.getElementById("insertUserTask").addEventListener("submit", insertUserTask);
+    document.getElementById("showUserTasksForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        fetchUserTasks();
+    });
 };
 
 // General function to refresh the displayed table data. 
