@@ -312,6 +312,35 @@ async function insertUserTask(event) { // for viewing user's tasks
     }
 }
 
+document.getElementById("searchUserForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    const userID = document.getElementById("searchUserId").value;
+    const firstName = document.getElementById("searchFirstName").value;
+    const lastName = document.getElementById("searchLastName").value;
+    const params = new URLSearchParams({ // concatnates user's params into url string
+        userID,
+        firstName,
+        lastName
+    });
+    const response = await fetch(`/search-user?${params.toString()}`); // fetching inputted data
+    const data = await response.json();
+    const tableBody = document.getElementById("searchResultsTable").querySelector("tbody");
+    
+    tableBody.innerHTML = ''; // for clearing prev output
+    if (data.length === 0) {
+        document.getElementById("searchResultMsg").textContent = "No results found.";
+        return;
+    }
+    document.getElementById("searchResultMsg").textContent = "";
+    data.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach(value => {
+            const cell = row.insertCell();
+            cell.textContent = value;
+        });
+    });
+});
+
 
 async function populateAppUsers() {
     const response = await fetch("/populate-appusers", {

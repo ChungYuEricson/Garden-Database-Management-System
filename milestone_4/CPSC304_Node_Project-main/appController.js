@@ -132,6 +132,11 @@ router.post("/update-name-demotable", async (req, res) => {
     }
 });
 
+router.get('/search-user', async (req, res) => {
+    const { userID, firstName, lastName } = req.query;
+    const users = await appService.searchUsers({userID, firstName, lastName});
+    res.json(users);
+});
 
 // router.get('/count-demotable', async (req, res) => {
 //     const tableCount = await appService.countDemotable();

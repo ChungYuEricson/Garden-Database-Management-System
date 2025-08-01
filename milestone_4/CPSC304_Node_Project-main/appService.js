@@ -353,6 +353,31 @@ async function updateNameDemotable(oldName, newName) {
     });
 }
 
+async function searchUsers(filters) {
+    return await withOracleDB(async (connection) => {
+        const conditions = [];
+        const bindVariable = {};
+        if (filters.userID) {
+            conditions.push("userID = :userID"); // filter the condition in ""; use to build sql's WHERE condition
+            bindVariable.userID = parseInt(filters.userID);
+        }
+        if (filters.firstName) {
+            conditions.push("LOWER(firstName) LIKE :firstName");
+            bindVariable.firstName = `%${filters.firstName.toLowerCase()}%`;
+        }
+        if (filters.lastName) {
+            conditions.push("LOWER(lastName) LIKE :lastName");
+            bindVariable.lastName = `%${filters.lastName.toLowerCase()}%`;
+        }
+        const where = conditions.length > 0 ? "WHERE " + conditions.join(" AND ") : "";
+        const query = `SELECT * FROM AppUser ${where}`;
+        const result = await connection.execute(query, bindVariable);
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
 // async function countDemotable() {
 //     return await withOracleDB(async (connection) => {
 //         const result = await connection.execute('SELECT Count(*) FROM DEMOTABLE');
@@ -389,5 +414,6 @@ module.exports = {
     insertTask,
     initiateTasks,
     getUserTasks,
-    insertUserTask
+    insertUserTask,
+    searchUsers
 };

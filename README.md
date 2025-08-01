@@ -72,6 +72,8 @@ This project follows standard ER modeling practices and will be normalized up to
 - POST /assign-task  (Jacky)
     - Associate task table with users **[DONE via Search User's Tasks?]**
     - Delete task upon completing **[In progress]**
+- DELETE /user
+    - Upon deleting a user, delete their tasks, if it exists. 
 - Error handling features (Ericson) 
 - Save/load?
 
@@ -83,6 +85,5 @@ This project follows standard ER modeling practices and will be normalized up to
 #### Personal Github Disclaimer
 Some github commits may be done using personal accounts for ease of use. The information for these accounts are listed below:
 1. Justin Galimpin: justingalimpin@gmail.com
-2. Jacky Wang:
-jacky05wang@gmail.com
+2. Jacky Wang: jacky05wang@gmail.com
 3. Ericson Ho: cy.ericson@gmail.com
