@@ -38,6 +38,7 @@ async function checkDbConnection() {
 }
 
 async function fetchAndDisplayUsers() {
+    console.log('Fetching users');
     const tableElement = document.getElementById('appUser');
     const tableBody = tableElement.querySelector('tbody');
 
@@ -421,6 +422,7 @@ window.onload = function() {
     checkDbConnection();
     fetchTableData();
     fetchAndDisplayTasks();
+    fetchAndDisplayUsers();
     // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("resetAppUsers").addEventListener("click", resetAppUsers);
     // document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);

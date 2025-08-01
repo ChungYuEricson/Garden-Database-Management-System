@@ -195,6 +195,8 @@ INSERT INTO AppUser (userID, firstName, lastName) VALUES (7, 'LeBron', 'James');
 INSERT INTO AppUser (userID, firstName, lastName) VALUES (8, 'Kevin', 'Levin');
 INSERT INTO AppUser (userID, firstName, lastName) VALUES (9, 'Tom', 'Cruise');
 INSERT INTO AppUser (userID, firstName, lastName) VALUES (10, 'Jackie', 'Chan');
+INSERT INTO AppUser (userID, firstName, lastName) VALUES (11, 'ii', 'nn');
+
 
 INSERT INTO Owner (userID, gardensOwned) VALUES (1, 2);
 INSERT INTO Owner (userID, gardensOwned) VALUES (2, 1);
