@@ -5,7 +5,6 @@ drop table Tasks CASCADE CONSTRAINT;
 drop table User_HAS_Task CASCADE CONSTRAINT;
 drop table Landplot CASCADE CONSTRAINT;
 drop table Garden_WORKS_Landplot;
-drop table Owner_OWNS_Landplot;
 drop table Fertilizer CASCADE CONSTRAINT;
 drop table Soil CASCADE CONSTRAINT;
 drop table gardenSetting CASCADE CONSTRAINT;
@@ -64,18 +63,12 @@ CREATE TABLE Landplot (
 	landID INTEGER,
 	location VARCHAR(20) NOT NULL,
 	landSize FLOAT NOT NULL,
-	PRIMARY KEY (landID)
+	userID INTEGER NOT NULL,
+	PRIMARY KEY (landID),
+	FOREIGN KEY (userID) REFERENCES AppUser(userID)
 );
 
 CREATE TABLE Garden_WORKS_Landplot (
-	userID INTEGER,
-    landID INTEGER,
-    PRIMARY KEY (userID, landID),
-    FOREIGN KEY (userID) REFERENCES AppUser(userID),
-    FOREIGN KEY (landID) REFERENCES Landplot(landID)
-);
-
-CREATE TABLE Owner_OWNS_Landplot (
 	userID INTEGER,
     landID INTEGER,
     PRIMARY KEY (userID, landID),
@@ -124,11 +117,12 @@ CREATE TABLE Landplot_HAS_GardenType (
 
 CREATE TABLE GardenLog (
  	gardenLogID INTEGER,
- 	gardenID INTEGER,
+ 	gardenID INTEGER NOT NULL,
  	weather VARCHAR(20),
  	monthlyAvgTemp FLOAT,
  	controlledTemp FLOAT,
  	PRIMARY KEY (gardenLogID),
+	UNIQUE (gardenID),
  	FOREIGN KEY (gardenID) REFERENCES GardenType(gardenID)
         ON DELETE CASCADE
 );
@@ -172,6 +166,7 @@ CREATE TABLE PlantLog (
     growth VARCHAR(20),
     harvestDate DATE,
     PRIMARY KEY (plantLogID),
+	UNIQUE (plantID, species),
     FOREIGN KEY (plantID, species) REFERENCES Plant(plantID, species),
     FOREIGN KEY (soilID) REFERENCES Soil(soilID)
 );
@@ -195,8 +190,6 @@ INSERT INTO AppUser (userID, firstName, lastName) VALUES (7, 'LeBron', 'James');
 INSERT INTO AppUser (userID, firstName, lastName) VALUES (8, 'Kevin', 'Levin');
 INSERT INTO AppUser (userID, firstName, lastName) VALUES (9, 'Tom', 'Cruise');
 INSERT INTO AppUser (userID, firstName, lastName) VALUES (10, 'Jackie', 'Chan');
-INSERT INTO AppUser (userID, firstName, lastName) VALUES (11, 'ii', 'nn');
-
 
 INSERT INTO Owner (userID, gardensOwned) VALUES (1, 2);
 INSERT INTO Owner (userID, gardensOwned) VALUES (2, 1);
@@ -222,17 +215,11 @@ INSERT INTO User_HAS_Task (userID, taskID) VALUES (5, 103);
 INSERT INTO User_HAS_Task (userID, taskID) VALUES (6, 104);
 INSERT INTO User_HAS_Task (userID, taskID) VALUES (7, 105);
 
-INSERT INTO Landplot (landID, location, landSize) VALUES (201, 'Burnaby', 300.5);
-INSERT INTO Landplot (landID, location, landSize) VALUES (202, 'Richmond', 150.0);
-INSERT INTO Landplot (landID, location, landSize) VALUES (203, 'Vancouver', 250.0);
-INSERT INTO Landplot (landID, location, landSize) VALUES (204, 'Surrey', 100.0);
-INSERT INTO Landplot (landID, location, landSize) VALUES (205, 'NorthVancouver', 500.0);
-
-INSERT INTO Owner_OWNS_Landplot (userID, landID) VALUES (1, 201);
-INSERT INTO Owner_OWNS_Landplot (userID, landID) VALUES (2, 202);
-INSERT INTO Owner_OWNS_Landplot (userID, landID) VALUES (3, 203);
-INSERT INTO Owner_OWNS_Landplot (userID, landID) VALUES (4, 204);
-INSERT INTO Owner_OWNS_Landplot (userID, landID) VALUES (5, 205);
+INSERT INTO Landplot (landID, location, landSize, userID) VALUES (201, 'Burnaby', 300.5, 1);
+INSERT INTO Landplot (landID, location, landSize, userID) VALUES (202, 'Richmond', 150.0, 2);
+INSERT INTO Landplot (landID, location, landSize, userID) VALUES (203, 'Vancouver', 250.0, 3);
+INSERT INTO Landplot (landID, location, landSize, userID) VALUES (204, 'Surrey', 100.0, 4);
+INSERT INTO Landplot (landID, location, landSize, userID) VALUES (205, 'NorthVancouver', 500.0, 5);
 
 INSERT INTO Garden_WORKS_Landplot (userID, landID) VALUES (6, 201);
 INSERT INTO Garden_WORKS_Landplot (userID, landID) VALUES (7, 202);
@@ -255,6 +242,8 @@ INSERT INTO Soil (soilID, soilType, fertilizerBrand) VALUES (405, 'Peaty', 'Fast
 INSERT INTO GardenSetting (gardenSetting, irrigation) VALUES ('Urban', 'Drip');
 INSERT INTO GardenSetting (gardenSetting, irrigation) VALUES ('Suburban', 'Sprinkler');
 INSERT INTO GardenSetting (gardenSetting, irrigation) VALUES ('Natural', 'None');
+INSERT INTO GardenSetting (gardenSetting, irrigation) VALUES ('Controlled', 'Pour');
+INSERT INTO GardenSetting (gardenSetting, irrigation) VALUES ('Farm', 'Drip');
 
 INSERT INTO GardenType (gardenID, soilID, gardenSize, gardenSetting) VALUES (301, 401, 300.5, 'Suburban');
 INSERT INTO GardenType (gardenID, soilID, gardenSize, gardenSetting) VALUES (302, 402, 150.0, 'Suburban');
