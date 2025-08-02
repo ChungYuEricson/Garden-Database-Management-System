@@ -173,4 +173,24 @@ router.get('/count-appusers', async (req, res) => {
 });
 
 
+// plantlog related router
+
+
+    router.post("/initiate-plantlog", async (req, res) => {
+        const initiateResult = await appService.initiatePlantLog();
+        if (initiateResult) {
+            res.json({ success: true });
+        } else {
+            res.status(500).json({ success: false });
+        }
+    });
+
+        router.get('/plantlog', async (req, res) => {
+        const tableContent = await appService.fetchPlantLogFromDb();
+        res.json({ data: tableContent });
+    });
+
+
+// end of plantlog related router
+
 module.exports = router;

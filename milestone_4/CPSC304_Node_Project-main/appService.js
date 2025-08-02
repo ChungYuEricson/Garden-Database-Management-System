@@ -355,6 +355,50 @@ async function countAppUsers() {
 }
 
 
+//plant related async
+
+async function initiatePlantLog() {
+    return await withOracleDB(async (connection) => {
+        try {
+            await connection.execute(`DROP TABLE PlantLog CASCADE CONSTRAINTS PURGE`); // need to purge existing table for reset to occur
+        } catch(err) {
+            console.log('Table might not exist, proceeding to create...');
+        }
+
+        const result = await connection.execute(`
+            CREATE TABLE PlantLog (
+                plantLogID INTEGER,
+                plantID INTEGER,
+                species VARCHAR(20) NOT NULL,
+                soilID INTEGER,
+                datePlanted DATE NOT NULL,
+                growth VARCHAR(20),
+                harvestDate DATE,
+                PRIMARY KEY (plantLogID),
+                FOREIGN KEY (plantID, species) REFERENCES Plant(plantID, species),
+                FOREIGN KEY (soilID) REFERENCES Soil(soilID)
+            )
+        `);
+        return true;
+    }).catch(() => {
+        return false;
+    });
+}
+
+async function fetchPlantLogFromDb() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM PlantLog',
+            [],
+            { outFormat: oracledb.OUT_FORMAT_ARRAY });
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
+// end of plantlog
+
+
 module.exports = {
     // fetchDemotableFromDb,
     //initiateDemotable,
@@ -376,4 +420,7 @@ module.exports = {
     searchUsers,
     fetchPlantsFromDb,
     insertPlant,
+     //plantlog related
+    initiatePlantLog,
+    fetchPlantLogFromDb
 };
