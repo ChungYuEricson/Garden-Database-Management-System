@@ -88,6 +88,23 @@ async function fetchAndDisplayTasks() {
     });
 }
 
+async function fetchAndDisplayPlants() {
+    const table = document.getElementById('plantTable');
+    const tbody = table.querySelector('tbody');
+
+    const response = await fetch('/plants');
+    const data = await response.json();
+
+    tbody.innerHTML = '';
+    data.data.forEach(plant => {
+        const row = tbody.insertRow();
+        plant.forEach(value => {
+            const cell = row.insertCell();
+            cell.textContent = value;
+        });
+    });
+}
+
 async function fetchUserTasks() {
     const userID = document.getElementById('userIDInput').value;
     const table = document.getElementById('tasksTable');
@@ -257,6 +274,25 @@ async function insertTasks(event) {
     }
 }
 
+async function insertPlant(event) {
+    event.preventDefault();
+
+    const plantID = document.getElementById('plantID').value;
+    const species = document.getElementById('species').value;
+    const plantName = document.getElementById('plantName').value;
+
+    const response = await fetch('/insert-plant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plantID, species, plantName })
+    });
+
+    const result = await response.json();
+    const msg = document.getElementById('insertPlantMsg');
+    msg.textContent = result.success ? "Plant inserted!" : "Error inserting plant.";
+    if (result.success) fetchAndDisplayPlants();
+}
+
 async function insertUserTask(event) { // for viewing user's tasks
     event.preventDefault();
 
@@ -423,6 +459,7 @@ window.onload = function() {
     fetchTableData();
     fetchAndDisplayTasks();
     fetchAndDisplayUsers();
+    fetchAndDisplayPlants();
     // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("resetAppUsers").addEventListener("click", resetAppUsers);
     // document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
@@ -435,6 +472,7 @@ window.onload = function() {
     // document.getElementById("insertTask").addEventListener("submit", insertTasks);
     document.getElementById("resetTasks").addEventListener("click", resetTasks);
     document.getElementById("insertUserTask").addEventListener("submit", insertUserTask);
+    document.getElementById("insertPlantForm").addEventListener("submit", insertPlant);
     document.getElementById("showUserTasksForm").addEventListener("submit", function(event) {
         event.preventDefault(); // to prevent reloading page upon submitting 
         fetchUserTasks();
