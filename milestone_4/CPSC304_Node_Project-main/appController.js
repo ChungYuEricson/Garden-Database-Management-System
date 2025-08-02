@@ -30,20 +30,16 @@ router.get('/tasks', async (req, res) => {
     res.json({data: tableContent});
 });
 
+router.get('/plants', async (req, res) => {
+    const tableContent = await appService.fetchPlantsFromDb();
+    res.json({ data: tableContent });
+});
+
 router.get('/api/user-tasks/:userID', async (req, res) => {
     const userID = parseInt(req.params.userID);
     const result = await appService.getUserTasks(userID);
     res.json(result);
 });
-
-// router.post("/initiate-demotable", async (req, res) => {
-//     const initiateResult = await appService.initiateDemotable();
-//     if (initiateResult) {
-//         res.json({ success: true });
-//     } else {
-//         res.status(500).json({ success: false });
-//     }
-// });
 
 router.post("/initiate-appusers", async (req, res) => {
     const initiateResult = await appService.initiateAppUsers();
@@ -81,16 +77,14 @@ router.post("/populate-tasks", async (req, res) => {
     }
 });
 
-
-// router.post("/insert-demotable", async (req, res) => {
-//     const { id, name } = req.body;
-//     const insertResult = await appService.insertDemotable(id, name);
-//     if (insertResult) {
-//         res.json({ success: true });
-//     } else {
-//         res.status(500).json({ success: false });
-//     }
-// });
+router.post("/populate-plants", async (req, res) => {
+    const result = await appService.populatePlants();
+    if (result) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
 
 router.post("/insert-appuser", async (req, res) => {
     const { userID, firstName, lastName } = req.body;
@@ -105,6 +99,16 @@ router.post("/insert-appuser", async (req, res) => {
 router.post("/insert-task", async (req, res) => {
     const { taskID, frequency, details } = req.body;
     const insertResult = await appService.insertTask(taskID, frequency, details);
+    if (insertResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.post("/insert-plant", async (req, res) => {
+    const { plantID, species, plantName } = req.body;
+    const insertResult = await appService.insertPlant(plantID, species, plantName);
     if (insertResult) {
         res.json({ success: true });
     } else {
