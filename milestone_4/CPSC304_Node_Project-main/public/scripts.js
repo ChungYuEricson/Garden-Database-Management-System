@@ -415,6 +415,41 @@ async function countAppUsers() {
 }
 
 
+//plant related async
+
+async function fetchAndDisplayPlantLog() {
+    console.log('Fetching plantlog');
+    const tableElement = document.getElementById('plantLogTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/plantlog', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+    const plantLogData = responseData.data;
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    plantLogData.forEach(row => {
+        const tr = tableBody.insertRow();
+        row.forEach((cellData) => {
+            const td = tr.insertCell();
+            if (cellData instanceof Date) {
+                td.textContent = cellData.toISOString().split('T')[0]; // format dates
+            } else {
+                td.textContent = cellData;
+            }
+        });
+    });
+}
+
+
+
+
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
@@ -439,6 +474,7 @@ window.onload = function() {
         event.preventDefault(); // to prevent reloading page upon submitting 
         fetchUserTasks();
     });
+    fetchAndDisplayPlantLog();
 };
 
 // General function to refresh the displayed table data. 

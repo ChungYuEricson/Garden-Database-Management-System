@@ -195,7 +195,6 @@ INSERT INTO AppUser (userID, firstName, lastName) VALUES (7, 'LeBron', 'James');
 INSERT INTO AppUser (userID, firstName, lastName) VALUES (8, 'Kevin', 'Levin');
 INSERT INTO AppUser (userID, firstName, lastName) VALUES (9, 'Tom', 'Cruise');
 INSERT INTO AppUser (userID, firstName, lastName) VALUES (10, 'Jackie', 'Chan');
-INSERT INTO AppUser (userID, firstName, lastName) VALUES (11, 'ii', 'nn');
 
 
 INSERT INTO Owner (userID, gardensOwned) VALUES (1, 2);
@@ -303,6 +302,7 @@ INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth,
 INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (603, 703, 'Lily', 403, DATE '2025-02-20', 'Growing', DATE '2025-04-20');
 INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (604, 704, 'Fern', 404, DATE '2025-01-10', 'Dormant', null);
 INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (605, 705, 'Cactus', 405, DATE '2025-05-05', 'Flowering', DATE '2025-07-20');
+INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (606, 705, 'Cactus', 405, DATE '2025-05-05', 'Flowering', DATE '2025-07-20');
 
 INSERT INTO GardenLog_HAS_Plant (gardenLogID, plantID, species) VALUES (501, 701, 'Rose');
 INSERT INTO GardenLog_HAS_Plant (gardenLogID, plantID, species) VALUES (502, 702, 'Tulip');
