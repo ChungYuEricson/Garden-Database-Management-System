@@ -290,7 +290,10 @@ async function insertPlant(event) {
     const result = await response.json();
     const msg = document.getElementById('insertPlantMsg');
     msg.textContent = result.success ? "Plant inserted!" : "Error inserting plant.";
-    if (result.success) fetchAndDisplayPlants();
+    if (result.success) {
+        fetchAndDisplayPlants();
+        fetchAndDisplayPlantLog();
+    };
 }
 
 async function insertUserTask(event) { // for viewing user's tasks

@@ -162,14 +162,16 @@ CREATE TABLE PlantLog (
     plantID INTEGER,
     species VARCHAR(20) NOT NULL,
     soilID INTEGER,
-    datePlanted DATE NOT NULL,
-    growth VARCHAR(20),
-    harvestDate DATE,
+    datePlanted DATE DEFAULT SYSDATE,
+    growth VARCHAR(20) DEFAULT 'seedling',
+    harvestDate DATE DEFAULT NULL,
     PRIMARY KEY (plantLogID),
 	UNIQUE (plantID, species),
-    FOREIGN KEY (plantID, species) REFERENCES Plant(plantID, species),
+    FOREIGN KEY (plantID, species) REFERENCES Plant(plantID, species) ON DELETE CASCADE,
     FOREIGN KEY (soilID) REFERENCES Soil(soilID)
 );
+
+CREATE SEQUENCE plantlog_seq START WITH 1000 INCREMENT BY 1;
 
 CREATE TABLE GardenLog_HAS_Plant (
 	gardenLogID INTEGER,

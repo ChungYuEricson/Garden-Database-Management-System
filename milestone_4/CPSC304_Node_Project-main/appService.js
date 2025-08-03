@@ -246,8 +246,18 @@ async function insertPlant(plantID, species, plantName) {
         const result = await connection.execute(
             `INSERT INTO Plant (plantID, species, plantName) VALUES (:plantID, :species, :plantName)`,
             { plantID, species, plantName },
-            { autoCommit: true }
+            // { autoCommit: true }
         );
+        await connection.execute(
+                `INSERT INTO PlantLog (
+                    plantLogID, plantID, species, datePlanted
+                ) VALUES (
+                    plantlog_seq.NEXTVAL, :plantID, :species, SYSDATE
+                )`,
+                { plantID, species }
+            );
+            await connection.commit();
+        
         return result.rowsAffected && result.rowsAffected > 0;
     }).catch(() => {
         return false;
