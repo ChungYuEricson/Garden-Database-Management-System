@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
-    <!-- <link rel="stylesheet" href="styles.css">   -->
+    <link rel="stylesheet" href="styles.css">  
 
     <title>Database Application</title>
 </head>
@@ -160,26 +160,22 @@
     </form>
     <div id="insertResultMsg"></div> -->
 
-    <h2> Insert New User </h2>
+    <h1>Insertions</h1> 
+
+    <h2> New User </h2>
     <form id="insertAppUser">
-        ID: <input type="number" id="insertId" placeholder="Enter ID" required> <br><br>
-        First Name: <input type="text" id="insertFirstName" placeholder="Enter First Name" maxlength="20"> <br><br>
-        Last Name: <input type="text" id="insertLastName" placeholder="Enter Last Name" maxlength="20"> <br><br>
-        <label for="role">Choose a role:</label>
-        <select name="role" id="role">
-            <option value="owner">Owner</option>
-            <option value="gardener">Gardener</option>
-        </select>
+        ID: <input type="number" id="insertId" placeholder="Enter ID" required>
+        First Name: <input type="text" id="insertFirstName" placeholder="Enter First Name" maxlength="20">
+        Last Name: <input type="text" id="insertLastName" placeholder="Enter Last Name" maxlength="20">
         <button type="submit"> Insert </button> <br>
     </form>
     <div id="insertResultMsg"></div>
 
-    <h2> Insert New Task </h2>
+    <h2> New Task </h2>
     <form id="insertUserTask">
-        userID: <input type="number" id="insertUserId" placeholder="Enter ID" required> <br><br>
-        TaskID: <input type="number" id="insertTaskId" placeholder="Enter ID" required> <br><br>
-        <!-- Frequency: <input type="text" id="insertFrequency" placeholder="Enter Frequency" maxlength="20"> <br><br> -->
-        <label for="frequency">Insert Frequency:</label>
+        userID: <input type="number" id="insertUserId" placeholder="Enter ID" required>
+        TaskID: <input type="number" id="insertTaskId" placeholder="Enter ID" required>
+        <label for="frequency">Frequency:</label>
         <select name="frequency" id="insertFrequency">
             <option value="daily">Daily</option>
             <option value="weekly">Weekly</option>
@@ -187,18 +183,18 @@
             <option value="monthly">Monthly</option>
             <option value="biannually">Biannually</option>
             <option value="annually">Annually</option>
-        </select> <br><br>
-        Details: <input type="text" id="insertDetails" placeholder="Enter Details" maxlength="20"> <br><br>
+        </select>
+        Details: <input type="text" id="insertDetails" placeholder="Enter Details" maxlength="20">
 
         <button type="submit"> Insert Task</button> <br>
     </form>
     <div id="insertResultMsg"></div>
 
-    <h2>Insert New Plant</h2>
+    <h2> New Plant</h2>
     <form id="insertPlantForm">
-        Plant ID: <input type="number" id="plantID" required><br><br>
-        Species: <input type="text" id="species" required><br><br>
-        Plant Name: <input type="text" id="plantName" required><br><br>
+        Plant ID: <input type="number" id="plantID" required>
+        Species: <input type="text" id="species" required>
+        Plant Name: <input type="text" id="plantName" required>
         <button type="submit">Insert</button>
     </form>
     <div id="insertPlantMsg"></div>
