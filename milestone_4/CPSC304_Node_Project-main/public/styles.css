@@ -18,6 +18,19 @@ h1 {
     text-align: center;
 }
 
+.reset-populate-section .button-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.reset-populate-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
 /* TABLE STYLES */
 table {
     width: 100%;
