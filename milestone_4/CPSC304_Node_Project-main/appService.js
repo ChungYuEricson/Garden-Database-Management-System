@@ -477,6 +477,20 @@ async function deletePlant(plantID, species) {
     });
 }
 
+async function updatePlantGrowth(plantID, newGrowth) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `UPDATE PlantLog SET growth = :newGrowth WHERE plantID = :plantID`,
+            { plantID, newGrowth },
+            { autoCommit: true }
+        );
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch((err) => {
+        console.error("Error updating plant growth:", err);
+        return false;
+    });
+}
+
 // end of plantlog
 
 
@@ -503,6 +517,7 @@ module.exports = {
     deletePlant,
     fetchSoilOptions,
     fetchSpeciesOptions,
+    updatePlantGrowth,
     //end of plantlog related
     deleteUser
 };

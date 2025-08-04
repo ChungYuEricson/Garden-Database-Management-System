@@ -502,6 +502,41 @@ async function populateDropdowns() {
     });
 }
 
+async function populateUpdatePlantDropdown() {
+    const select = document.getElementById('updatePlantID');
+    const res = await fetch('/plants');
+    const data = await res.json();
+
+    data.data.forEach(([plantID, species, plantName]) => {
+        const option = document.createElement('option');
+        option.value = plantID;
+        option.textContent = `${plantID} – ${plantName} (${species})`;
+        select.appendChild(option);
+    });
+}
+
+async function updatePlantGrowth(event) {
+    event.preventDefault();
+
+    const plantID = document.getElementById('updatePlantID').value;
+    const newGrowth = document.getElementById('newGrowth').value;
+
+    const res = await fetch('/update-plant-growth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plantID, newGrowth })
+    });
+
+    const result = await res.json();
+    const msg = document.getElementById('updatePlantGrowthMsg');
+    msg.textContent = result.success ? "Growth updated successfully!" : "Failed to update growth.";
+
+    if (result.success) {
+        fetchAndDisplayPlantLog();
+    }
+}
+
+
 // end of plantlog related
 
 // ---------------------------------------------------------------
@@ -514,6 +549,7 @@ window.onload = function() {
     fetchAndDisplayUsers();
     fetchAndDisplayPlants();
     populateDropdowns();
+    populateUpdatePlantDropdown();
     //plantlog
     fetchAndDisplayPlantLog();
     document.getElementById("deletePlantForm").addEventListener("submit", deletePlant);
@@ -527,6 +563,7 @@ window.onload = function() {
     document.getElementById("resetTasks").addEventListener("click", resetTasks);
     document.getElementById("insertUserTask").addEventListener("submit", insertUserTask);
     document.getElementById("insertPlantForm").addEventListener("submit", insertPlant);
+    document.getElementById("updatePlantGrowthForm").addEventListener("submit", updatePlantGrowth);
     document.getElementById("deleteUser").addEventListener("submit", deleteAppUser);
     document.getElementById("showUserTasksForm").addEventListener("submit", function(event) {
         event.preventDefault(); // to prevent reloading page upon submitting 
