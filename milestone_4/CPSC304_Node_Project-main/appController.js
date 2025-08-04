@@ -135,6 +135,16 @@ router.post("/update-name-demotable", async (req, res) => {
         res.status(500).json({ success: false });
     }
 });
+// delete user
+router.post("/delete-appuser", async (req, res) => {
+    const { userID } = req.body;
+    const updateResult = await appService.deleteUser(userID);
+    if (updateResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
 
 router.get('/search-user', async (req, res) => {
     const { userID, firstName, lastName } = req.query;
