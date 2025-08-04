@@ -241,7 +241,7 @@ async function insertAppUser(userID, firstName, lastName) {
     });
 }
 
-async function insertPlant(plantID, species, plantName) {
+async function insertPlant(plantID, species, plantName, plantLogID, soilID, growth, harvestDate) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
             `INSERT INTO Plant (plantID, species, plantName) VALUES (:plantID, :species, :plantName)`,
@@ -250,11 +250,17 @@ async function insertPlant(plantID, species, plantName) {
         );
         await connection.execute(
                 `INSERT INTO PlantLog (
-                    plantLogID, plantID, species, datePlanted
+                    plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate
                 ) VALUES (
-                    plantlog_seq.NEXTVAL, :plantID, :species, SYSDATE
+                    :plantLogID, :plantID, :species, :soilID, SYSDATE, :growth, TO_DATE(:harvestDate, 'YYYY-MM-DD')
                 )`,
-                { plantID, species }
+                {
+                plantLogID,
+                plantID,
+                species,
+                soilID,
+                growth,
+                harvestDate: harvestDate || null }
             );
             await connection.commit();
         

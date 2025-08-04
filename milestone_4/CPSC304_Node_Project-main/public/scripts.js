@@ -281,10 +281,18 @@ async function insertPlant(event) {
     const species = document.getElementById('species').value;
     const plantName = document.getElementById('plantName').value;
 
+    const plantLogID = parseInt(document.getElementById('plantLogID').value);
+    const soilID = document.getElementById('soilID').value || null;
+    const growth = document.getElementById('growth').value || null;
+    const harvestDate = document.getElementById('harvestDate').value || null;
+
     const response = await fetch('/insert-plant', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plantID, species, plantName })
+        body: JSON.stringify({ plantID, species, plantName, plantLogID,
+            soilID: soilID ? parseInt(soilID) : null,
+            growth,
+            harvestDate})
     });
 
     const result = await response.json();
