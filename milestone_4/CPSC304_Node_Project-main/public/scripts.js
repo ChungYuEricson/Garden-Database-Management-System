@@ -244,6 +244,31 @@ async function insertDemotable(event) {
     }
 }
 
+async function deleteAppUser(event) {
+    event.preventDefault();
+
+    const userID = document.getElementById('deleteUserID').value;
+    const response = await fetch('/delete-appuser', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userID: userID,
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('deleteResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "User deleted successfully!";
+        fetchTableData();
+    } else {
+        messageElement.textContent = "Error deleting data!";
+    }
+}
+
 async function insertTasks(event) {
     event.preventDefault();
 
@@ -521,6 +546,7 @@ window.onload = function() {
     document.getElementById("resetTasks").addEventListener("click", resetTasks);
     document.getElementById("insertUserTask").addEventListener("submit", insertUserTask);
     document.getElementById("insertPlantForm").addEventListener("submit", insertPlant);
+    document.getElementById("deleteUser").addEventListener("submit", deleteAppUser);
     document.getElementById("showUserTasksForm").addEventListener("submit", function(event) {
         event.preventDefault(); // to prevent reloading page upon submitting 
         fetchUserTasks();

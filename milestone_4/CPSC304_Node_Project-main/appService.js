@@ -322,6 +322,42 @@ async function insertUserTask(userID, taskID, frequency, details) {
     });
 }
 
+async function deleteUser(userID) {
+    return await withOracleDB(async (connection) => {
+        await connection.execute(
+            `DELETE FROM User_HAS_TASK WHERE userID = :userID`,
+            {userID},
+        );
+
+        await connection.execute( // remove all connections where user is gardener
+            `DELETE FROM Garden_WORKS_Landplot WHERE userID = :userID or landID IN 
+            (SELECT landID FROM Landplot WHERE userID = :userID)`,
+            {userID},
+        );
+
+        await connection.execute(
+            `DELETE FROM Landplot_HAS_GardenType WHERE landID IN 
+            (SELECT landID FROM Landplot where userID = :userID)`,
+            {userID},
+        );
+
+        await connection.execute(
+            `DELETE FROM Landplot WHERE userID = :userID`,
+            {userID},
+        );
+
+        const result = await connection.execute(
+            `DELETE FROM AppUser WHERE userID = :userID`,
+            {userID},
+            { autoCommit: true }
+        );
+
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return false;
+    });
+}
+
 async function updateNameDemotable(oldName, newName) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
@@ -438,5 +474,6 @@ module.exports = {
     insertPlant,
      //plantlog related
     initiatePlantLog,
-    fetchPlantLogFromDb
+    fetchPlantLogFromDb,
+    deleteUser
 };
