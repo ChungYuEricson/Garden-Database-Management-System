@@ -519,6 +519,31 @@ async function fetchAndDisplayPlantLog() {
     });
 }
 
+
+async function deletePlant(event) {
+    event.preventDefault();
+
+    const plantID = document.getElementById('deletePlantID').value;
+    const species = document.getElementById('deleteSpecies').value;
+
+    const response = await fetch('/delete-plant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plantID, species })
+    });
+
+    const result = await response.json();
+    const msg = document.getElementById('deletePlantMsg');
+    msg.textContent = result.success ? "Plant deleted!" : "Error deleting plant.";
+
+    if (result.success) {
+        fetchAndDisplayPlants();
+        fetchAndDisplayPlantLog();
+    }
+}
+
+
+
 // end of plantlog related
 
 // ---------------------------------------------------------------
@@ -532,6 +557,7 @@ window.onload = function() {
     fetchAndDisplayPlants();
     //plantlog
     fetchAndDisplayPlantLog();
+    document.getElementById("deletePlantForm").addEventListener("submit", deletePlant);
     //end of plantlog
     // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("resetAppUsers").addEventListener("click", resetAppUsers);

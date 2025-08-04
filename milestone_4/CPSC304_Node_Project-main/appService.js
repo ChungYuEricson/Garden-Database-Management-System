@@ -439,12 +439,28 @@ async function initiatePlantLog() {
 
 async function fetchPlantLogFromDb() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM PlantLog',
+        const result = await connection.execute('SELECT * FROM PlantLog ORDER BY plantLogID ASC',
             [],
             { outFormat: oracledb.OUT_FORMAT_ARRAY });
         return result.rows;
     }).catch(() => {
         return [];
+    });
+}
+
+
+async function deletePlant(plantID, species) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `DELETE FROM Plant WHERE plantID = :plantID AND species = :species`,
+            { plantID, species },
+            { autoCommit: true }
+        );
+
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch((err) => {
+        console.error("Error deleting plant:", err);
+        return false;
     });
 }
 
@@ -475,5 +491,7 @@ module.exports = {
      //plantlog related
     initiatePlantLog,
     fetchPlantLogFromDb,
+    deletePlant,
+    //end of plantlog related
     deleteUser
 };
