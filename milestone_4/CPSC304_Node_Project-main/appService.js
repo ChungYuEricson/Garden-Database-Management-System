@@ -406,6 +406,21 @@ async function countAppUsers() {
     });
 }
 
+async function countAppUsersFrequency() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT LOWER(Tasks.frequency), COUNT(*) AS USER_COUNT 
+             FROM Tasks 
+             JOIN User_HAS_Task uht ON Tasks.taskID = uht.taskID 
+             GROUP BY LOWER(Tasks.frequency) 
+             ORDER BY LOWER(Tasks.frequency)`,
+             []
+        );
+        return result.rows;
+    }).catch(() => {
+        return null;
+    });
+}
 
 //plant related async
 
@@ -499,6 +514,7 @@ module.exports = {
     initiateAppUsers, 
     updateNameDemotable, 
     countAppUsers,
+    countAppUsersFrequency,
     fetchAppUsersFromDb,
     insertAppUser,
     populateAppUsers,

@@ -172,6 +172,21 @@ router.get('/count-appusers', async (req, res) => {
     }
 });
 
+router.get('/count-AppUsersFrequency', async (req, res) => {
+    const freqTable = await appService.countAppUsersFrequency();
+    if (Array.isArray(freqTable)) {
+        res.json({ 
+            success: true,  
+            freqTable
+        });
+    } else {
+        res.status(500).json({ 
+            success: false, 
+            freqTable: []
+        });
+    }
+});
+
 
 // plantlog related router
 

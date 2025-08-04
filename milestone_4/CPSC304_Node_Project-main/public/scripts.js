@@ -423,6 +423,22 @@ async function countAppUsers() {
     }
 }
 
+async function countAppUsersFrequency() {
+    const response = await fetch(`/count-AppUsersFrequency`);
+    const responseData = await response.json();
+
+    if (responseData.success) {
+        // const tupleCount = responseData.count;
+        // messageElement.textContent = `The number of users: ${tupleCount}`;
+        const tbody = document.querySelector('#frequencyTable tbody');
+        tbody.innerHTML = responseData.freqTable
+            .map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`)
+            .join('');
+    } else {
+        alert("Error in count users!");
+    }
+}
+
 
 //plantlog related async
 
@@ -558,6 +574,7 @@ window.onload = function() {
     document.getElementById("insertAppUser").addEventListener("submit", insertDemotable);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countAppUsers").addEventListener("click", countAppUsers);
+    document.getElementById("countAppUsersFrequency").addEventListener("click", countAppUsersFrequency);
     document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
     document.getElementById("populateTasks").addEventListener("click", populateTasks);
     document.getElementById("resetTasks").addEventListener("click", resetTasks);
