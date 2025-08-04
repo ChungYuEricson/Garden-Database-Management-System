@@ -15,11 +15,6 @@ router.get('/check-db-connection', async (req, res) => {
     }
 });
 
-// router.get('/demotable', async (req, res) => {
-//     const tableContent = await appService.fetchDemotableFromDb();
-//     res.json({data: tableContent});
-// });
-
 router.get('/appusers', async (req, res) => {
     const tableContent = await appService.fetchAppUsersFromDb();
     res.json({data: tableContent});
@@ -162,21 +157,6 @@ router.get('/search-user', async (req, res) => {
     res.json(users);
 });
 
-// router.get('/count-demotable', async (req, res) => {
-//     const tableCount = await appService.countDemotable();
-//     if (tableCount >= 0) {
-//         res.json({ 
-//             success: true,  
-//             count: tableCount
-//         });
-//     } else {
-//         res.status(500).json({ 
-//             success: false, 
-//             count: tableCount
-//         });
-//     }
-// });
-
 router.get('/count-appusers', async (req, res) => {
     const tableCount = await appService.countAppUsers();
     if (tableCount >= 0) {
@@ -194,7 +174,6 @@ router.get('/count-appusers', async (req, res) => {
 
 
 // plantlog related router
-
 
 router.post("/initiate-plantlog", async (req, res) => {
     const initiateResult = await appService.initiatePlantLog();
@@ -219,7 +198,6 @@ router.post("/delete-plant", async (req, res) => {
         res.status(500).json({ success: false });
     }
 });
-
 
 // end of plantlog related router
 

@@ -139,22 +139,6 @@ async function fetchUserTasks() {
     }
 }
 
-// This function resets or initializes the demotable.
-// async function resetDemotable() {
-//     const response = await fetch("/initiate-demotable", {
-//         method: 'POST'
-//     });
-//     const responseData = await response.json();
-
-//     if (responseData.success) {
-//         const messageElement = document.getElementById('resetResultMsg');
-//         messageElement.textContent = "demotable initiated successfully!";
-//         fetchTableData();
-//     } else {
-//         alert("Error initiating table!");
-//     }
-// }
-
 async function resetAppUsers() {
     const response = await fetch("/initiate-appusers", {
         method: 'POST'
@@ -184,35 +168,6 @@ async function resetTasks() {
         alert("Error initiating table!");
     }
 }
-
-// Inserts new records into the demotable.
-// async function insertDemotable(event) {
-//     event.preventDefault();
-
-//     const idValue = document.getElementById('insertId').value;
-//     const nameValue = document.getElementById('insertName').value;
-
-//     const response = await fetch('/insert-demotable', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             id: idValue,
-//             name: nameValue
-//         })
-//     });
-
-//     const responseData = await response.json();
-//     const messageElement = document.getElementById('insertResultMsg');
-
-//     if (responseData.success) {
-//         messageElement.textContent = "Data inserted successfully!";
-//         fetchTableData();
-//     } else {
-//         messageElement.textContent = "Error inserting data!";
-//     }
-// }
 
 async function insertDemotable(event) {
     event.preventDefault();
@@ -452,24 +407,6 @@ async function updateNameDemotable(event) {
     }
 }
 
-// Counts rows in the demotable.
-// Modify the function accordingly if using different aggregate functions or procedures.
-// async function countDemotable() {
-//     const response = await fetch("/count-demotable", {
-//         method: 'GET'
-//     });
-
-//     const responseData = await response.json();
-//     const messageElement = document.getElementById('countResultMsg');
-
-//     if (responseData.success) {
-//         const tupleCount = responseData.count;
-//         messageElement.textContent = `The number of tuples in demotable: ${tupleCount}`;
-//     } else {
-//         alert("Error in count demotable!");
-//     }
-// }
-
 async function countAppUsers() {
     const response = await fetch("/count-appusers", {
         method: 'GET'
@@ -581,16 +518,12 @@ window.onload = function() {
     fetchAndDisplayPlantLog();
     document.getElementById("deletePlantForm").addEventListener("submit", deletePlant);
     //end of plantlog
-    // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("resetAppUsers").addEventListener("click", resetAppUsers);
-    // document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     document.getElementById("insertAppUser").addEventListener("submit", insertDemotable);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
-    // document.getElementById("countDemotable").addEventListener("click", countDemotable);
     document.getElementById("countAppUsers").addEventListener("click", countAppUsers);
     document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
     document.getElementById("populateTasks").addEventListener("click", populateTasks);
-    // document.getElementById("insertTask").addEventListener("submit", insertTasks);
     document.getElementById("resetTasks").addEventListener("click", resetTasks);
     document.getElementById("insertUserTask").addEventListener("submit", insertUserTask);
     document.getElementById("insertPlantForm").addEventListener("submit", insertPlant);

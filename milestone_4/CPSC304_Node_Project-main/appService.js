@@ -481,10 +481,6 @@ async function deletePlant(plantID, species) {
 
 
 module.exports = {
-    // fetchDemotableFromDb,
-    //initiateDemotable,
-    //insertDemotable, 
-    // countDemotable,
     testOracleConnection,
     initiateAppUsers, 
     updateNameDemotable, 
