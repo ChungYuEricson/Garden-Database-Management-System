@@ -448,6 +448,19 @@ async function fetchPlantLogFromDb() {
     });
 }
 
+async function fetchSoilOptions() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT soilID, soilType FROM Soil ORDER BY soilID');
+        return result.rows; 
+    }).catch(() => []);
+}
+
+async function fetchSpeciesOptions() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT species FROM PlantInfo ORDER BY species');
+        return result.rows;
+    }).catch(() => []);
+}
 
 async function deletePlant(plantID, species) {
     return await withOracleDB(async (connection) => {
@@ -492,6 +505,8 @@ module.exports = {
     initiatePlantLog,
     fetchPlantLogFromDb,
     deletePlant,
+    fetchSoilOptions,
+    fetchSpeciesOptions,
     //end of plantlog related
     deleteUser
 };

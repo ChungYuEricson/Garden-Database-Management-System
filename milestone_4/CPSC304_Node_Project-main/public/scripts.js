@@ -519,7 +519,6 @@ async function fetchAndDisplayPlantLog() {
     });
 }
 
-
 async function deletePlant(event) {
     event.preventDefault();
 
@@ -542,7 +541,29 @@ async function deletePlant(event) {
     }
 }
 
+async function populateDropdowns() {
+    // Populate species dropdown
+    const speciesSelect = document.getElementById('species');
+    const speciesRes = await fetch('/species-options');
+    const speciesData = await speciesRes.json();
+    speciesData.data.forEach(([species]) => {
+        const option = document.createElement('option');
+        option.value = species;
+        option.textContent = species;
+        speciesSelect.appendChild(option);
+    });
 
+    // Populate soil ID dropdown
+    const soilSelect = document.getElementById('soilID');
+    const soilRes = await fetch('/soil-options');
+    const soilData = await soilRes.json();
+    soilData.data.forEach(([soilID, soilType]) => {
+        const option = document.createElement('option');
+        option.value = soilID;
+        option.textContent = `${soilID} (${soilType})`;
+        soilSelect.appendChild(option);
+    });
+}
 
 // end of plantlog related
 
@@ -555,6 +576,7 @@ window.onload = function() {
     fetchAndDisplayTasks();
     fetchAndDisplayUsers();
     fetchAndDisplayPlants();
+    populateDropdowns();
     //plantlog
     fetchAndDisplayPlantLog();
     document.getElementById("deletePlantForm").addEventListener("submit", deletePlant);
