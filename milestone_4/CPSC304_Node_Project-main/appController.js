@@ -41,6 +41,16 @@ router.get('/api/user-tasks/:userID', async (req, res) => {
     res.json(result);
 });
 
+router.get('/soil-options', async (req, res) => {
+    const options = await appService.fetchSoilOptions();
+    res.json({ data: options });
+});
+
+router.get('/species-options', async (req, res) => {
+    const options = await appService.fetchSpeciesOptions();
+    res.json({ data: options });
+});
+
 router.post("/initiate-appusers", async (req, res) => {
     const initiateResult = await appService.initiateAppUsers();
     if (initiateResult) {
