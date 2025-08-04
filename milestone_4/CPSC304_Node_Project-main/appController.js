@@ -199,6 +199,16 @@ router.post("/delete-plant", async (req, res) => {
     }
 });
 
+router.post("/update-plant-growth", async (req, res) => {
+    const { plantID, newGrowth } = req.body;
+    const result = await appService.updatePlantGrowth(plantID, newGrowth);
+    if (result) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
 // end of plantlog related router
 
 module.exports = router;
