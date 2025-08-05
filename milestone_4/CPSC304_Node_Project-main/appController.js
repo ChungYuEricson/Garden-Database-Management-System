@@ -240,4 +240,15 @@ router.post("/update-plant-growth", async (req, res) => {
 
 // end of plantlog related router
 
+router.get("/average-tasks-nested", async (req, res) => {
+    const minTasks = parseInt(req.query.minTasks);
+    const result = await appService.getAverageTasksForActiveUsers(minTasks);
+    if (result !== null) {
+        res.json({ success: true, avg: result.avg, users: result.users });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+
 module.exports = router;
