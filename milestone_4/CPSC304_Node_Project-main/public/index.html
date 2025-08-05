@@ -97,35 +97,102 @@
         <tbody></tbody>
     </table>
 
-    <h2> Show User's Task(s) </h2>
-    <form id="showUserTasksForm">
-        ID: <input type="number" id="userIDInput" placeholder="Enter UserID" required> <br><br>
-        <button type="submit"> Search </button> <br>
-    </form>
-    <div id="userTasksResultMsg"></div>
-    <table id="tasksTable" border="1" style="display: none;">
-        <thead>
-            <tr>
-                <th>taskID</th>
-                <th>frequency</th>
-                <th>details</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <h2>Find Plant Details</h2>
+    <form id="searchPlantForm">
+        <input type="text" id="searchPlantID" name="plantID" placeholder="Plant ID">
 
-    <h2>Show Plants</h2>
-    <table id="plantTable" border="1">
+        <label for="species">Species:</label>
+        <select id="species" name="species">
+            <option value="">-- Any --</option>
+            <option value="rose">Rose</option>
+            <option value="tulip">Tulip</option>
+            <option value="sunflower">Sunflower</option>
+        </select>
+
+        <input type="text" id="searchPlantName" name="plantName" placeholder="Plant Name">
+
+        <label for="growth">Growth:</label>
+        <select id="growth" name="growth">
+            <option value="">-- Any --</option>
+            <option value="seedling">Seedling</option>
+            <option value="vegetative">Vegetative</option>
+            <option value="flowering">Flowering</option>
+            <option value="mature">Mature</option>
+        </select>
+
+        <input type="text" id="searchFamilyID" name="familyID" placeholder="Family ID">
+
+        <label for="harvestable">Harvestable:</label>
+        <select id="searchHarvestable" name="harvestable">
+            <option value="">-- Any --</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+
+        <label for="prefEnvironment">Preferred Environment:</label>
+        <select id="prefEnvironment" name="prefEnvironment">
+            <option value="">-- Any --</option>
+            <option value="sunny">Sunny</option>
+            <option value="shady">Shady</option>
+            <option value="humid">Humid</option>
+            <option value="dry">Dry</option>
+        </select>
+
+        <button type="submit">Search Plants</button>
+    </form>
+
+    <p id="searchPlantResultMsg"></p>
+
+    <table id="searchPlantResultsTable">
         <thead>
             <tr>
-                <th>PlantID</th>
-                <th>Species</th>
+                <th>Plant ID</th>
                 <th>Plant Name</th>
+                <th>Species</th>
+                <th>Family ID</th>
+                <th>Floral Structure</th>
+                <th>Seed Type</th>
+                <th>Harvestable</th>
+                <th>Preferred Environment</th>
+                <th>Plant Log ID</th>
+                <th>Date Planted</th>
+                <th>Growth</th>
+                <th>Harvest Date</th>
+                <th>Soil ID</th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
+
+        <h2> Show User's Task(s) </h2>
+        <form id="showUserTasksForm">
+            ID: <input type="number" id="userIDInput" placeholder="Enter UserID" required> <br><br>
+            <button type="submit"> Search </button> <br>
+        </form>
+        <div id="userTasksResultMsg"></div>
+        <table id="tasksTable" border="1" style="display: none;">
+            <thead>
+                <tr>
+                    <th>taskID</th>
+                    <th>frequency</th>
+                    <th>details</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <h2>Show Plants</h2>
+        <table id="plantTable" border="1">
+            <thead>
+                <tr>
+                    <th>PlantID</th>
+                    <th>Species</th>
+                    <th>Plant Name</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
     <br>
     <hr><br> <!-- ========================================================================= -->

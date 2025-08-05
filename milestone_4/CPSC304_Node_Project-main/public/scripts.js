@@ -582,6 +582,51 @@ async function updatePlantGrowth(event) {
         fetchAndDisplayPlantLog();
     }
 }
+
+document.getElementById("searchPlantForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const plantID = document.getElementById("searchPlantID").value;
+    const species = document.getElementById("species").value;
+    const plantName = document.getElementById("searchPlantName").value;
+    const growth = document.getElementById("growth").value;
+    const familyID = document.getElementById("searchFamilyID").value;
+    const harvestable = document.getElementById("searchHarvestable").value;
+    const prefEnvironment = document.getElementById("prefEnvironment").value;
+
+    const params = new URLSearchParams({
+        plantID,
+        species,
+        plantName,
+        growth,
+        familyID,
+        harvestable,
+        prefEnvironment
+    });
+
+    const response = await fetch(`/search-plant?${params.toString()}`);
+    const data = await response.json();
+
+    const tableBody = document.getElementById("searchPlantResultsTable").querySelector("tbody");
+    tableBody.innerHTML = '';
+
+    if (data.length === 0) {
+        document.getElementById("searchPlantResultMsg").textContent = "No results found.";
+        return;
+    }
+
+    document.getElementById("searchPlantResultMsg").textContent = "";
+
+    data.forEach(plant => {
+        const row = tableBody.insertRow();
+        for (const key in plant) {
+            const cell = row.insertCell();
+            cell.textContent = plant[key];
+        }
+    });
+});
+
+
 // end of plantlog related
 
 async function fetchAvgTasks(event) {
