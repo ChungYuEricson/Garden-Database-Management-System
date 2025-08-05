@@ -546,6 +546,50 @@ async function updatePlantGrowth(plantID, newGrowth) {
 
 // end of plantlog
 
+// Nested Aggregation GROUP BY
+async function getAverageTasksForActiveUsers(minTasks) {
+    return await withOracleDB(async (connection) => {
+        const qualifyingUsersResult = await connection.execute(
+            `
+            SELECT userID, COUNT(*) AS task_count
+            FROM User_HAS_Task
+            GROUP BY userID
+            HAVING COUNT(*) > :minTasks
+            `,
+            { minTasks },
+            { outFormat: oracledb.OUT_FORMAT_OBJECT }
+        );
+
+        const qualifyingUsers = qualifyingUsersResult.rows;
+
+        const avgResult = await connection.execute(
+            `
+            SELECT AVG(task_count) AS avg_tasks_for_active_users
+            FROM (
+                SELECT userID, COUNT(*) AS task_count
+                FROM User_HAS_Task
+                WHERE userID IN (
+                    SELECT userID
+                    FROM User_HAS_Task
+                    GROUP BY userID
+                    HAVING COUNT(*) > :minTasks
+                )
+                GROUP BY userID
+            )
+            `,
+            { minTasks },
+            { outFormat: oracledb.OUT_FORMAT_OBJECT }
+        );
+
+        return {
+            avg: avgResult.rows[0].AVG_TASKS_FOR_ACTIVE_USERS,
+            users: qualifyingUsers
+        };
+    }).catch((err) => {
+        console.error("Error in nested aggregation query:", err);
+        return false;
+    });
+}
 
 module.exports = {
     testOracleConnection,
@@ -575,5 +619,6 @@ module.exports = {
     //end of plantlog related
     deleteUser,
     initiateGardenLog,
-    fetchGardenLogFromDb
+    fetchGardenLogFromDb,
+    getAverageTasksForActiveUsers,
 };
