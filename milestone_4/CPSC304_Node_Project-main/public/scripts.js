@@ -582,9 +582,43 @@ async function updatePlantGrowth(event) {
         fetchAndDisplayPlantLog();
     }
 }
-
-
 // end of plantlog related
+
+async function fetchAvgTasks(event) {
+    event.preventDefault();
+    const minTasks = document.getElementById("minTasks").value;
+    const res = await fetch(`/average-tasks-nested?minTasks=${minTasks}`);
+    const msg = document.getElementById("avgTasksResultMsg");
+    const table = document.getElementById("avgTasksUserTable");
+    const tbody = table.querySelector("tbody");
+
+    try {
+        const data = await res.json();
+        if (data.success) {
+            msg.textContent = `Average tasks for users with more than ${minTasks} tasks: ${data.avg.toFixed(2)}`;
+
+            // Populate table
+            tbody.innerHTML = '';
+            data.users.forEach(user => {
+                const row = tbody.insertRow();
+                const cell1 = row.insertCell();
+                const cell2 = row.insertCell();
+                cell1.textContent = user.USERID;
+                cell2.textContent = user.TASK_COUNT;
+            });
+
+            table.style.display = data.users.length > 0 ? "table" : "none";
+        } else {
+            msg.textContent = "Error fetching average.";
+            table.style.display = "none";
+        }
+    } catch (err) {
+        msg.textContent = "Failed to parse response.";
+        table.style.display = "none";
+        console.error(err);
+    }
+}
+
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
@@ -614,6 +648,7 @@ window.onload = function() {
     document.getElementById("insertPlantForm").addEventListener("submit", insertPlant);
     document.getElementById("updatePlantGrowthForm").addEventListener("submit", updatePlantGrowth);
     document.getElementById("deleteUser").addEventListener("submit", deleteAppUser);
+    document.getElementById("avgTasksForm").addEventListener("submit", fetchAvgTasks);
     document.getElementById("showUserTasksForm").addEventListener("submit", function(event) {
         event.preventDefault(); // to prevent reloading page upon submitting 
         fetchUserTasks();
