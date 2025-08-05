@@ -88,6 +88,37 @@ async function fetchAndDisplayTasks() {
     });
 }
 
+
+async function fetchAndDisplayGardenLog() {
+    console.log('Fetching gardenlog');
+    const tableElement = document.getElementById('gardenLogTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/gardenlog', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+    const gardenLogData = responseData.data;
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    gardenLogData.forEach(row => {
+        const tr = tableBody.insertRow();
+        row.forEach((cellData) => {
+            const td = tr.insertCell();
+            if (cellData instanceof Date) {
+                td.textContent = cellData.toISOString().split('T')[0]; // format dates
+            } else {
+                td.textContent = cellData;
+            }
+        });
+    });
+}
+
 async function fetchAndDisplayPlants() {
     const table = document.getElementById('plantTable');
     const tbody = table.querySelector('tbody');
@@ -566,6 +597,7 @@ window.onload = function() {
     fetchAndDisplayPlants();
     populateDropdowns();
     populateUpdatePlantDropdown();
+    fetchAndDisplayGardenLog();
     //plantlog
     fetchAndDisplayPlantLog();
     document.getElementById("deletePlantForm").addEventListener("submit", deletePlant);
@@ -575,7 +607,7 @@ window.onload = function() {
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countAppUsers").addEventListener("click", countAppUsers);
     document.getElementById("countAppUsersFrequency").addEventListener("click", countAppUsersFrequency);
-    document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
+    // document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
     document.getElementById("populateTasks").addEventListener("click", populateTasks);
     document.getElementById("resetTasks").addEventListener("click", resetTasks);
     document.getElementById("insertUserTask").addEventListener("submit", insertUserTask);

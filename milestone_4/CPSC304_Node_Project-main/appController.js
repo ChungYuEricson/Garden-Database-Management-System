@@ -64,14 +64,14 @@ router.post("/initiate-tasks", async (req, res) => {
     }
 });
 
-router.post("/populate-appusers", async (req, res) => {
-    const populateResult = await appService.populateAppUsers();
-    if (populateResult) {
-        res.json({ success: true });
-    } else {
-        res.status(500).json({ success: false });
-    }
-});
+// router.post("/populate-appusers", async (req, res) => {
+//     const populateResult = await appService.populateAppUsers();
+//     if (populateResult) {
+//         res.json({ success: true });
+//     } else {
+//         res.status(500).json({ success: false });
+//     }
+// });
 
 router.post("/populate-tasks", async (req, res) => {
     const populateResult = await appService.populateTasks();
@@ -185,6 +185,20 @@ router.get('/count-AppUsersFrequency', async (req, res) => {
             freqTable: []
         });
     }
+});
+
+router.post("/initiate-gardenlog", async (req, res) => {
+    const initiateResult = await appService.initiateGardenLog();
+    if (initiateResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/gardenlog', async (req, res) => {
+    const tableContent = await appService.fetchGardenLogFromDb();
+    res.json({ data: tableContent });
 });
 
 

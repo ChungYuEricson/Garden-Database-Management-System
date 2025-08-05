@@ -171,29 +171,29 @@ async function getUserTasks(userID) {
 }
 
 
-async function populateAppUsers() {
-    return await withOracleDB(async (connection) => {
-        for (const [userID, firstName, lastName] of users) {
-            try {
-                await connection.execute(
-                    `INSERT INTO AppUser (userID, firstName, lastName) VALUES (:userID, :firstName, :lastName)`,
-                    [userID, firstName, lastName],
-                    { autoCommit: true }
-                );
-            } catch (err) { // for when there is an existing userID
-                if (err.errorNum === 1) {
-                    continue;
-                } else {
-                    console.error(err);
-                    throw err;
-                }
-            }
-        }
-        return true;
-    }).catch(() => {
-        return false;
-    });
-}
+// async function populateAppUsers() {
+//     return await withOracleDB(async (connection) => {
+//         for (const [userID, firstName, lastName] of users) {
+//             try {
+//                 await connection.execute(
+//                     `INSERT INTO AppUser (userID, firstName, lastName) VALUES (:userID, :firstName, :lastName)`,
+//                     [userID, firstName, lastName],
+//                     { autoCommit: true }
+//                 );
+//             } catch (err) { // for when there is an existing userID
+//                 if (err.errorNum === 1) {
+//                     continue;
+//                 } else {
+//                     console.error(err);
+//                     throw err;
+//                 }
+//             }
+//         }
+//         return true;
+//     }).catch(() => {
+//         return false;
+//     });
+// }
 
 async function populateTasks() {
     const tasks = [
@@ -422,6 +422,44 @@ async function countAppUsersFrequency() {
     });
 }
 
+
+async function initiateGardenLog() {
+    return await withOracleDB(async (connection) => {
+        try {
+            await connection.execute(`DROP TABLE GardenLog CASCADE CONSTRAINTS PURGE`); // need to purge existing table for reset to occur
+        } catch(err) {
+            console.log('Table might not exist, proceeding to create...');
+        }
+
+        const result = await connection.execute(`
+            CREATE TABLE GardenLog (
+                gardenLogID INTEGER,
+                gardenID INTEGER NOT NULL,
+                weather VARCHAR(20),
+                monthlyAvgTemp FLOAT,
+                controlledTemp FLOAT,
+                PRIMARY KEY (gardenLogID),
+                UNIQUE (gardenID),
+                FOREIGN KEY (gardenID) REFERENCES GardenType(gardenID)
+                    ON DELETE CASCADE
+        `);
+        return true;
+    }).catch(() => {
+        return false;
+    });
+}
+
+async function fetchGardenLogFromDb() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM GardenLog ORDER BY gardenLogID ASC',
+            [],
+            { outFormat: oracledb.OUT_FORMAT_ARRAY });
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
 //plant related async
 
 async function initiatePlantLog() {
@@ -517,7 +555,7 @@ module.exports = {
     countAppUsersFrequency,
     fetchAppUsersFromDb,
     insertAppUser,
-    populateAppUsers,
+    // populateAppUsers,
     fetchTasksFromDb,
     populateTasks,
     insertTask,
@@ -535,5 +573,7 @@ module.exports = {
     fetchSpeciesOptions,
     updatePlantGrowth,
     //end of plantlog related
-    deleteUser
+    deleteUser,
+    initiateGardenLog,
+    fetchGardenLogFromDb
 };
