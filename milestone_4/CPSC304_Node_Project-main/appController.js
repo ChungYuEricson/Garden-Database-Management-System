@@ -238,6 +238,30 @@ router.post("/update-plant-growth", async (req, res) => {
     }
 });
 
+router.get('/search-plant', async (req, res) => {
+    const {
+        plantID,
+        species,
+        plantName,
+        growth,
+        familyID,
+        harvestable,
+        prefEnvironment
+    } = req.query;
+
+    const plants = await appService.searchPlants({
+        plantID,
+        species,
+        plantName,
+        growth,
+        familyID,
+        harvestable,
+        prefEnvironment
+    });
+
+    res.json(plants);
+});
+
 // end of plantlog related router
 
 router.get("/average-tasks-nested", async (req, res) => {

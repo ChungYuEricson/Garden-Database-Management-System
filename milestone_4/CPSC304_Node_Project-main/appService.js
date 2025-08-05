@@ -544,6 +544,87 @@ async function updatePlantGrowth(plantID, newGrowth) {
     });
 }
 
+
+async function searchPlants(filters) {
+    return await withOracleDB(async (connection) => {
+        const conditions = [];
+        const bindVariable = {};
+
+        if (filters.plantID) {
+            conditions.push("P.plantID = :plantID");
+            bindVariable.plantID = parseInt(filters.plantID);
+        }
+
+        if (filters.species) {
+            conditions.push("LOWER(P.species) LIKE :species");
+            bindVariable.species = `%${filters.species.toLowerCase()}%`;
+        }
+
+        if (filters.plantName) {
+            conditions.push("LOWER(P.plantName) LIKE :plantName");
+            bindVariable.plantName = `%${filters.plantName.toLowerCase()}%`;
+        }
+
+        if (filters.growth) {
+            conditions.push("LOWER(PL.growth) = :growth");
+            bindVariable.growth = filters.growth.toLowerCase();
+        }
+
+        if (filters.familyID) {
+            conditions.push("PF.familyID = :familyID");
+            bindVariable.familyID = parseInt(filters.familyID);
+        }
+
+        if (filters.harvestable) {
+            conditions.push("ST.harvestable = :harvestable");
+            bindVariable.harvestable = parseInt(filters.harvestable);
+        }
+
+        if (filters.prefEnvironment) {
+            conditions.push("LOWER(PI.prefEnvironment) = :prefEnvironment");
+            bindVariable.prefEnvironment = filters.prefEnvironment.toLowerCase();
+        }
+
+        const where = conditions.length > 0 ? "WHERE " + conditions.join(" AND ") : "";
+
+        const query = `
+            SELECT
+                P.plantID,
+                P.plantName,
+                P.species,
+                PF.familyID,
+                PF.floralStructure,
+                ST.seedType,
+                ST.harvestable,
+                PI.prefEnvironment,
+                PL.plantLogID,
+                PL.datePlanted,
+                PL.growth,
+                PL.harvestDate,
+                PL.soilID
+            FROM PlantLog PL
+            JOIN Plant P ON PL.plantID = P.plantID AND PL.species = P.species
+            JOIN PlantInfo PI ON P.species = PI.species
+            JOIN PlantFamily PF ON PI.familyID = PF.familyID
+            JOIN SeedType ST ON PF.seedType = ST.seedType
+            ${where}
+            ORDER BY PL.plantLogID ASC
+        `;
+
+        const result = await connection.execute(query, bindVariable, {
+            outFormat: oracledb.OUT_FORMAT_OBJECT
+        });
+
+        return result.rows;
+    }).catch((err) => {
+        console.error("Error searching plants:", err);
+        return [];
+    });
+}
+
+
+
+
 // end of plantlog
 
 // Nested Aggregation GROUP BY
@@ -616,6 +697,7 @@ module.exports = {
     fetchSoilOptions,
     fetchSpeciesOptions,
     updatePlantGrowth,
+    searchPlants,
     //end of plantlog related
     deleteUser,
     initiateGardenLog,
