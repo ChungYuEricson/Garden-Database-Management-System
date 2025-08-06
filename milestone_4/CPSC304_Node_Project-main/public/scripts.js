@@ -652,7 +652,6 @@ document.getElementById("searchPlantForm").addEventListener("submit", async func
     const species = document.getElementById("species").value;
     const plantName = document.getElementById("searchPlantName").value;
     const growth = document.getElementById("growth").value;
-    const familyID = document.getElementById("searchFamilyID").value;
     const harvestable = document.getElementById("searchHarvestable").value;
     const prefEnvironment = document.getElementById("prefEnvironment").value;
 
@@ -661,7 +660,6 @@ document.getElementById("searchPlantForm").addEventListener("submit", async func
         species,
         plantName,
         growth,
-        familyID,
         harvestable,
         prefEnvironment
     });
