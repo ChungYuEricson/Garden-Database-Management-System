@@ -708,8 +708,9 @@ async function initProjectionForm() {
 
     // Load table names
     const tableRes = await fetch('/all-tables');
-    const tables = (await tableRes.json()).data;
+    const tableData = await tableRes.json();
 
+    const tables = tableData.data;
     tables.forEach(table => {
         const option = document.createElement('option');
         option.value = table;

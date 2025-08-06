@@ -693,7 +693,12 @@ async function getAverageTasksForActiveUsers(minTasks) {
 // Projection Functions
 async function fetchAllTableNames() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute(`SELECT table_name FROM user_tables`);
+        const result = await connection.execute(`
+            SELECT table_name 
+            FROM user_tables
+            WHERE table_name NOT IN 
+            ('AUTHORS', 'BOOKS', 'PUBLISHERS', 'TITLEAUTHOR', 'TITLES', 'EDITORS',
+             'SALES', 'SALESDETAILS', 'TITLEEDITORS', 'TITLEAUTHORS', 'DEMOTABLE')`);
         return result.rows.map(r => r[0]);
     }).catch(() => []);
 }
