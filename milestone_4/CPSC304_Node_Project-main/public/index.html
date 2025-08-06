@@ -80,7 +80,15 @@
         </select><br>
 
         <label for="newGrowth">New Growth Stage:</label>
-        <input type="text" id="newGrowth" placeholder="e.g., Blooming"><br>
+        <select id="newGrowth">
+            <option value="">-- Select Stage --</option>
+            <option value="Seedling">Seedling</option>
+            <option value="Vegetative">Vegetative</option>
+            <option value="Budding">Budding</option>
+            <option value="Blooming">Blooming</option>
+            <option value="Mature">Mature</option>
+            <option value="Harvested">Harvested</option>
+        </select><br>
 
         <label for="updatedSoilID">New Soil ID:</label>
         <select id="updatedSoilID">
@@ -149,7 +157,8 @@
             <option value="">-- Any --</option>
         </select>
 
-        <input type="text" id="searchFamilyID" name="familyID" placeholder="e.g. Budding">
+        <!-- <input type="text" id="searchFamilyID" name="familyID" placeholder="e.g. Budding"> -->
+         <br>
 
         <label for="harvestable">Harvestable:</label>
         <select id="searchHarvestable" name="harvestable">
@@ -157,6 +166,8 @@
             <option value="1">Yes</option>
             <option value="0">No</option>
         </select>
+
+        <br>
 
         <label for="prefEnvironment">Preferred Environment:</label>
         <select id="prefEnvironment" name="prefEnvironment">
@@ -168,6 +179,7 @@
             <option value="dry">Dry</option>
         </select>
 
+        <br>
         <button type="submit">Search Plants</button>
     </form>
 
@@ -276,7 +288,16 @@
             <option value="">Select a soil ID</option>
         </select><br>
     
-        Growth Stage: <input type="text" id="insertGrowth"><br>
+        <label for="insertGrowth">Growth Stage:</label>
+        <select id="insertGrowth" name="growthStage">
+            <option value="">-- Select Stage --</option>
+            <option value="Seedling">Seedling</option>
+            <option value="Vegetative">Vegetative</option>
+            <option value="Budding">Budding</option>
+            <option value="Blooming">Blooming</option>
+            <option value="Mature">Mature</option>
+            <option value="Harvested">Harvested</option>
+        </select><br>
         Harvest Date: <input type="date" id="harvestDate"><br>
     
         <button type="submit">Insert</button>
