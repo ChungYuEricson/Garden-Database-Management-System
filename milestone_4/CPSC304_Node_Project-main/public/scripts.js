@@ -12,8 +12,6 @@
  * 
  */
 
-
-
 // This function checks the database connection and updates its status on the frontend.
 async function checkDbConnection() {
     const statusElem = document.getElementById('dbStatus');
@@ -169,36 +167,6 @@ async function fetchUserTasks() {
         resultmsg.textContent = 'User not found.';                  // if the userID is null
     }
 }
-
-// async function resetAppUsers() {
-//     const response = await fetch("/initiate-appusers", {
-//         method: 'POST'
-//     });
-//     const responseData = await response.json();
-
-//     if (responseData.success) {
-//         const messageElement = document.getElementById('resetResultMsg');
-//         messageElement.textContent = "appusers initiated successfully!";
-//         fetchTableData();
-//     } else {
-//         alert("Error initiating table!");
-//     }
-// }
-
-// async function resetTasks() {
-//     const response = await fetch("/initiate-tasks", {
-//         method: 'POST'
-//     });
-//     const responseData = await response.json();
-
-//     if (responseData.success) {
-//         const messageElement = document.getElementById('resetResultMsg');
-//         messageElement.textContent = "tasks initiated successfully!";
-//         fetchAndDisplayTasks();
-//     } else {
-//         alert("Error initiating table!");
-//     }
-// }
 
 async function insertDemotable(event) {
     event.preventDefault();
@@ -374,39 +342,6 @@ document.getElementById("searchUserForm").addEventListener("submit", async funct
         });
     });
 });
-
-
-// async function populateAppUsers() {
-//     const response = await fetch("/populate-appusers", {
-//         method: 'POST'
-//     });
-
-//     const responseData = await response.json();
-//     const messageElement = document.getElementById('populateResultMsg');
-
-//     if (responseData.success) {
-//         messageElement.textContent = "AppUser table populated successfully!";
-//         fetchTableData();
-//     } else {
-//         messageElement.textContent = "Error populating table.";
-//     }
-// }
-
-// async function populateTasks() {
-//     const response = await fetch("/populate-tasks", {
-//         method: 'POST'
-//     });
-
-//     const responseData = await response.json();
-//     const messageElement = document.getElementById('populateResultMsg');
-
-//     if (responseData.success) {
-//         messageElement.textContent = "Tasks table populated successfully!";
-//         fetchTableData();
-//     } else {
-//         messageElement.textContent = "Error populating table.";
-//     }
-// }
 
 
 // Updates names in the demotable.
@@ -599,19 +534,6 @@ async function populateDropdowns() {
     growthSelect.appendChild(opt);
   });
 }
-
-// async function populateUpdatePlantDropdown() {
-//     const select = document.getElementById('updatePlantID');
-//     const res = await fetch('/plants');
-//     const data = await res.json();
-
-//     data.data.forEach(([plantID, species, plantName]) => {
-//         const option = document.createElement('option');
-//         option.value = plantID;
-//         option.textContent = `${plantID} – ${plantName} (${species})`;
-//         select.appendChild(option);
-//     });
-// }
 
 async function populateUpdatePlantDropdown() {
     const plantRes = await fetch('/plants');
@@ -972,24 +894,18 @@ window.onload = function() {
     document.getElementById("findSpeciesButton").addEventListener("click", fetchPlantsOnAllSoils);
     document.getElementById("deletePlantForm").addEventListener("submit", deletePlant);
     //end of plantlog
-    // document.getElementById("resetAppUsers").addEventListener("click", resetAppUsers);
     document.getElementById("insertAppUser").addEventListener("submit", insertDemotable);
     document.getElementById("updateNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countAppUsers").addEventListener("click", countAppUsers);
     document.getElementById("countAppUsersFrequency").addEventListener("click", countAppUsersFrequency);
-    // document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
-    // document.getElementById("populateTasks").addEventListener("click", populateTasks);
-    // document.getElementById("resetTasks").addEventListener("click", resetTasks);
     document.getElementById("insertUserTask").addEventListener("submit", insertUserTask);
     document.getElementById("insertPlantForm").addEventListener("submit", insertPlant);
-    // document.getElementById("updatePlantSoilForm").addEventListener("submit", updatePlantSoil);
     document.getElementById("deleteUser").addEventListener("submit", deleteAppUser);
     document.getElementById("avgTasksForm").addEventListener("submit", fetchAvgTasks);
     document.getElementById("showUserTasksForm").addEventListener("submit", function(event) {
         event.preventDefault(); // to prevent reloading page upon submitting 
         fetchUserTasks();
     });
-    // document.getElementById('countPlantSpeciesButton').addEventListener('click', countPlantsBySpecies);
     initProjectionForm();
 };
 

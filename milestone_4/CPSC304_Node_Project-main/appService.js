@@ -170,31 +170,6 @@ async function getUserTasks(userID) {
     });
 }
 
-
-// async function populateAppUsers() {
-//     return await withOracleDB(async (connection) => {
-//         for (const [userID, firstName, lastName] of users) {
-//             try {
-//                 await connection.execute(
-//                     `INSERT INTO AppUser (userID, firstName, lastName) VALUES (:userID, :firstName, :lastName)`,
-//                     [userID, firstName, lastName],
-//                     { autoCommit: true }
-//                 );
-//             } catch (err) { // for when there is an existing userID
-//                 if (err.errorNum === 1) {
-//                     continue;
-//                 } else {
-//                     console.error(err);
-//                     throw err;
-//                 }
-//             }
-//         }
-//         return true;
-//     }).catch(() => {
-//         return false;
-//     });
-// }
-
 async function populateTasks() {
     const tasks = [
         [101, 'Daily'],
