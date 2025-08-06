@@ -497,17 +497,6 @@ async function deletePlant(plantID, species) {
     return await withOracleDB(async (connection) => {
         const pid = Number(plantID);
 
-        // Delete child rows first
-        await connection.execute(
-            `DELETE FROM GardenLog_HAS_Plant WHERE plantID = :pid AND species = :species`,
-            { pid, species }
-        );
-
-        await connection.execute(
-            `DELETE FROM PlantLog WHERE plantID = :pid AND species = :species`,
-            { pid, species }
-        );
-
         const result = await connection.execute(
             `DELETE FROM Plant WHERE plantID = :pid AND species = :species`,
             { pid, species },
