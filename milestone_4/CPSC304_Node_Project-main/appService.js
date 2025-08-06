@@ -672,6 +672,43 @@ async function getAverageTasksForActiveUsers(minTasks) {
     });
 }
 
+// Projection Functions
+async function fetchAllTableNames() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`SELECT table_name FROM user_tables`);
+        return result.rows.map(r => r[0]);
+    }).catch(() => []);
+}
+
+async function fetchColumnsForTable(tableName) {
+    const upperName = tableName.toUpperCase().trim();
+    console.log("Fetching columns for table:", JSON.stringify(upperName));
+
+    return await withOracleDB(async (connection) => {
+        try {
+            const result = await connection.execute(
+                `SELECT column_name FROM user_tab_columns WHERE table_name = :tbl`,  
+                { tbl: upperName }  
+            );
+            console.log("Fetched columns:", result.rows);
+            return result.rows.map(r => r[0]);
+        } catch (err) {
+            console.error("Oracle error in fetchColumnsForTable:", err);
+            return [];
+        }
+    });
+}
+
+async function runProjection(table, columns) {
+    const columnList = columns.map(c => `"${c}"`).join(', ');
+    const query = `SELECT ${columnList} FROM "${table}" FETCH FIRST 25 ROWS ONLY`;
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(query, [], { outFormat: oracledb.OUT_FORMAT_ARRAY });
+        return result.rows;
+    }).catch(() => []);
+}
+
+
 module.exports = {
     testOracleConnection,
     initiateAppUsers, 
@@ -703,4 +740,8 @@ module.exports = {
     initiateGardenLog,
     fetchGardenLogFromDb,
     getAverageTasksForActiveUsers,
+
+    fetchAllTableNames, 
+    fetchColumnsForTable,
+    runProjection
 };

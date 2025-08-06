@@ -664,6 +664,99 @@ async function fetchAvgTasks(event) {
     }
 }
 
+// Projection Functions
+async function initProjectionForm() {
+    const tableSelect = document.getElementById('tableSelect');
+    const columnSelect = document.getElementById('columnSelect');
+
+    // Load table names
+    const tableRes = await fetch('/all-tables');
+    const tables = (await tableRes.json()).data;
+
+    tables.forEach(table => {
+        const option = document.createElement('option');
+        option.value = table;
+        option.textContent = table;
+        tableSelect.appendChild(option);
+    });
+
+    // Load columns when table is selected
+    tableSelect.addEventListener('change', async () => {
+        const table = tableSelect.value.trim();
+        console.log("Selected table:", table);
+
+        columnSelect.innerHTML = ''; // Clear old options
+
+        if (!table) return;
+
+        const colRes = await fetch(`/table-columns/${table}`);
+        const data = await colRes.json();
+        console.log("Fetched columns:", data);
+
+        const columns = data.data;
+
+        // FIX: Unwrap nested array values
+        columns.forEach(colRow => {
+            const col = colRow[0]; 
+            const option = document.createElement('option');
+            option.value = col;
+            option.textContent = col;
+            columnSelect.appendChild(option);
+        });
+    });
+
+    // Submit projection form
+    document.getElementById('projectionForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const table = tableSelect.value;
+        const selectedCols = [...columnSelect.selectedOptions].map(opt => opt.value);
+
+        if (selectedCols.length === 0) {
+            document.getElementById('projectionResultMsg').textContent = "Please select at least one attribute.";
+            return;
+        }
+
+        const res = await fetch('/project', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ table, columns: selectedCols })
+        });
+
+        const data = await res.json();
+        renderProjectionResults(selectedCols, data.data);
+    });
+}
+
+function renderProjectionResults(columns, rows) {
+    const thead = document.querySelector('#projectionTable thead tr');
+    const tbody = document.querySelector('#projectionTable tbody');
+    const msg = document.getElementById('projectionResultMsg');
+
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
+
+    // Create column headers
+    columns.forEach(col => {
+        const th = document.createElement('th');
+        th.textContent = col;
+        thead.appendChild(th);
+    });
+
+    // Populate rows
+    rows.forEach(row => {
+        const tr = document.createElement('tr');
+        row.forEach(cell => {
+            const td = document.createElement('td');
+            td.textContent = cell;
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+    });
+
+    msg.textContent = `${rows.length} row(s) returned.`;
+}
+
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
@@ -698,6 +791,7 @@ window.onload = function() {
         event.preventDefault(); // to prevent reloading page upon submitting 
         fetchUserTasks();
     });
+    initProjectionForm();
 };
 
 // General function to refresh the displayed table data. 
