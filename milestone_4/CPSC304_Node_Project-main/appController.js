@@ -274,5 +274,23 @@ router.get("/average-tasks-nested", async (req, res) => {
     }
 });
 
+// Projection Routes
+
+router.get('/all-tables', async (req, res) => {
+    const tables = await appService.fetchAllTableNames();
+    res.json({ data: tables });
+});
+
+router.get('/table-columns/:tableName', async (req, res) => {
+    const columns = await appService.fetchColumnsForTable(req.params.tableName);
+    res.json({ data: columns });
+});
+
+router.post('/project', async (req, res) => {
+    const { table, columns } = req.body;
+    const result = await appService.runProjection(table, columns);
+    res.json({ data: result });
+});
+
 
 module.exports = router;
