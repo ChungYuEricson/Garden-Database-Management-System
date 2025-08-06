@@ -676,6 +676,38 @@ async function updatePlantSoil(event) {
         fetchAndDisplayPlantLog();
     }
 }
+function setupSpeciesThresholdForm() {
+  const form = document.getElementById("speciesThresholdForm");
+  if (!form) return;
+
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const threshold = document.getElementById("plantThreshold").value;
+
+    const res = await fetch(`/species-count-having?threshold=${threshold}`);
+    const data = await res.json();
+
+    const tableBody = document.querySelector("#speciesResultsTable tbody");
+    tableBody.innerHTML = ""; // Clear previous results
+
+    if (data.length === 0) {
+      document.getElementById("speciesResultsMsg").textContent = "No species found.";
+      return;
+    }
+
+    data.forEach(row => {
+      const tr = document.createElement("tr");
+      const speciesCell = document.createElement("td");
+      const countCell = document.createElement("td");
+      speciesCell.textContent = row[0];
+      countCell.textContent = row[1];
+      tr.appendChild(speciesCell);
+      tr.appendChild(countCell);
+      tableBody.appendChild(tr);
+    });
+  });
+}
 
 document.getElementById("searchPlantForm").addEventListener("submit", async function(event) {
     event.preventDefault();
@@ -757,6 +789,58 @@ async function fetchAvgTasks(event) {
         console.error(err);
     }
 }
+
+function updatePlantDetailsForm() {
+    const form = document.getElementById("updatePlantDetailsForm");
+    if (!form) return;
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const plantID = document.getElementById('updatePlantID').value;
+        const newGrowth = document.getElementById('newGrowth').value;
+        const soilID = document.getElementById('updatedSoilID').value;
+
+        if (!plantID) return;
+
+        const res = await fetch('/update-plant-details', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ plantID, newGrowth, soilID })
+        });
+
+        const result = await res.json();
+        const msg = document.getElementById('updatePlantMsg');
+        if (msg) {
+            msg.textContent = result.success ? "Plant updated!" : "Update failed.";
+        }
+
+        if (result.success) {
+            fetchAndDisplayPlantLog();
+        }
+    });
+}
+
+async function fetchPlantsOnAllSoils() {
+    const res = await fetch('/plants-on-all-soils');
+    const data = await res.json();
+
+    const tableBody = document.querySelector('#allSoilResults tbody');
+    tableBody.innerHTML = '';
+
+    data.data.forEach(plantID => {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.textContent = plantID;
+        row.appendChild(cell);
+        tableBody.appendChild(row);
+    });
+
+    document.getElementById('allSoilResultMsg').textContent = data.data.length
+        ? `Found ${data.data.length} plant(s)`
+        : "No plants found on all soil types.";
+}
+
 
 // Projection Functions
 async function initProjectionForm() {
@@ -863,6 +947,9 @@ window.onload = function() {
     populateUpdatePlantDropdown();
     populateSoilDropdown();
     fetchAndDisplayGardenLog();
+    updatePlantDetailsForm();
+    fetchPlantsOnAllSoils();
+    setupSpeciesThresholdForm();
     //plantlog
     fetchAndDisplayPlantLog();
     document.getElementById("deletePlantForm").addEventListener("submit", deletePlant);
@@ -877,15 +964,14 @@ window.onload = function() {
     document.getElementById("resetTasks").addEventListener("click", resetTasks);
     document.getElementById("insertUserTask").addEventListener("submit", insertUserTask);
     document.getElementById("insertPlantForm").addEventListener("submit", insertPlant);
-    document.getElementById("updatePlantGrowthForm").addEventListener("submit", updatePlantGrowth);
-    document.getElementById("updatePlantSoilForm").addEventListener("submit", updatePlantSoil);
+    // document.getElementById("updatePlantSoilForm").addEventListener("submit", updatePlantSoil);
     document.getElementById("deleteUser").addEventListener("submit", deleteAppUser);
     document.getElementById("avgTasksForm").addEventListener("submit", fetchAvgTasks);
     document.getElementById("showUserTasksForm").addEventListener("submit", function(event) {
         event.preventDefault(); // to prevent reloading page upon submitting 
         fetchUserTasks();
     });
-    document.getElementById('countPlantSpeciesButton').addEventListener('click', countPlantsBySpecies);
+    // document.getElementById('countPlantSpeciesButton').addEventListener('click', countPlantsBySpecies);
     initProjectionForm();
 };
 

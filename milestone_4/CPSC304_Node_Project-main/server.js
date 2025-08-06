@@ -24,7 +24,6 @@ app.use(express.json());             // Parse incoming JSON payloads
 // mount the router
 app.use('/', appController);
 
-
 // ----------------------------------------------------------
 // Starting the server
 app.listen(PORT, () => {

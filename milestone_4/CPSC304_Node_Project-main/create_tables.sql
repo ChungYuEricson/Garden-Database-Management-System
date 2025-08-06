@@ -287,12 +287,22 @@ INSERT INTO Plant (plantID, species, plantName) VALUES (702, 'Tulip', 'Tulip');
 INSERT INTO Plant (plantID, species, plantName) VALUES (703, 'Lily', 'Lily');
 INSERT INTO Plant (plantID, species, plantName) VALUES (704, 'Fern', 'Fern');
 INSERT INTO Plant (plantID, species, plantName) VALUES (705, 'Cactus', 'Cactus');
+INSERT INTO Plant (plantID, species, plantName) VALUES (706, 'Rose', 'Rose');
+INSERT INTO Plant (plantID, species, plantName) VALUES (707, 'Rose', 'Rose');
+INSERT INTO Plant (plantID, species, plantName) VALUES (708, 'Rose', 'Rose');
+INSERT INTO Plant (plantID, species, plantName) VALUES (709, 'Rose', 'Rose');
+
 
 INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (601, 701, 'Rose', 401, DATE '2025-04-01', 'Blooming', DATE '2025-05-01');
 INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (602, 702, 'Tulip', 402, DATE '2025-03-15', 'Seedling', null);
 INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (603, 703, 'Lily', 403, DATE '2025-02-20', 'Growing', DATE '2025-04-20');
 INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (604, 704, 'Fern', 404, DATE '2025-01-10', 'Dormant', null);
 INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (605, 705, 'Cactus', 405, DATE '2025-05-05', 'Flowering', DATE '2025-07-20');
+INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (606, 706, 'Rose', 402, DATE '2025-04-01', 'Blooming', DATE '2025-05-01');
+INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (607, 707, 'Rose', 403, DATE '2025-04-01', 'Blooming', DATE '2025-05-01');
+INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (608, 708, 'Rose', 404, DATE '2025-04-01', 'Blooming', DATE '2025-05-01');
+INSERT INTO PlantLog (plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate) VALUES (609, 709, 'Rose', 405, DATE '2025-04-01', 'Blooming', DATE '2025-05-01');
+
 
 INSERT INTO GardenLog_HAS_Plant (gardenLogID, plantID, species) VALUES (501, 701, 'Rose');
 INSERT INTO GardenLog_HAS_Plant (gardenLogID, plantID, species) VALUES (502, 702, 'Tulip');

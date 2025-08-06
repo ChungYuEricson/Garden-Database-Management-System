@@ -42,19 +42,43 @@
      <!--Plantlog Display-->
 
     <h2>Plant Log</h2>
-    <button id="resetPlantLogBtn">Reset Plant Log Table</button>
-    <p id="plantLogResetMsg"></p>
-
     <table id="plantLogTable" border="1">
     <thead>
         <tr>
-        <th>PlantLogID</th><th>PlantID</th><th>Species</th><th>SoilID</th><th>Date Planted</th><th>Growth</th><th>Harvest Date</th>
+        <th>PlantLogID</th>
+        <th>PlantID</th>
+        <th>Species</th>
+        <th>SoilID</th>
+        <th>Date Planted</th>
+        <th>Growth</th>
+        <th>Harvest Date</th>
         </tr>
     </thead>
     <tbody></tbody>
     </table>
 
     <!--End of Plantlog display-->
+
+    
+    <h2>Update Plant Details</h2>
+    <form id="updatePlantDetailsForm">
+        <label for="updatePlantID">Select Plant ID:</label>
+        <select id="updatePlantID" required>
+            <option value="">Choose a plant</option>
+        </select><br>
+
+        <label for="newGrowth">New Growth Stage:</label>
+        <input type="text" id="newGrowth" placeholder="e.g., Blooming"><br>
+
+        <label for="updatedSoilID">New Soil ID:</label>
+        <select id="updatedSoilID">
+            <option value="">Select a soil ID</option>
+        </select><br>
+
+        <button type="submit">Update Plant</button>
+    </form>
+
+    <div id="updatePlantMsg"></div>
 
     <!-- Gardenlog Display -->
     <h2>Garden Log</h2>
@@ -74,7 +98,7 @@
     <tbody></tbody>
     </table>
 
-
+    <h1> DEMO JOIN </h1>
     <h2>Find User</h2>
     <form id="searchUserForm">
         <label for="searchUserId">User ID:</label>
@@ -96,7 +120,7 @@
         </thead>
         <tbody></tbody>
     </table>
-
+    <h1> Selection </h1>
     <h2>Find Plant Details</h2>
     <form id="searchPlantForm">
         <input type="text" id="searchPlantID" name="plantID" placeholder="Plant ID">
@@ -246,7 +270,7 @@
     <form id="insertPlantForm">
         Plant ID: <input type="number" id="plantID" required><br>
 
-        <label for="insertSpecies">Species:</label>
+        <label for="insertSpecies">Species:</label> <br>
         <select id="insertSpecies" name="species">
             <option value="">-- Any --</option>
         </select>
@@ -283,8 +307,8 @@
         Plant ID: <input type="number" id="deletePlantID" required><br>
         Species: <input type="text" id="deleteSpecies" required><br>
         <button type="submit">Delete</button>
-    </form>
-    <div id="deletePlantMsg"></div>
+    <div id="deletePlantMsg"></div>        </form>
+
     <br>
 
     <h1>Updates</h1>     
@@ -301,7 +325,7 @@
     </form>
     <div id="updateNameResultMsg"></div>
 
-    <h2>Update Plant Growth</h2>
+    <!-- <h2>Update Plant Growth</h2>
     <form id="updatePlantGrowthForm">
         <label for="updatePlantID">Select Plant ID:</label>
         <select id="updatePlantID" required>
@@ -313,9 +337,9 @@
 
         <button type="submit">Update Growth</button>
     </form>
-    <div id="updatePlantGrowthMsg"></div>
+    <div id="updatePlantGrowthMsg"></div> -->
 
-    <h2>Update Plant Soil</h2>
+    <!-- <h2>Update Plant Soil</h2>
     <form id="updatePlantSoilForm">
         <label for="updateSoilPlantID">Select Plant ID:</label>
         <select id="updateSoilPlantID" required>
@@ -329,7 +353,8 @@
     
         <button type="submit">Update Soil</button>
     </form>
-    <div id="updatePlantSoilMsg"></div>
+    <div id="updatePlantSoilMsg"></div> -->
+
 
     <br>
     <hr><br> <!-- ========================================================================= -->
@@ -340,6 +365,7 @@
     <!-- A placeholder to display the count result. -->
     <div id="countResultMsg"></div> <br>
 
+    <h1> DEMO Group By </h1>
     <h2> Number of Users based on Task Frequency </h2>
     <button id="countAppUsersFrequency" type="button"> count </button> <br><br>
     <table id="frequencyTable" border="1">
@@ -348,12 +374,18 @@
     </table>
     <div id="countFrequencyMsg"></div>
 
-    <h2>Count Plants by Species (HAVING; x > 2)</h2>
-    <button id="countPlantSpeciesButton">Count</button>
-    <div id="plantSpeciesCountMsg"></div>
-    <table id="plantSpeciesCountTable" border="1">
+    <h1> Having Aggregation </h1>
+    <h2>Count Plants by Species (HAVING)</h2>
+    <form id="speciesThresholdForm">
+    <label for="plantThreshold">Minimum Count:</label>
+    <input type="number" id="plantThreshold" required>
+    <button type="submit">Submit</button>
+    </form>
+
+    <div id="speciesResultsMsg"></div>
+    <table id="speciesResultsTable" border="1">
     <thead>
-        <tr><th>Species</th><th>Count</th></tr>
+        <tr><th>Species</th><th>Plant Count</th></tr>
     </thead>
     <tbody></tbody>
     </table>
@@ -361,6 +393,7 @@
     <br>
     <hr><br> <!-- ========================================================================= -->
 
+    <h1> Nested Aggregate </h1>
     <h2>Average # of Tasks per User</h2>
     <form id="avgTasksForm">
         <label for="minTasks">Only include users with more than X tasks:</label>
@@ -381,7 +414,8 @@
     <br>
     <hr><br> <!-- ========================================================================= -->
 
-    <h2>Projection</h2>
+    <h1>DEMO Projection</h1>
+    <h2> Find Tables </h2>
     <form id="projectionForm">
         <label for="tableSelect">Choose a table:</label><br>
         <select id="tableSelect" required></select><br><br>
@@ -397,6 +431,19 @@
         <thead><tr></tr></thead>
         <tbody></tbody>
     </table>    
+
+
+    <h1> DEMO: Division </h1>
+    <h2>Species on All Soil Types</h2>
+    <button onclick="fetchPlantsOnAllSoils()">Find Species</button>
+    <p id="allSoilResultMsg"></p>
+    <table id="allSoilResults" border="1">
+        <thead>
+            <tr><th>Plant ID</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
 
     <!-- ===================================================================================== -->
     <!-- External JavaScript file that contains the functionality/logic for the operations above. -->

@@ -374,6 +374,15 @@ async function updateNameDemotable(oldFirstName, oldLastName, newFirstName, newL
     });
 }
 
+// reset
+async function resetDatabase() {
+  const conn = await getConnection();
+  const resetScript = await fs.readFile(path.join(__dirname, 'sql/reset.sql'), 'utf8');
+  await conn.executeMany(resetScript, []); // if needed, split by ";" first
+  await conn.commit();
+  await conn.close();
+}
+
 async function searchUsers(filters) {
     return await withOracleDB(async (connection) => {
         const conditions = [];
@@ -519,9 +528,22 @@ async function fetchSpeciesOptions() {
 
 async function deletePlant(plantID, species) {
     return await withOracleDB(async (connection) => {
+        const pid = Number(plantID);
+
+        // Delete child rows first
+        await connection.execute(
+            `DELETE FROM GardenLog_HAS_Plant WHERE plantID = :pid AND species = :species`,
+            { pid, species }
+        );
+
+        await connection.execute(
+            `DELETE FROM PlantLog WHERE plantID = :pid AND species = :species`,
+            { pid, species }
+        );
+
         const result = await connection.execute(
-            `DELETE FROM Plant WHERE plantID = :plantID AND species = :species`,
-            { plantID, species },
+            `DELETE FROM Plant WHERE plantID = :pid AND species = :species`,
+            { pid, species },
             { autoCommit: true }
         );
 
@@ -555,6 +577,24 @@ async function updatePlantSoil(plantID, soilID) {
         );
         return result.rowsAffected > 0;
     }).catch(() => false);
+}
+
+async function findPlantsOnAllSoilTypes() {
+    return await withOracleDB(async (connection) => {
+        const sql = `
+            SELECT DISTINCT PL.species
+            FROM PlantLog PL
+            WHERE NOT EXISTS (
+                SELECT S.soilID
+                FROM Soil S
+                MINUS
+                SELECT PL2.soilID
+                FROM PlantLog PL2
+                WHERE PL2.species = PL.species)
+        `;
+        const result = await connection.execute(sql);
+        return result.rows.map(row => row[0]); // extract plantID
+    });
 }
 
 async function searchPlants(filters) {
@@ -723,6 +763,19 @@ async function runProjection(table, columns) {
     }).catch(() => []);
 }
 
+async function getSpeciesHavingMoreThan(threshold) {
+  const query = `
+    SELECT LOWER(species) AS species, COUNT(*) AS PLANT_COUNT
+    FROM Plant
+    GROUP BY LOWER(species)
+    HAVING COUNT(*) > :threshold
+  `;
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(query, [threshold]);
+    return result.rows;
+  });
+}
+
 // HAVING requirement
 async function countPlantsBySpecies() {
     return await withOracleDB(async (connection) => {
@@ -730,7 +783,7 @@ async function countPlantsBySpecies() {
             `SELECT LOWER(species), COUNT(*) AS PLANT_COUNT 
              FROM Plant
              GROUP BY LOWER(species)
-             HAVING COUNT(*) > 2 `,
+             HAVING COUNT(*) > :user_input_threshold `,
              []
         );
         return result.rows;
@@ -747,6 +800,7 @@ module.exports = {
     countAppUsersFrequency,
     fetchAppUsersFromDb,
     insertAppUser,
+    findPlantsOnAllSoilTypes,
     // populateAppUsers,
     fetchTasksFromDb,
     populateTasks,
@@ -775,4 +829,5 @@ module.exports = {
     fetchColumnsForTable,
     runProjection,
     countPlantsBySpecies,
+    getSpeciesHavingMoreThan,
 };

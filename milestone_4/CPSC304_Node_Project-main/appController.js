@@ -309,5 +309,51 @@ router.post('/project', async (req, res) => {
     res.json({ data: result });
 });
 
+router.get("/plants-on-all-soils", async (req, res) => {
+    try {
+        const data = await appService.findPlantsOnAllSoilTypes();
+        res.json({ data });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+router.get("/species-count-having", async (req, res) => {
+  const threshold = parseInt(req.query.threshold);
+  const result = await appService.getSpeciesHavingMoreThan(threshold);
+  res.json(result);
+});
+
+
+router.get("/species-count-having", async (req, res) => {
+    const threshold = parseInt(req.query.threshold);
+    const result = await appService.getSpeciesHavingMoreThan(threshold);
+    res.json(result);
+});
+
+
+
+router.post("/update-plant-details", async (req, res) => {
+    const { plantID, newGrowth, soilID } = req.body;
+
+    try {
+        if (!plantID) return res.status(400).json({ success: false, message: "Missing plantID" });
+
+        if (newGrowth) {
+            await appService.updatePlantGrowth(plantID, newGrowth);
+        }
+
+        if (soilID) {
+            await appService.updatePlantSoil(plantID, soilID);
+        }
+
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false });
+    }
+});
+
 
 module.exports = router;
