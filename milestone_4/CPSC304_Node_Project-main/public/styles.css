@@ -117,3 +117,43 @@ input::placeholder, textarea::placeholder {
     background-color: #f2f2f2;
     z-index: 2;
   }
+
+  /* General table styling */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  /* Header row with green gradient */
+  thead tr {
+    background: linear-gradient(90deg, #2eb433, #0a600f); /* green gradient */
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  /* Table cells */
+  th, td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Alternating row colors */
+  tbody tr:nth-child(even) {
+    background-color: #f9fff9;
+  }
+  
+  tbody tr:nth-child(odd) {
+    background-color: #eefbee;
+  }
+  
+  tbody tr:hover {
+    background-color: #d4f5d4;
+    cursor: pointer;
+  }
