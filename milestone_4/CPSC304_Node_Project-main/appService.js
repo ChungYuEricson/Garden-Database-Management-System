@@ -374,15 +374,6 @@ async function updateNameDemotable(oldFirstName, oldLastName, newFirstName, newL
     });
 }
 
-// reset
-async function resetDatabase() {
-  const conn = await getConnection();
-  const resetScript = await fs.readFile(path.join(__dirname, 'sql/reset.sql'), 'utf8');
-  await conn.executeMany(resetScript, []); // if needed, split by ";" first
-  await conn.commit();
-  await conn.close();
-}
-
 async function searchUsers(filters) {
     return await withOracleDB(async (connection) => {
         const conditions = [];
