@@ -333,6 +333,9 @@
     </table>
     <div id="countFrequencyMsg"></div>
 
+    <br>
+    <hr><br> <!-- ========================================================================= -->
+
     <h2>Average # of Tasks per User</h2>
     <form id="avgTasksForm">
         <label for="minTasks">Only include users with more than X tasks:</label>
@@ -349,7 +352,26 @@
         </thead>
         <tbody></tbody>
     </table>
+
+    <br>
+    <hr><br> <!-- ========================================================================= -->
+
+    <h2>Projection</h2>
+    <form id="projectionForm">
+        <label for="tableSelect">Choose a table:</label><br>
+        <select id="tableSelect" required></select><br><br>
     
+        <label for="columnSelect">Choose attributes:</label><br>
+        <select id="columnSelect" multiple size="6" style="width: 200px" required></select><br><br>
+    
+        <button type="submit">Project</button>
+    </form>
+    
+    <div id="projectionResultMsg"></div>
+    <table id="projectionTable" border="1">
+        <thead><tr></tr></thead>
+        <tbody></tbody>
+    </table>    
 
     <!-- ===================================================================================== -->
     <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
