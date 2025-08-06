@@ -294,7 +294,7 @@ async function insertPlant(event) {
 
     const plantLogID = parseInt(document.getElementById('plantLogID').value);
     const soilID = document.getElementById('soilID').value || null;
-    const growth = document.getElementById('growth').value || null;
+    const growth = document.getElementById('insertGrowth').value || null;
     const harvestDate = document.getElementById('harvestDate').value || null;
 
     const response = await fetch('/insert-plant', {
