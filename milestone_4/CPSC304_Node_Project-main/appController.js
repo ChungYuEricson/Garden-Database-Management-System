@@ -359,5 +359,15 @@ router.post("/update-plant-details", async (req, res) => {
     }
 });
 
+router.get('/growth-options', async (req, res) => {
+  try {
+    const stages = await appService.fetchGrowthOptions();  
+    res.json({ data: stages });                            
+  } catch (err) {
+    console.error('growth-options error', err);
+    res.status(500).json({ data: [] });
+  }
+});
+
 
 module.exports = router;

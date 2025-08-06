@@ -584,6 +584,20 @@ async function populateDropdowns() {
         option.textContent = `${soilID} (${soilType})`;
         soilSelect.appendChild(option);
     });
+
+    // Populate growth dropdown
+    const growthRes  = await fetch('/growth-options');   // <-- backend route you added
+    const growthData = await growthRes.json();
+
+    const growthSelect = document.getElementById('growth');
+    growthSelect.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
+
+    growthData.data.forEach(([stage]) => {
+    const opt = document.createElement('option');
+    opt.value = stage;
+    opt.textContent = stage;
+    growthSelect.appendChild(opt);
+  });
 }
 
 // async function populateUpdatePlantDropdown() {
@@ -952,7 +966,7 @@ window.onload = function() {
     populateSoilDropdown();
     fetchAndDisplayGardenLog();
     updatePlantDetailsForm();
-    setupSpeciesThresholdForm();
+    setupSpeciesThresholdForm();		
     //plantlog
     fetchAndDisplayPlantLog();
     document.getElementById("findSpeciesButton").addEventListener("click", fetchPlantsOnAllSoils);

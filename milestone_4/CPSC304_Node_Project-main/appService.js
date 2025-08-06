@@ -782,6 +782,18 @@ async function getSpeciesHavingMoreThan(threshold) {
   });
 }
 
+async function fetchGrowthOptions() {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `SELECT DISTINCT LOWER(growth) AS stage
+         FROM PlantLog
+         WHERE growth IS NOT NULL
+         ORDER BY stage`
+    );
+    return result.rows;           
+  }).catch(() => []);
+}
+
 // HAVING requirement
 async function countPlantsBySpecies() {
     return await withOracleDB(async (connection) => {
@@ -813,6 +825,7 @@ module.exports = {
     insertTask,
     initiateTasks,
     getUserTasks,
+    fetchGrowthOptions,
     insertUserTask,
     searchUsers,
     fetchPlantsFromDb,
