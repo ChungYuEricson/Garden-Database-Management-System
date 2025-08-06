@@ -374,24 +374,6 @@ async function updateNameDemotable(oldFirstName, oldLastName, newFirstName, newL
     });
 }
 
-async function updatePlantLogEntry(plantLogID, newGrowth, newSoilID) {
-    return await withOracleDB(async (connection) => {
-        console.log("Updating PlantLog with:", { plantLogID, newGrowth, newSoilID }); // 👈 Add this
-        const result = await connection.execute(
-            `UPDATE PlantLog 
-             SET growth = :newGrowth, soilID = :newSoilID 
-             WHERE plantLogID = :plantLogID`,
-            { plantLogID, newGrowth, newSoilID },
-            { autoCommit: true }
-        );
-        return result.rowsAffected && result.rowsAffected > 0;
-    }).catch((err) => {
-        console.error("Error updating plant log entry:", err);
-        return false;
-    });
-}
-
-
 async function searchUsers(filters) {
     return await withOracleDB(async (connection) => {
         const conditions = [];
@@ -782,5 +764,4 @@ module.exports = {
     fetchColumnsForTable,
     runProjection,
     countPlantsBySpecies,
-    updatePlantLogEntry
 };

@@ -141,16 +141,6 @@ router.post("/update-name-demotable", async (req, res) => {
     }
 });
 
-router.post("/update-plant-log", async (req, res) => {
-    const { plantLogID, newGrowth, newSoilID } = req.body;
-    const success = await appService.updatePlantLogEntry(plantLogID, newGrowth, newSoilID);
-    if (success) {
-        res.json({ success: true });
-    } else {
-        res.status(500).json({ success: false });
-    }
-});
-
 // delete user
 router.post("/delete-appuser", async (req, res) => {
     const { userID } = req.body;

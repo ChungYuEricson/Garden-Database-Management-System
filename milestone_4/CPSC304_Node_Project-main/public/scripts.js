@@ -792,28 +792,6 @@ function renderProjectionResults(columns, rows) {
 
     msg.textContent = `${rows.length} row(s) returned.`;
 }
-document.getElementById("updatePlantLogForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
-
-    const plantLogID = parseInt(document.getElementById("plantLogIDUpdate").value);
-    const newGrowth = document.getElementById("newGrowthLog").value.trim();
-    const newSoilID = parseInt(document.getElementById("newSoilID").value);
-
-    const response = await fetch("/update-plant-log", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plantLogID, newGrowth, newSoilID })
-    });
-
-    const msgDiv = document.getElementById("updateResultMsg");
-    if (response.ok) {
-        msgDiv.textContent = "PlantLog updated successfully!";
-    } else {
-        msgDiv.textContent = "Failed to update PlantLog.";
-    }
-});
-
-
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
