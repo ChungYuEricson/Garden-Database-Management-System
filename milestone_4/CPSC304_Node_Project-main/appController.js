@@ -239,6 +239,12 @@ router.post("/update-plant-growth", async (req, res) => {
     }
 });
 
+router.post('/update-plant-soil', async (req, res) => {
+    const { plantID, soilID } = req.body;
+    const success = await appService.updatePlantSoil(plantID, soilID);
+    res.json({ success });
+});
+
 router.get('/search-plant', async (req, res) => {
     const {
         plantID,
