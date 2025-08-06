@@ -157,3 +157,27 @@ table {
     background-color: #d4f5d4;
     cursor: pointer;
   }
+
+  /* Button Styling */
+  button {
+    background-color: #4CAF50; 
+    color: white; 
+    border: none; 
+    padding: 12px 24px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    border-radius: 8px; 
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Hover effect for button */
+button:hover {
+    background-color: #45a049; 
+    transform: scale(1.05); 
+}
+
+/* Focus effect */
+button:focus {
+    outline: none; 
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.6); 
+}

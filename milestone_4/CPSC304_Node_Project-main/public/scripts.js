@@ -304,7 +304,7 @@ async function insertUserTask(event) { // for viewing user's tasks
     });
 
     const data = await response.json();
-    const msg = document.getElementById("insertResultMsg");
+    const msg = document.getElementById("insertTaskMsg");
 
     if (data.success) {
         msg.textContent = "Task inserted and assigned successfully!";

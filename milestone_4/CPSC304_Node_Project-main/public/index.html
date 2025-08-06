@@ -27,7 +27,7 @@
     </th>
 
     <br>
-    <hr><br> <!-- ========================================================================= -->
+    <br> <!-- ========================================================================= -->
 
     <div class = "user-count">
         <h2 style="margin: 0;">Show Users</h2>
@@ -49,6 +49,8 @@
         <tbody></tbody>
     </table>
     </div>
+
+    <hr>
 
      <!--Plantlog Display-->
 
@@ -103,6 +105,8 @@
 
     <div id="updatePlantMsg"></div>
 
+    <br><hr><br>
+
     <!-- Gardenlog Display -->
     <h2>Garden Log</h2>
     <div class="scrollable-table">
@@ -119,6 +123,8 @@
     <tbody></tbody>
     </table>
     </div>
+
+    <br><hr><br>
 
     <h2>Find User</h2>
     <form id="searchUserForm">
@@ -141,6 +147,9 @@
         </thead>
         <tbody></tbody>
     </table>
+
+    <br><hr><br>
+
     <h2>SELECTION DEMO: Find Plant Details</h2>
     <form id="searchPlantForm">
         <input type="text" id="searchPlantID" name="plantID" placeholder="Plant ID">
@@ -208,40 +217,41 @@
     </table>
     </div>
 
-        <h2> Show User's Task(s) </h2>
-        <form id="showUserTasksForm">
-            ID: <input type="number" id="userIDInput" placeholder="Enter UserID" required> <br><br>
-            <button type="submit"> Search </button> <br>
-        </form>
-        <div id="userTasksResultMsg"></div>
-        <table id="tasksTable" border="1" style="display: none;">
-            <thead>
-                <tr>
-                    <th>taskID</th>
-                    <th>frequency</th>
-                    <th>details</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+    <br><hr><br>
 
-        <h2>Show Plants</h2>
-        <div class="scrollable-table">
-        <table id="plantTable" border="1">
-            <thead>
-                <tr>
-                    <th>PlantID</th>
-                    <th>Species</th>
-                    <th>Plant Name</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        </div>
+    <h2> Show User's Task(s) </h2>
+    <form id="showUserTasksForm">
+        ID: <input type="number" id="userIDInput" placeholder="Enter UserID" required>
+        <button type="submit"> Search </button> <br>
+    </form>
+    <div id="userTasksResultMsg"></div>
+    <table id="tasksTable" border="1" style="display: none;">
+        <thead>
+            <tr>
+                <th>taskID</th>
+                <th>frequency</th>
+                <th>details</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
-    <br>
-    <hr><br> <!-- ========================================================================= -->
+    <hr>
+
+    <h2>Plants Table</h2>
+    <div class="scrollable-table">
+    <table id="plantTable" border="1">
+        <thead>
+            <tr>
+                <th>PlantID</th>
+                <th>Species</th>
+                <th>Plant Name</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    </div>
 
     <h2>INSERTION DEMO: New Plant</h2>
     <form id="insertPlantForm">
@@ -276,6 +286,8 @@
     </form>
     <div id="insertPlantMsg"></div>
 
+    <br><hr><br>
+
     <h2>Insert New User </h2>
     <form id="insertAppUser">
         ID: <input type="number" id="insertId" placeholder="Enter ID" required>
@@ -302,9 +314,10 @@
 
         <button type="submit"> Insert </button> <br>
     </form>
-    <div id="insertResultMsg"></div>
+    <div id="insertTaskMsg"></div>
 
-    <hr><br> <!-- ========================================================================= -->
+    <br><hr><br>
+    
     <h2>DELETION DEMO: Delete User </h2>
     <form id="deleteUser">
         userID: <input type="number" id="deleteUserID" placeholder="Enter ID" required> <br><br>
@@ -319,12 +332,9 @@
         Species: <input type="text" id="deleteSpecies" required><br>
         <button type="submit">Delete</button>
     <div id="deletePlantMsg"></div>        </form>
-
-    <br>
-
-    <h1>Updates</h1>     
-    <hr><br> <!-- ========================================================================= -->
-
+ 
+    <br><hr><br>
+    
     <h2>Update Name</h2>
     <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
     <form id="updateNameDemotable">
@@ -336,8 +346,7 @@
     </form>
     <div id="updateNameResultMsg"></div>
 
-    <br>
-    <hr><br> <!-- ========================================================================= -->
+    <br><hr><br>
 
     <h2>GROUP BY AGGREGATION DEMO: Number of Users based on Task Frequency </h2>
     <button id="countAppUsersFrequency" type="button"> count </button> <br><br>
@@ -362,8 +371,7 @@
     <tbody></tbody>
     </table>
 
-    <br>
-    <hr><br> <!-- ========================================================================= -->
+    <br><hr><br>
 
     <h2>NESTED AGGREGATION DEMO: Average # of Tasks per User</h2>
     <form id="avgTasksForm">
@@ -382,8 +390,7 @@
         <tbody></tbody>
     </table>
 
-    <br>
-    <hr><br> <!-- ========================================================================= -->
+    <br><hr><br>
 
     <h2>PROJECTION DEMO: Find Tables </h2>
     <form id="projectionForm">
