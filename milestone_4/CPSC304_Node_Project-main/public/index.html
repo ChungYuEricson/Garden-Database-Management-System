@@ -72,7 +72,7 @@
 
     <!--End of Plantlog display-->
     
-    <h2>Update Plant Details</h2>
+    <h2>UPDATE DEMO: Update Plant Details</h2>
     <form id="updatePlantDetailsForm">
         <label for="updatePlantID">Select Plant ID:</label>
         <select id="updatePlantID" required>
@@ -112,8 +112,6 @@
     </table>
     </div>
 
-
-    <h1> DEMO JOIN </h1>
     <h2>Find User</h2>
     <form id="searchUserForm">
         <label for="searchUserId">User ID:</label>
@@ -135,8 +133,7 @@
         </thead>
         <tbody></tbody>
     </table>
-    <h1> Selection </h1>
-    <h2>Find Plant Details</h2>
+    <h2>SELECTION DEMO: Find Plant Details</h2>
     <form id="searchPlantForm">
         <input type="text" id="searchPlantID" name="plantID" placeholder="Plant ID">
 
@@ -234,10 +231,7 @@
     <br>
     <hr><br> <!-- ========================================================================= -->
 
-    <h1>Insertions</h1> 
-    <hr><br> <!-- ========================================================================= -->
-
-    <h2> New User </h2>
+    <h2>Insert New User </h2>
     <form id="insertAppUser">
         ID: <input type="number" id="insertId" placeholder="Enter ID" required>
         First Name: <input type="text" id="insertFirstName" placeholder="Enter First Name" maxlength="20">
@@ -246,7 +240,7 @@
     </form>
     <div id="insertResultMsg"></div>
 
-    <h2> New Task </h2>
+    <h2>Insert New Task </h2>
     <form id="insertUserTask">
         userID: <input type="number" id="insertUserId" placeholder="Enter ID" required>
         TaskID: <input type="number" id="insertTaskId" placeholder="Enter ID" required>
@@ -265,8 +259,7 @@
     </form>
     <div id="insertResultMsg"></div>
     
-    <h1>INSERT for DEMO</h1>
-    <h2>New Plant</h2>
+    <h2>INSERTION DEMO: New Plant</h2>
     <form id="insertPlantForm">
         Plant ID: <input type="number" id="plantID" required><br>
 
@@ -290,11 +283,8 @@
     </form>
     <div id="insertPlantMsg"></div>
 
-    <h1>Deletions</h1> 
-
     <hr><br> <!-- ========================================================================= -->
-    <h1> DELETE for DEMO</h1>
-    <h2> Delete User </h2>
+    <h2>DELETION DEMO: Delete User </h2>
     <form id="deleteUser">
         userID: <input type="number" id="deleteUserID" placeholder="Enter ID" required> <br><br>
         <button type="submit"> Delete </button> <br>
@@ -302,7 +292,7 @@
     <div id="deleteResultMsg"></div>
     <br>
 
-    <h2>Delete Plant</h2>
+    <h2>DELETION DEMO: Delete Plant</h2>
     <form id="deletePlantForm">
         Plant ID: <input type="number" id="deletePlantID" required><br>
         Species: <input type="text" id="deleteSpecies" required><br>
@@ -328,8 +318,7 @@
     <br>
     <hr><br> <!-- ========================================================================= -->
 
-    <h1> DEMO Group By </h1>
-    <h2> Number of Users based on Task Frequency </h2>
+    <h2>GROUP BY AGGREGATION DEMO: Number of Users based on Task Frequency </h2>
     <button id="countAppUsersFrequency" type="button"> count </button> <br><br>
     <table id="frequencyTable" border="1">
     <thead> <tr><th>Frequency</th><th>User Count</th></tr> </thead>
@@ -337,8 +326,7 @@
     </table>
     <div id="countFrequencyMsg"></div>
 
-    <h1> Having Aggregation </h1>
-    <h2>Count Plants by Species (HAVING)</h2>
+    <h2>HAVING AGGREGATION DEMO: Count Plants by Species</h2>
     <form id="speciesThresholdForm">
     <label for="plantThreshold">Minimum Count:</label>
     <input type="number" id="plantThreshold" required>
@@ -356,8 +344,7 @@
     <br>
     <hr><br> <!-- ========================================================================= -->
 
-    <h1> Nested Aggregate </h1>
-    <h2>Average # of Tasks per User</h2>
+    <h2>NESTED AGGREGATION DEMO: Average # of Tasks per User</h2>
     <form id="avgTasksForm">
         <label for="minTasks">Only include users with more than X tasks:</label>
         <input type="number" id="minTasks" placeholder="Enter X" required>
@@ -377,8 +364,7 @@
     <br>
     <hr><br> <!-- ========================================================================= -->
 
-    <h1>DEMO Projection</h1>
-    <h2> Find Tables </h2>
+    <h2>PROJECTION DEMO: Find Tables </h2>
     <form id="projectionForm">
         <label for="tableSelect">Choose a table:</label><br>
         <select id="tableSelect" required></select><br><br>
@@ -395,8 +381,7 @@
         <tbody></tbody>
     </table>    
 
-    <h1> DEMO: Division </h1>
-    <h2>Species on All Soil Types</h2>
+    <h2>DIVISION DEMO: Species on All Soil Types</h2>
     <button id="findSpeciesButton">Find Species</button>
 
     <div id="allSoilResultContainer" style="display: none;">
