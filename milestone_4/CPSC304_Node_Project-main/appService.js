@@ -249,18 +249,19 @@ async function insertPlant(plantID, species, plantName, plantLogID, soilID, grow
             // { autoCommit: true }
         );
         await connection.execute(
-                `INSERT INTO PlantLog (
-                    plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate
-                ) VALUES (
-                    :plantLogID, :plantID, :species, :soilID, SYSDATE, :growth, TO_DATE(:harvestDate, 'YYYY-MM-DD')
-                )`,
-                {
+            `INSERT INTO PlantLog (
+                plantLogID, plantID, species, soilID, datePlanted, growth, harvestDate
+            ) VALUES (
+                :plantLogID, :plantID, :species, :soilID, SYSDATE, :growth, TO_DATE(:harvestDate, 'YYYY-MM-DD')
+            )`,
+            {
                 plantLogID,
                 plantID,
                 species,
-                soilID,
+                soilID: soilID ? parseInt(soilID) : null,
                 growth,
-                harvestDate: harvestDate || null }
+                harvestDate: (harvestDate && harvestDate.trim().length > 0) ? harvestDate : null
+            }
             );
             await connection.commit();
         
@@ -570,6 +571,20 @@ async function updatePlantSoil(plantID, soilID) {
     }).catch(() => false);
 }
 
+async function updatePlantHarvestDate(plantID, harvestDate) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `UPDATE PlantLog SET harvestDate = TO_DATE(:harvestDate, 'YYYY-MM-DD') WHERE plantID = :plantID`,
+            { harvestDate, plantID },
+            { autoCommit: true }
+        );
+        return result.rowsAffected > 0;
+    }).catch((err) => {
+        console.error("Error updating harvest date:", err);
+        return false;
+    });
+}
+
 async function findPlantsOnAllSoilTypes() {
     return await withOracleDB(async (connection) => {
         const sql = `
@@ -810,6 +825,7 @@ module.exports = {
     fetchSpeciesOptions,
     updatePlantGrowth,
     updatePlantSoil,
+    updatePlantHarvestDate,
     searchPlants,
     //end of plantlog related
     deleteUser,

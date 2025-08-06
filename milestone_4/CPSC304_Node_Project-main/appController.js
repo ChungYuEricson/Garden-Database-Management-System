@@ -335,7 +335,7 @@ router.get("/species-count-having", async (req, res) => {
 
 
 router.post("/update-plant-details", async (req, res) => {
-    const { plantID, newGrowth, soilID } = req.body;
+    const { plantID, newGrowth, soilID, harvestDate } = req.body;
 
     try {
         if (!plantID) return res.status(400).json({ success: false, message: "Missing plantID" });
@@ -346,6 +346,10 @@ router.post("/update-plant-details", async (req, res) => {
 
         if (soilID) {
             await appService.updatePlantSoil(plantID, soilID);
+        }
+
+        if (harvestDate) {
+            await appService.updatePlantHarvestDate(plantID, harvestDate);
         }
 
         res.json({ success: true });

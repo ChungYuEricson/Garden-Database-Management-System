@@ -800,13 +800,14 @@ function updatePlantDetailsForm() {
         const plantID = document.getElementById('updatePlantID').value;
         const newGrowth = document.getElementById('newGrowth').value;
         const soilID = document.getElementById('updatedSoilID').value;
+        const harvestDate = document.getElementById('updatedHarvestDate').value;
 
         if (!plantID) return;
 
         const res = await fetch('/update-plant-details', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ plantID, newGrowth, soilID })
+            body: JSON.stringify({ plantID, newGrowth, soilID, harvestDate})
         });
 
         const result = await res.json();
