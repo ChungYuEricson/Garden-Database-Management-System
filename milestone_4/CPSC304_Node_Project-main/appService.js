@@ -680,7 +680,7 @@ async function fetchAllTableNames() {
             FROM user_tables
             WHERE table_name NOT IN 
             ('AUTHORS', 'BOOKS', 'PUBLISHERS', 'TITLEAUTHOR', 'TITLES', 'EDITORS',
-             'SALES', 'SALESDETAILS', 'TITLEEDITORS', 'TITLEAUTHORS', 'DEMOTABLE')`);
+             'SALES', 'SALESDETAILS', 'TITLEDITORS', 'TITLEAUTHORS', 'DEMOTABLE', 'ROLLING')`);
         return result.rows.map(r => r[0]);
     }).catch(() => []);
 }
