@@ -546,6 +546,16 @@ async function updatePlantGrowth(plantID, newGrowth) {
     });
 }
 
+async function updatePlantSoil(plantID, soilID) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `UPDATE PlantLog SET soilID = :soilID WHERE plantID = :plantID`,
+            { soilID: parseInt(soilID), plantID: parseInt(plantID) },
+            { autoCommit: true }
+        );
+        return result.rowsAffected > 0;
+    }).catch(() => false);
+}
 
 async function searchPlants(filters) {
     return await withOracleDB(async (connection) => {
@@ -754,6 +764,7 @@ module.exports = {
     fetchSoilOptions,
     fetchSpeciesOptions,
     updatePlantGrowth,
+    updatePlantSoil,
     searchPlants,
     //end of plantlog related
     deleteUser,

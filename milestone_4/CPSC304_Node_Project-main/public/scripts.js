@@ -586,16 +586,52 @@ async function populateDropdowns() {
     });
 }
 
-async function populateUpdatePlantDropdown() {
-    const select = document.getElementById('updatePlantID');
-    const res = await fetch('/plants');
-    const data = await res.json();
+// async function populateUpdatePlantDropdown() {
+//     const select = document.getElementById('updatePlantID');
+//     const res = await fetch('/plants');
+//     const data = await res.json();
 
-    data.data.forEach(([plantID, species, plantName]) => {
+//     data.data.forEach(([plantID, species, plantName]) => {
+//         const option = document.createElement('option');
+//         option.value = plantID;
+//         option.textContent = `${plantID} – ${plantName} (${species})`;
+//         select.appendChild(option);
+//     });
+// }
+
+async function populateUpdatePlantDropdown() {
+    const plantRes = await fetch('/plants');
+    const data = await plantRes.json();
+
+    const plantOptions = data.data.map(([plantID, species, plantName]) => {
         const option = document.createElement('option');
         option.value = plantID;
         option.textContent = `${plantID} – ${plantName} (${species})`;
-        select.appendChild(option);
+        return option;
+    });
+
+    const plantSelects = [
+        document.getElementById('updatePlantID'),      // existing growth updater
+        document.getElementById('updateSoilPlantID')   // new soil updater
+    ];
+
+    plantSelects.forEach(select => {
+        if (select) {
+            plantOptions.forEach(opt => select.appendChild(opt.cloneNode(true)));
+        }
+    });
+}
+
+async function populateSoilDropdown() {
+    const res = await fetch('/soil-options');
+    const data = await res.json();
+
+    const soilSelect = document.getElementById('updatedSoilID');
+    data.data.forEach(([soilID, soilType]) => {
+        const option = document.createElement('option');
+        option.value = soilID;
+        option.textContent = `${soilID} (${soilType})`;
+        soilSelect.appendChild(option);
     });
 }
 
@@ -614,6 +650,27 @@ async function updatePlantGrowth(event) {
     const result = await res.json();
     const msg = document.getElementById('updatePlantGrowthMsg');
     msg.textContent = result.success ? "Growth updated successfully!" : "Failed to update growth.";
+
+    if (result.success) {
+        fetchAndDisplayPlantLog();
+    }
+}
+
+async function updatePlantSoil(event) {
+    event.preventDefault();
+
+    const plantID = document.getElementById('updateSoilPlantID').value;
+    const soilID = document.getElementById('updatedSoilID').value;
+
+    const res = await fetch('/update-plant-soil', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plantID, soilID })
+    });
+
+    const result = await res.json();
+    const msg = document.getElementById('updatePlantSoilMsg');
+    msg.textContent = result.success ? "Soil updated successfully!" : "Failed to update soil.";
 
     if (result.success) {
         fetchAndDisplayPlantLog();
@@ -804,6 +861,7 @@ window.onload = function() {
     fetchAndDisplayPlants();
     populateDropdowns();
     populateUpdatePlantDropdown();
+    populateSoilDropdown();
     fetchAndDisplayGardenLog();
     //plantlog
     fetchAndDisplayPlantLog();
@@ -820,6 +878,7 @@ window.onload = function() {
     document.getElementById("insertUserTask").addEventListener("submit", insertUserTask);
     document.getElementById("insertPlantForm").addEventListener("submit", insertPlant);
     document.getElementById("updatePlantGrowthForm").addEventListener("submit", updatePlantGrowth);
+    document.getElementById("updatePlantSoilForm").addEventListener("submit", updatePlantSoil);
     document.getElementById("deleteUser").addEventListener("submit", deleteAppUser);
     document.getElementById("avgTasksForm").addEventListener("submit", fetchAvgTasks);
     document.getElementById("showUserTasksForm").addEventListener("submit", function(event) {
