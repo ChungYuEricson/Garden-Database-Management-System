@@ -101,3 +101,19 @@ input::placeholder, textarea::placeholder {
     height: 1em;
     vertical-align: middle;
 }
+
+.scrollable-table {
+    max-height: 300px;      
+    overflow-y: auto;       
+    margin-bottom: 1rem;
+    border: 1px solid #ccc; 
+    padding: 0.5rem;    
+    background-color: white; 
+  }
+
+  .scrollable-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f2f2f2;
+    z-index: 2;
+  }
