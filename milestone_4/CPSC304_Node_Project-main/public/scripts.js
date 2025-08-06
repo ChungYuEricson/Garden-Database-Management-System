@@ -696,8 +696,7 @@ async function initProjectionForm() {
         const columns = data.data;
 
         // FIX: Unwrap nested array values
-        columns.forEach(colRow => {
-            const col = colRow[0]; 
+        columns.forEach(col => {
             const option = document.createElement('option');
             option.value = col;
             option.textContent = col;
