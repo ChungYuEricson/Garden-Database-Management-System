@@ -170,35 +170,35 @@ async function fetchUserTasks() {
     }
 }
 
-async function resetAppUsers() {
-    const response = await fetch("/initiate-appusers", {
-        method: 'POST'
-    });
-    const responseData = await response.json();
+// async function resetAppUsers() {
+//     const response = await fetch("/initiate-appusers", {
+//         method: 'POST'
+//     });
+//     const responseData = await response.json();
 
-    if (responseData.success) {
-        const messageElement = document.getElementById('resetResultMsg');
-        messageElement.textContent = "appusers initiated successfully!";
-        fetchTableData();
-    } else {
-        alert("Error initiating table!");
-    }
-}
+//     if (responseData.success) {
+//         const messageElement = document.getElementById('resetResultMsg');
+//         messageElement.textContent = "appusers initiated successfully!";
+//         fetchTableData();
+//     } else {
+//         alert("Error initiating table!");
+//     }
+// }
 
-async function resetTasks() {
-    const response = await fetch("/initiate-tasks", {
-        method: 'POST'
-    });
-    const responseData = await response.json();
+// async function resetTasks() {
+//     const response = await fetch("/initiate-tasks", {
+//         method: 'POST'
+//     });
+//     const responseData = await response.json();
 
-    if (responseData.success) {
-        const messageElement = document.getElementById('resetResultMsg');
-        messageElement.textContent = "tasks initiated successfully!";
-        fetchAndDisplayTasks();
-    } else {
-        alert("Error initiating table!");
-    }
-}
+//     if (responseData.success) {
+//         const messageElement = document.getElementById('resetResultMsg');
+//         messageElement.textContent = "tasks initiated successfully!";
+//         fetchAndDisplayTasks();
+//     } else {
+//         alert("Error initiating table!");
+//     }
+// }
 
 async function insertDemotable(event) {
     event.preventDefault();
@@ -376,37 +376,37 @@ document.getElementById("searchUserForm").addEventListener("submit", async funct
 });
 
 
-async function populateAppUsers() {
-    const response = await fetch("/populate-appusers", {
-        method: 'POST'
-    });
+// async function populateAppUsers() {
+//     const response = await fetch("/populate-appusers", {
+//         method: 'POST'
+//     });
 
-    const responseData = await response.json();
-    const messageElement = document.getElementById('populateResultMsg');
+//     const responseData = await response.json();
+//     const messageElement = document.getElementById('populateResultMsg');
 
-    if (responseData.success) {
-        messageElement.textContent = "AppUser table populated successfully!";
-        fetchTableData();
-    } else {
-        messageElement.textContent = "Error populating table.";
-    }
-}
+//     if (responseData.success) {
+//         messageElement.textContent = "AppUser table populated successfully!";
+//         fetchTableData();
+//     } else {
+//         messageElement.textContent = "Error populating table.";
+//     }
+// }
 
-async function populateTasks() {
-    const response = await fetch("/populate-tasks", {
-        method: 'POST'
-    });
+// async function populateTasks() {
+//     const response = await fetch("/populate-tasks", {
+//         method: 'POST'
+//     });
 
-    const responseData = await response.json();
-    const messageElement = document.getElementById('populateResultMsg');
+//     const responseData = await response.json();
+//     const messageElement = document.getElementById('populateResultMsg');
 
-    if (responseData.success) {
-        messageElement.textContent = "Tasks table populated successfully!";
-        fetchTableData();
-    } else {
-        messageElement.textContent = "Error populating table.";
-    }
-}
+//     if (responseData.success) {
+//         messageElement.textContent = "Tasks table populated successfully!";
+//         fetchTableData();
+//     } else {
+//         messageElement.textContent = "Error populating table.";
+//     }
+// }
 
 
 // Updates names in the demotable.
@@ -822,25 +822,28 @@ function updatePlantDetailsForm() {
 }
 
 async function fetchPlantsOnAllSoils() {
-    const res = await fetch('/plants-on-all-soils');
-    const data = await res.json();
+  const res = await fetch('/plants-on-all-soils');
+  const data = await res.json();
 
-    const tableBody = document.querySelector('#allSoilResults tbody');
-    tableBody.innerHTML = '';
+  const tableBody = document.querySelector('#allSoilResults tbody');
+  tableBody.innerHTML = '';
 
+  if (data.data.length > 0) {
     data.data.forEach(plantID => {
-        const row = document.createElement('tr');
-        const cell = document.createElement('td');
-        cell.textContent = plantID;
-        row.appendChild(cell);
-        tableBody.appendChild(row);
+      const row = document.createElement('tr');
+      const cell = document.createElement('td');
+      cell.textContent = plantID;
+      row.appendChild(cell);
+      tableBody.appendChild(row);
     });
 
-    document.getElementById('allSoilResultMsg').textContent = data.data.length
-        ? `Found ${data.data.length} plant(s)`
-        : "No plants found on all soil types.";
-}
+    document.getElementById('allSoilResultMsg').textContent = `Found ${data.data.length} plant(s).`;
+  } else {
+    document.getElementById('allSoilResultMsg').textContent = "No plants found on all soil types.";
+  }
 
+  document.getElementById('allSoilResultContainer').style.display = 'block';
+}
 
 // Projection Functions
 async function initProjectionForm() {
@@ -948,20 +951,20 @@ window.onload = function() {
     populateSoilDropdown();
     fetchAndDisplayGardenLog();
     updatePlantDetailsForm();
-    fetchPlantsOnAllSoils();
     setupSpeciesThresholdForm();
     //plantlog
     fetchAndDisplayPlantLog();
+    document.getElementById("findSpeciesButton").addEventListener("click", fetchPlantsOnAllSoils);
     document.getElementById("deletePlantForm").addEventListener("submit", deletePlant);
     //end of plantlog
-    document.getElementById("resetAppUsers").addEventListener("click", resetAppUsers);
+    // document.getElementById("resetAppUsers").addEventListener("click", resetAppUsers);
     document.getElementById("insertAppUser").addEventListener("submit", insertDemotable);
     document.getElementById("updateNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countAppUsers").addEventListener("click", countAppUsers);
     document.getElementById("countAppUsersFrequency").addEventListener("click", countAppUsersFrequency);
     // document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
-    document.getElementById("populateTasks").addEventListener("click", populateTasks);
-    document.getElementById("resetTasks").addEventListener("click", resetTasks);
+    // document.getElementById("populateTasks").addEventListener("click", populateTasks);
+    // document.getElementById("resetTasks").addEventListener("click", resetTasks);
     document.getElementById("insertUserTask").addEventListener("submit", insertUserTask);
     document.getElementById("insertPlantForm").addEventListener("submit", insertPlant);
     // document.getElementById("updatePlantSoilForm").addEventListener("submit", updatePlantSoil);

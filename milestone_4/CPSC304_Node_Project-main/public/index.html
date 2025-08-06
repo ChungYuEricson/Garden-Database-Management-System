@@ -134,8 +134,8 @@
 
         <label for="searchSpecies">Species:</label>
         <select id="species" name="species">
-            <option value="">-- Any --</option>
-        </select>
+            <option value="">-- Any --</option> 
+        </select> 
 
         <input type="text" id="searchPlantName" name="plantName" placeholder="Plant Name">
 
@@ -225,22 +225,20 @@
 
     <br>
     <hr><br> <!-- ========================================================================= -->
-    <section class = "reset-populate-section">
+    <!-- <section class = "reset-populate-section">
         <h1>Reset and Populate</h1>
-        <!-- <h2>Reset User Table</h2> -->
         <p>If you wish to reset the  (user) table press on the reset button. If this is the first time you're running this page, you
             MUST use reset</p>
             <div class="button-row">
                 <button id="resetAppUsers"> Reset User Table </button>
-                <button id="resetTasks"> Reset Task Table</button>
+                <button id="resetTasks"> Reset Task Table</button> -->
                 <!-- <button id="populateAppUsers"> Populate Users </button> -->
-                <button id="populateTasks"> Populate Tasks </button>
+                <!-- <button id="populateTasks"> Populate Tasks </button>
             </div>
         <div id="resetResultMsg"></div>
         <div id="populateResultMsg"></div>
-    </section>
+    </section> -->
 
-    <br><hr><br>
 
     <h1>Insertions</h1> 
     <hr><br> <!-- ========================================================================= -->
@@ -281,7 +279,7 @@
         <label for="insertSpecies">Species:</label> <br>
         <select id="insertSpecies" name="species">
             <option value="">-- Any --</option>
-        </select>
+        </select><br> 
 
         Plant Name: <input type="text" id="plantName" required><br>
         PlantLog ID: <input type="number" id="plantLogID" required><br>
@@ -434,18 +432,19 @@
         <tbody></tbody>
     </table>    
 
-
     <h1> DEMO: Division </h1>
     <h2>Species on All Soil Types</h2>
-    <button onclick="fetchPlantsOnAllSoils()">Find Species</button>
+    <button id="findSpeciesButton">Find Species</button>
+
+    <div id="allSoilResultContainer" style="display: none;">
     <p id="allSoilResultMsg"></p>
     <table id="allSoilResults" border="1">
         <thead>
-            <tr><th>Plant ID</th></tr>
+        <tr><th>Plant ID</th></tr>
         </thead>
         <tbody></tbody>
     </table>
-
+    </div>
 
     <!-- ===================================================================================== -->
     <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
