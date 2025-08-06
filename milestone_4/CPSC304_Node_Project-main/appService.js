@@ -358,11 +358,13 @@ async function deleteUser(userID) {
     });
 }
 
-async function updateNameDemotable(oldName, newName) {
+async function updateNameDemotable(oldFirstName, oldLastName, newFirstName, newLastName) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `UPDATE DEMOTABLE SET name=:newName where name=:oldName`,
-            [newName, oldName],
+            `UPDATE AppUser 
+             SET firstName=:newFirstName, lastName=:newLastName
+             WHERE firstName=:oldFirstName AND lastName=:oldLastName`,
+            {oldFirstName, oldLastName, newFirstName, newLastName},
             { autoCommit: true }
         );
 
@@ -371,6 +373,24 @@ async function updateNameDemotable(oldName, newName) {
         return false;
     });
 }
+
+async function updatePlantLogEntry(plantLogID, newGrowth, newSoilID) {
+    return await withOracleDB(async (connection) => {
+        console.log("Updating PlantLog with:", { plantLogID, newGrowth, newSoilID }); // 👈 Add this
+        const result = await connection.execute(
+            `UPDATE PlantLog 
+             SET growth = :newGrowth, soilID = :newSoilID 
+             WHERE plantLogID = :plantLogID`,
+            { plantLogID, newGrowth, newSoilID },
+            { autoCommit: true }
+        );
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch((err) => {
+        console.error("Error updating plant log entry:", err);
+        return false;
+    });
+}
+
 
 async function searchUsers(filters) {
     return await withOracleDB(async (connection) => {
@@ -623,8 +643,6 @@ async function searchPlants(filters) {
 }
 
 
-
-
 // end of plantlog
 
 // Nested Aggregation GROUP BY
@@ -708,6 +726,21 @@ async function runProjection(table, columns) {
     }).catch(() => []);
 }
 
+// HAVING requirement
+async function countPlantsBySpecies() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT LOWER(species), COUNT(*) AS PLANT_COUNT 
+             FROM Plant
+             GROUP BY LOWER(species)
+             HAVING COUNT(*) > 2 `,
+             []
+        );
+        return result.rows;
+    }).catch(() => {
+        return null;
+    });
+}
 
 module.exports = {
     testOracleConnection,
@@ -740,8 +773,9 @@ module.exports = {
     initiateGardenLog,
     fetchGardenLogFromDb,
     getAverageTasksForActiveUsers,
-
     fetchAllTableNames, 
     fetchColumnsForTable,
-    runProjection
+    runProjection,
+    countPlantsBySpecies,
+    updatePlantLogEntry
 };

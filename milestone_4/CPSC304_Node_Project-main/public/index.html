@@ -101,12 +101,9 @@
     <form id="searchPlantForm">
         <input type="text" id="searchPlantID" name="plantID" placeholder="Plant ID">
 
-        <label for="species">Species:</label>
+        <label for="searchSpecies">Species:</label>
         <select id="species" name="species">
             <option value="">-- Any --</option>
-            <option value="rose">Rose</option>
-            <option value="tulip">Tulip</option>
-            <option value="sunflower">Sunflower</option>
         </select>
 
         <input type="text" id="searchPlantName" name="plantName" placeholder="Plant Name">
@@ -243,15 +240,16 @@
         <button type="submit"> Insert </button> <br>
     </form>
     <div id="insertResultMsg"></div>
-
+    
+    <h1>INSERT for DEMO</h1>
     <h2>New Plant</h2>
     <form id="insertPlantForm">
         Plant ID: <input type="number" id="plantID" required><br>
 
-        <label for="species">Species:</label>
-        <select id="species" required>
-            <option value="">Select a species</option>
-        </select><br>
+        <label for="insertSpecies">Species:</label>
+        <select id="insertSpecies" name="species">
+            <option value="">-- Any --</option>
+        </select>
 
         Plant Name: <input type="text" id="plantName" required><br>
         PlantLog ID: <input type="number" id="plantLogID" required><br>
@@ -271,6 +269,7 @@
     <h1>Deletions</h1> 
 
     <hr><br> <!-- ========================================================================= -->
+    <h1> DELETE for DEMO</h1>
     <h2> Delete User </h2>
     <form id="deleteUser">
         userID: <input type="number" id="deleteUserID" placeholder="Enter ID" required> <br><br>
@@ -291,15 +290,15 @@
     <h1>Updates</h1>     
     <hr><br> <!-- ========================================================================= -->
 
-    <h2>Update Name in DemoTable</h2>
+    <h2>Update Name</h2>
     <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
-    <form id="updataNameDemotable">
-        Old Name: <input type="text" id="updateOldName" placeholder="Enter Old Name" required> <br><br>
-        New Name: <input type="text" id="updateNewName" placeholder="Enter New Name" maxlength="20"> <br><br>
-
+    <form id="updateNameDemotable">
+        Old First Name: <input type="text" id="updateOldFirstName" placeholder="Enter Old First Name" required> <br><br>
+        Old Last Name: <input type="text" id="updateOldLastName" placeholder="Enter Old Last Name" required> <br><br>
+        New First Name: <input type="text" id="updateNewFirstName" placeholder="Enter New First Name" required> <br><br>
+        New Last Name: <input type="text" id="updateNewLastName" placeholder="Enter New Last Name" required> <br><br>
         <button type="submit"> update </button> <br>
     </form>
-    <!-- A placeholder to display messages related to the update operation. -->
     <div id="updateNameResultMsg"></div>
 
     <h2>Update Plant Growth</h2>
@@ -315,6 +314,23 @@
         <button type="submit">Update Growth</button>
     </form>
     <div id="updatePlantGrowthMsg"></div>
+
+    <h2>Update PlantLog Entry</h2>
+    <form id="updatePlantLogForm">
+        <label for="plantLogIDUpdate">PlantLog ID:</label>
+        <input type="number" id="plantLogIDUpdate" required><br>
+
+        <label for="newGrowthLog">New Growth Stage:</label>
+        <input type="text" id="newGrowthLog" required><br>
+
+        <label for="newSoilID">New Soil ID:</label>
+        <input type="number" id="newSoilID" required><br>
+
+        <button type="submit">Update PlantLog</button>
+    </form>
+    <div id="updateResultMsg"></div>
+
+
 
     <br>
     <hr><br> <!-- ========================================================================= -->
@@ -332,6 +348,16 @@
     <tbody></tbody>
     </table>
     <div id="countFrequencyMsg"></div>
+
+    <h2>Count Plants by Species (HAVING; x > 2)</h2>
+    <button id="countPlantSpeciesButton">Count</button>
+    <div id="plantSpeciesCountMsg"></div>
+    <table id="plantSpeciesCountTable" border="1">
+    <thead>
+        <tr><th>Species</th><th>Count</th></tr>
+    </thead>
+    <tbody></tbody>
+    </table>
 
     <br>
     <hr><br> <!-- ========================================================================= -->

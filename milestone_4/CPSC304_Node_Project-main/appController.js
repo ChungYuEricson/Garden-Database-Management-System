@@ -132,14 +132,25 @@ router.post("/insert-user-task", async (req, res) => {
 });
 
 router.post("/update-name-demotable", async (req, res) => {
-    const { oldName, newName } = req.body;
-    const updateResult = await appService.updateNameDemotable(oldName, newName);
+    const { oldFirstName, oldLastName , newFirstName, newLastName} = req.body;
+    const updateResult = await appService.updateNameDemotable(oldFirstName, oldLastName, newFirstName, newLastName);
     if (updateResult) {
         res.json({ success: true });
     } else {
         res.status(500).json({ success: false });
     }
 });
+
+router.post("/update-plant-log", async (req, res) => {
+    const { plantLogID, newGrowth, newSoilID } = req.body;
+    const success = await appService.updatePlantLogEntry(plantLogID, newGrowth, newSoilID);
+    if (success) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
 // delete user
 router.post("/delete-appuser", async (req, res) => {
     const { userID } = req.body;
@@ -272,6 +283,16 @@ router.get("/average-tasks-nested", async (req, res) => {
     } else {
         res.status(500).json({ success: false });
     }
+});
+
+// count plant by species
+router.get('/count-plant-species', async (req, res) => {
+    const data = await appService.countPlantsBySpecies();
+    if (!data) {
+        console.error("Error in /count-plant-species");
+        return res.status(500).json([]);
+    }
+    res.json(data);
 });
 
 // Projection Routes

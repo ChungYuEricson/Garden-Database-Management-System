@@ -289,7 +289,7 @@ async function insertPlant(event) {
     event.preventDefault();
 
     const plantID = document.getElementById('plantID').value;
-    const species = document.getElementById('species').value;
+    const species = document.getElementById('insertSpecies').value;
     const plantName = document.getElementById('plantName').value;
 
     const plantLogID = parseInt(document.getElementById('plantLogID').value);
@@ -413,8 +413,10 @@ async function populateTasks() {
 async function updateNameDemotable(event) {
     event.preventDefault();
 
-    const oldNameValue = document.getElementById('updateOldName').value;
-    const newNameValue = document.getElementById('updateNewName').value;
+    const oldFirstName = document.getElementById('updateOldFirstName').value;
+    const oldLastName = document.getElementById('updateOldLastName').value;
+    const newFirstName = document.getElementById('updateNewFirstName').value;
+    const newLastName = document.getElementById('updateNewLastName').value;
 
     const response = await fetch('/update-name-demotable', {
         method: 'POST',
@@ -422,8 +424,10 @@ async function updateNameDemotable(event) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            oldName: oldNameValue,
-            newName: newNameValue
+            oldFirstName: oldFirstName,
+            oldLastName: oldLastName,
+            newFirstName: newFirstName,
+            newLastName: newLastName
         })
     });
 
@@ -452,6 +456,31 @@ async function countAppUsers() {
     } else {
         alert("Error in count users!");
     }
+}
+
+async function countPlantsBySpecies() {
+    const response = await fetch('/count-plant-species');
+    const data = await response.json();
+
+    const msg = document.getElementById('plantSpeciesCountMsg');
+    const tbody = document.getElementById('plantSpeciesCountTable').querySelector('tbody');
+
+    tbody.innerHTML = '';
+
+    if (!data) {
+        msg.textContent = 'No species have more than 2 plants.';
+        return;
+    }
+
+    msg.textContent = '';
+
+    data.forEach(([species, count]) => {
+        const row = tbody.insertRow();
+        const speciesCell = row.insertCell();
+        const countCell = row.insertCell();
+        speciesCell.textContent = species;
+        countCell.textContent = count;
+    });
 }
 
 async function countAppUsersFrequency() {
@@ -526,15 +555,23 @@ async function deletePlant(event) {
 }
 
 async function populateDropdowns() {
-    // Populate species dropdown
-    const speciesSelect = document.getElementById('species');
     const speciesRes = await fetch('/species-options');
     const speciesData = await speciesRes.json();
+
+    // Populate species dropdown
+    const speciesSelect = document.getElementById('species');
+    const speciesInsert = document.getElementById('insertSpecies');
+
     speciesData.data.forEach(([species]) => {
         const option = document.createElement('option');
         option.value = species;
         option.textContent = species;
         speciesSelect.appendChild(option);
+
+        const option2 = document.createElement('option');
+        option2.value = species;
+        option2.textContent = species;
+        speciesInsert.appendChild(option2);
     });
 
     // Populate soil ID dropdown
@@ -695,7 +732,6 @@ async function initProjectionForm() {
 
         const columns = data.data;
 
-        // FIX: Unwrap nested array values
         columns.forEach(col => {
             const option = document.createElement('option');
             option.value = col;
@@ -755,6 +791,27 @@ function renderProjectionResults(columns, rows) {
 
     msg.textContent = `${rows.length} row(s) returned.`;
 }
+document.getElementById("updatePlantLogForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const plantLogID = parseInt(document.getElementById("plantLogIDUpdate").value);
+    const newGrowth = document.getElementById("newGrowthLog").value.trim();
+    const newSoilID = parseInt(document.getElementById("newSoilID").value);
+
+    const response = await fetch("/update-plant-log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plantLogID, newGrowth, newSoilID })
+    });
+
+    const msgDiv = document.getElementById("updateResultMsg");
+    if (response.ok) {
+        msgDiv.textContent = "PlantLog updated successfully!";
+    } else {
+        msgDiv.textContent = "Failed to update PlantLog.";
+    }
+});
+
 
 
 // ---------------------------------------------------------------
@@ -775,7 +832,7 @@ window.onload = function() {
     //end of plantlog
     document.getElementById("resetAppUsers").addEventListener("click", resetAppUsers);
     document.getElementById("insertAppUser").addEventListener("submit", insertDemotable);
-    document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
+    document.getElementById("updateNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countAppUsers").addEventListener("click", countAppUsers);
     document.getElementById("countAppUsersFrequency").addEventListener("click", countAppUsersFrequency);
     // document.getElementById("populateAppUsers").addEventListener("click", populateAppUsers);
@@ -790,6 +847,7 @@ window.onload = function() {
         event.preventDefault(); // to prevent reloading page upon submitting 
         fetchUserTasks();
     });
+    document.getElementById('countPlantSpeciesButton').addEventListener('click', countPlantsBySpecies);
     initProjectionForm();
 };
 
