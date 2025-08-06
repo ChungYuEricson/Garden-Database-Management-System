@@ -144,7 +144,7 @@ CREATE TABLE PlantFamily (
 CREATE TABLE PlantInfo (
 	species VARCHAR(20),
     familyID INTEGER,
-	prefEnvironment VARCHAR(20),
+	prefEnvironment VARCHAR(20) DEFAULT 'Warm',
 	PRIMARY KEY (species),
 	FOREIGN KEY (familyID) REFERENCES PlantFamily(familyID)
 );
