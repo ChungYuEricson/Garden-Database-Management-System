@@ -61,17 +61,17 @@ This project follows standard ER modeling practices and will be normalized up to
 - POST /insert-data  (Justin)  
 - PUT /edit-table    (Justin)  
 - DELETE /delete-all (Ericson) 
-- POST /create-user  (Jacky)   **Potentially Done?**
-- GET /users         (Jacky)   **Potentially Done? Would this be Show Users?** 
+- POST /create-user  (Jacky)  
+- GET /users         (Jacky)  
 - GET /plants        (Ericson) 
 - GET /tasks         (Jacky)   
-    - Populating task table   **[DONE]**
-    - Reset task table        **[DONE]**
-    - Insert into task table  **[DONE]**
+    - Populating task table  
+    - Reset task table       
+    - Insert into task table  
 - PUT /edit-plant    (Ericson) 
 - POST /assign-task  (Jacky)
-    - Associate task table with users **[DONE via Search User's Tasks?]**
-    - Delete task upon completing **[In progress]**
+    - Associate task table with users 
+    - Delete task upon completing 
 - DELETE /user
     - Upon deleting a user, delete their tasks, if it exists. 
 - Error handling features (Ericson) 
